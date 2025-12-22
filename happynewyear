@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестик для милаши!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #444;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+        }
+        
+        p {
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3071f2;
+            margin-bottom: 30px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f0f5ff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .timer.expired {
+            color: #ff4444;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .button {
+            background-color: #3071f2;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #255cd1;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(48, 113, 242, 0.3);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            padding: 18px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #333;
+        }
+        
+        .option:hover {
+            border-color: #3071f2;
+            background-color: #f5f9ff;
+        }
+        
+        .hint {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .correct-hint {
+            background-color: #e8f7e8;
+            color: #2a8a2a;
+            border: 1px solid #b8e0b8;
+        }
+        
+        .incorrect-hint {
+            background-color: #fff0f0;
+            color: #cc3333;
+            border: 1px solid #ffcccc;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+        }
+        
+        .final-text {
+            color: black;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-top: 40px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 600px) {
+            .page {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .timer {
+                font-size: 2rem;
+            }
+            
+            .final-text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Страница 1: Приветствие -->
+    <div id="page1" class="page active">
+        <h1>привет милаша!</h1>
+        <p>
+            во-первых, <strong>с новым годом</strong>, а во-вторых, СЕЙЧАС будет мини тестик где на каждый вопрос тебе дастся по 1 минутке))
+        </p>
+        <button id="startButton" class="button">начать!</button>
+    </div>
+    
+    <!-- Страница 2: Вопрос -->
+    <div id="page2" class="page">
+        <div id="timer" class="timer">01:00</div>
+        <h2>Хм! Как думаешь, кого любит кэкс? <span class="emoji">&#129300;</span></h2>
+        
+        <div class="options">
+            <div class="option" data-answer="correct">милашу</div>
+            <div class="option" data-answer="incorrect">свою кошку</div>
+        </div>
+        
+        <div id="correctHint" class="hint correct-hint">
+            ну конечно! надеюсь ты ответила с первого раза это же очевидно
+        </div>
+        
+        <div id="incorrectHint" class="hint incorrect-hint">
+            какая кошка ты о чем у меня нету кошки <span class="emoji">&#128558;</span>
+        </div>
+        
+        <button id="nextButton" class="button" style="display: none;">далее! :3</button>
+    </div>
+    
+    <!-- Страница 3: Финальная -->
+    <div id="page3" class="page">
+        <div class="final-text">
+            ты умница!! иди роскожи как тебе все
+        </div>
+    </div>
+
+    <script>
+        // Элементы страниц
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const startButton = document.getElementById('startButton');
+        const nextButton = document.getElementById('nextButton');
+        const timerDisplay = document.getElementById('timer');
+        const options = document.querySelectorAll('.option');
+        const correctHint = document.getElementById('correctHint');
+        const incorrectHint = document.getElementById('incorrectHint');
+        
+        // Переменные для таймера
+        let timerInterval;
+        let seconds = 60;
+        let isTimerExpired = false;
+        
+        // Начало теста
+        startButton.addEventListener('click', function() {
+            page1.classList.remove('active');
+            page2.classList.add('active');
+            
+            // Сброс таймера и подсказок
+            seconds = 60;
+            isTimerExpired = false;
+            timerDisplay.textContent = '01:00';
+            timerDisplay.classList.remove('expired');
+            
+            // Скрыть подсказки и кнопку "далее"
+            correctHint.style.display = 'none';
+            incorrectHint.style.display = 'none';
+            nextButton.style.display = 'none';
+            
+            // Запуск таймера
+            startTimer();
+        });
+        
+        // Запуск таймера
+        function startTimer() {
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(function() {
+                seconds--;
+                
+                // После истечения минуты идем в минус
+                if (seconds >= 0) {
+                    let mins = Math.floor(seconds / 60);
+                    let secs = seconds % 60;
+                    timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    
+                    // Когда время истекло
+                    if (seconds === 0) {
+                        isTimerExpired = true;
+                        timerDisplay.classList.add('expired');
+                    }
+                } else {
+                    // Таймер идет в минус
+                    let absSeconds = Math.abs(seconds);
+                    let mins = Math.floor(absSeconds / 60);
+                    let secs = absSeconds % 60;
+                    timerDisplay.textContent = `-${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+        
+        // Обработка выбора ответа
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                // Показываем соответствующую подсказку
+                if (this.dataset.answer === 'correct') {
+                    correctHint.style.display = 'block';
+                    incorrectHint.style.display = 'none';
+                    
+                    // Показываем кнопку "далее" только при правильном ответе
+                    nextButton.style.display = 'inline-block';
+                } else {
+                    incorrectHint.style.display = 'block';
+                    correctHint.style.display = 'none';
+                    nextButton.style.display = 'none';
+                }
+                
+                // Делаем выбранный вариант более выделенным
+                options.forEach(opt => {
+                    opt.style.borderColor = '#ddd';
+                    opt.style.backgroundColor = 'white';
+                });
+                
+                this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
+                this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
+            });
+        });
+        
+        // Переход к следующей странице
+        nextButton.addEventListener('click', function() {
+            page2.classList.remove('active');
+            page3.classList.add('active');
+            
+            // Останавливаем таймер
+            clearInterval(timerInterval);
+        });
+        
+        // Анимация появления кнопки "далее"
+        function showNextButton() {
+            nextButton.style.display = 'inline-block';
+            nextButton.style.animation = 'fadeIn 0.5s';
+        }
+    </script>
+</body>
+</html>
