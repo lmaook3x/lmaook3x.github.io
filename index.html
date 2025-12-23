@@ -21,21 +21,23 @@
             position: relative;
             overflow-x: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
         
-        /* Снежинки */
+        /* Снежинки - В 6 РАЗ БОЛЬШЕ */
         .snowflake {
             position: absolute;
             color: #cccccc;
-            font-size: 4.5rem; /* Увеличены в 3 раза */
+            font-size: 27rem; /* Увеличены в 6 раз от предыдущих 4.5rem */
             user-select: none;
             z-index: -1;
-            opacity: 0.7;
+            opacity: 0.4;
             pointer-events: none;
         }
         
         .snowflake.blue {
             color: #aebeeb;
+            opacity: 0.3;
         }
         
         .page {
@@ -67,16 +69,17 @@
         .title-page h1 {
             color: #333;
             font-size: 3.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 15px; /* Уменьшено расстояние */
             font-weight: bold;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .title-page p {
             color: #444;
             font-size: 1.5rem;
-            line-height: 1.8;
-            margin-bottom: 25px;
+            line-height: 1.4; /* Уменьшен межстрочный интервал */
+            margin-bottom: 12px; /* Уменьшено расстояние между строками */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
@@ -95,6 +98,7 @@
             align-items: center;
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .timer {
@@ -105,7 +109,7 @@
             padding: 10px;
             border-radius: 5px;
             background-color: #f0f5ff;
-            font-family: 'Book Antiqua', Palatino, serif;
+            font-family: 'Consolas', 'Courier New', monospace; /* Изменен шрифт */
         }
         
         .timer.expired {
@@ -119,44 +123,57 @@
             100% { opacity: 1; }
         }
         
+        /* 3D Кнопка - МЕНЬШЕ */
         .button {
             background-color: #3071f2;
             color: white;
             border: none;
-            padding: 16px 40px;
-            font-size: 1.3rem;
+            padding: 12px 30px; /* Уменьшено */
+            font-size: 1.1rem; /* Уменьшено */
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-weight: bold;
             margin-top: 10px;
             display: inline-block;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* 3D эффект */
+            position: relative;
+            box-shadow: 
+                0 4px 0 #1c56d0,
+                0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
         }
         
         .button:hover {
             background-color: #255cd1;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(48, 113, 242, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 0 #1c56d0,
+                0 8px 15px rgba(48, 113, 242, 0.3);
         }
         
-        /* Кнопка "Далее!" поменьше */
-        #nextButton {
-            padding: 12px 30px;
-            font-size: 1.2rem;
+        .button:active {
+            transform: translateY(2px);
+            box-shadow: 
+                0 2px 0 #1c56d0,
+                0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Кнопка "Далее!" еще меньше */
+        .next-button {
+            padding: 10px 25px;
+            font-size: 1rem;
             transform-origin: center;
         }
         
-        /* Анимация для кнопки "Далее!" живее */
-        #nextButton:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(48, 113, 242, 0.4);
-            animation: bounce 0.5s ease;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(-3px) scale(1.05); }
-            50% { transform: translateY(-6px) scale(1.08); }
+        /* Анимация для кнопки "Далее!" */
+        .next-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 
+                0 6px 0 #1c56d0,
+                0 10px 20px rgba(48, 113, 242, 0.4);
         }
         
         .question-title {
@@ -235,7 +252,7 @@
         /* Стиль для убегающей кнопки */
         .runaway-button {
             position: absolute;
-            transition: all 0.3s ease;
+            transition: none !important; /* Убрано плавное движение */
         }
         
         .runaway-text {
@@ -280,14 +297,12 @@
             }
             
             .snowflake {
-                font-size: 3rem;
+                font-size: 15rem; /* Уменьшено для мобильных */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Снежинки будут добавлены через JavaScript -->
-    
     <!-- Страница 1: Приветствие -->
     <div id="page1" class="page active title-page">
         <h1>Привет Милаша!!</h1>
@@ -322,7 +337,7 @@
             Это да, но все же)
         </div>
         
-        <button id="nextButton1" class="button" style="display: none;">Далее!</button>
+        <button id="nextButton1" class="button next-button" style="display: none;">Далее!</button>
     </div>
     
     <!-- Страница 3: Вопрос 2 -->
@@ -348,7 +363,7 @@
             нет2
         </div>
         
-        <button id="nextButton2" class="button" style="display: none;">Далее!</button>
+        <button id="nextButton2" class="button next-button" style="display: none;">Далее!</button>
     </div>
     
     <!-- Страница 4: Кнопка убегает -->
@@ -357,72 +372,65 @@
             Дальше! Будет кое-то еще БОЛЕЕ интересное<br><br>
             Лишь нажми на кнопку внизу..
         </div>
-        <div id="runawayButtonContainer" style="margin-top: 40px; position: relative; height: 100px;">
-            <button id="runawayButton" class="button">Нажимай!</button>
+        <div id="runawayButtonContainer" style="margin-top: 40px; position: relative; height: 400px; width: 100%; border: 2px dashed #ddd; border-radius: 8px;">
+            <button id="runawayButton" class="button runaway-button">Нажимай!</button>
         </div>
         <div id="runawayText" class="runaway-text">ИЗВИНИ жмакай</div>
     </div>
 
     <script>
-        // Создание снежинок (только для страниц с вопросами)
+        // Равномерное распределение снежинок по сетке
         function createSnowflakes() {
-            const snowflakeSymbols = ['❄', '❆']; // Только 2 вида снежинок
+            const snowflakeSymbols = ['❄', '❆'];
             const body = document.body;
-            const snowflakeCount = 25; // Количество снежинок
             
             // Очищаем старые снежинки
             const oldSnowflakes = document.querySelectorAll('.snowflake');
             oldSnowflakes.forEach(snowflake => snowflake.remove());
             
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                
-                // Случайный символ снежинки (только ❄ или ❆)
-                const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
-                snowflake.textContent = symbol;
-                
-                // Большие размеры (в 3 раза больше)
-                const size = Math.random() * 3 + 2.4; // от 2.4 до 5.4rem
-                snowflake.style.fontSize = `${size}rem`;
-                
-                // Случайная позиция
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                snowflake.style.left = `${left}%`;
-                snowflake.style.top = `${top}%`;
-                
-                // Случайный угол поворота
-                const rotation = Math.random() * 360;
-                snowflake.style.transform = `rotate(${rotation}deg)`;
-                
-                // Случайный цвет
-                if (Math.random() > 0.7) {
-                    snowflake.classList.add('blue');
+            // Создаем равномерную сетку 5x5
+            const rows = 5;
+            const cols = 5;
+            
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    
+                    // Случайный символ снежинки
+                    const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+                    snowflake.textContent = symbol;
+                    
+                    // ОГРОМНЫЙ размер - в 6 раз больше чем были
+                    const baseSize = 27; // rem
+                    const sizeVariation = Math.random() * 5 - 2.5; // от -2.5 до +2.5
+                    snowflake.style.fontSize = `${baseSize + sizeVariation}rem`;
+                    
+                    // Равномерное распределение по сетке
+                    const left = (j / cols) * 100 + (Math.random() * 5 - 2.5); // небольшой случайный сдвиг
+                    const top = (i / rows) * 100 + (Math.random() * 5 - 2.5);
+                    snowflake.style.left = `${left}%`;
+                    snowflake.style.top = `${top}%`;
+                    
+                    // Случайный угол поворота
+                    const rotation = Math.random() * 360;
+                    snowflake.style.transform = `rotate(${rotation}deg)`;
+                    
+                    // Случайный цвет
+                    if (Math.random() > 0.7) {
+                        snowflake.classList.add('blue');
+                    }
+                    
+                    // Случайная прозрачность
+                    snowflake.style.opacity = Math.random() * 0.3 + 0.1;
+                    
+                    body.appendChild(snowflake);
                 }
-                
-                // Случайная прозрачность
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-                
-                // Случайная анимация
-                if (Math.random() > 0.5) {
-                    const duration = Math.random() * 10 + 5;
-                    snowflake.style.animation = `float ${duration}s infinite alternate ease-in-out`;
-                }
-                
-                body.appendChild(snowflake);
             }
         }
         
-        // Анимация парения для снежинок
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float {
-                0% { transform: rotate(var(--rot)) translateY(0px); }
-                100% { transform: rotate(var(--rot)) translateY(40px); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Создаем снежинки сразу при загрузке
+        createSnowflakes();
         
         // Элементы страниц
         const pages = {
@@ -447,9 +455,6 @@
         startButton.addEventListener('click', function() {
             pages[1].classList.remove('active');
             pages[2].classList.add('active');
-            
-            // Создаем снежинки при переходе на страницу с вопросами
-            createSnowflakes();
             
             // Сброс таймера
             seconds = 60;
@@ -559,58 +564,103 @@
             pages[3].classList.remove('active');
             pages[4].classList.add('active');
             
-            // Запускаем убегание кнопки
+            // Запускаем убегание кнопки с расширенной зоной обнаружения
             startRunawayButton();
         });
         
-        // Функция для убегающей кнопки
+        // Функция для убегающей кнопки с расширенной зоной обнаружения
         function startRunawayButton() {
             let runawayTimeout;
             let canClick = false;
             const container = document.getElementById('runawayButtonContainer');
             const button = runawayButton;
             
-            // Позиционируем кнопку
+            // Позиционируем кнопку в центре
             button.style.position = 'absolute';
             button.style.left = '50%';
             button.style.top = '50%';
             button.style.transform = 'translate(-50%, -50%)';
             
-            // Функция для перемещения кнопки
-            function moveButton() {
-                if (canClick) return;
+            // Размеры контейнера и кнопки
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+            
+            // Создаем невидимую зону обнаружения вокруг кнопки (в 3 раза больше)
+            const detectionRadius = 150; // пикселей
+            
+            // Функция для проверки близости курсора к кнопке
+            function isCursorNearButton(clientX, clientY) {
+                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
                 
-                const containerRect = container.getBoundingClientRect();
-                const buttonRect = button.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(clientX - buttonCenterX, 2) + 
+                    Math.pow(clientY - buttonCenterY, 2)
+                );
                 
-                // Новая случайная позиция в пределах контейнера
-                const maxX = containerRect.width - buttonRect.width;
-                const maxY = containerRect.height - buttonRect.height;
-                
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
-                
-                button.style.left = `${newX}px`;
-                button.style.top = `${newY}px`;
-                button.style.transform = 'translate(0, 0)';
+                return distance < detectionRadius;
             }
             
-            // Двигаем кнопку при наведении
-            button.addEventListener('mouseenter', function() {
-                if (!canClick) {
-                    moveButton();
+            // Функция для РЕЗКОГО перемещения кнопки ДАЛЕКО
+            function moveButtonFarAway() {
+                if (canClick) return;
+                
+                // Резкое перемещение в случайный угол контейнера или за его пределы
+                const moveOptions = [
+                    { x: -buttonRect.width - 50, y: -buttonRect.height - 50 }, // левый верх за пределами
+                    { x: containerRect.width + 50, y: -buttonRect.height - 50 }, // правый верх за пределами
+                    { x: -buttonRect.width - 50, y: containerRect.height + 50 }, // левый низ за пределами
+                    { x: containerRect.width + 50, y: containerRect.height + 50 }, // правый низ за пределами
+                    { x: Math.random() * containerRect.width, y: -buttonRect.height - 100 }, // сверху далеко
+                    { x: -buttonRect.width - 100, y: Math.random() * containerRect.height }, // слева далеко
+                    { x: containerRect.width + 100, y: Math.random() * containerRect.height }, // справа далеко
+                    { x: Math.random() * containerRect.width, y: containerRect.height + 100 } // снизу далеко
+                ];
+                
+                const newPos = moveOptions[Math.floor(Math.random() * moveOptions.length)];
+                
+                // Резкое перемещение без анимации
+                button.style.transition = 'none';
+                button.style.left = `${newPos.x}px`;
+                button.style.top = `${newPos.y}px`;
+                button.style.transform = 'translate(0, 0)';
+                
+                // Обновляем координаты кнопки
+                setTimeout(() => {
+                    buttonRect = button.getBoundingClientRect();
+                }, 10);
+            }
+            
+            // Слушаем движение курсора во всем контейнере
+            container.addEventListener('mousemove', function(e) {
+                if (canClick) return;
+                
+                const clientX = e.clientX;
+                const clientY = e.clientY;
+                
+                // Проверяем, находится ли курсор близко к кнопке
+                if (isCursorNearButton(clientX, clientY)) {
+                    moveButtonFarAway();
                 }
             });
             
-            // Двигаем кнопку каждые 500ms тоже
-            const moveInterval = setInterval(moveButton, 500);
+            // Также двигаем кнопку периодически для надежности
+            const moveInterval = setInterval(() => {
+                if (!canClick && Math.random() > 0.7) {
+                    moveButtonFarAway();
+                }
+            }, 300);
             
             // Через 10 секунд останавливаем убегание
             runawayTimeout = setTimeout(function() {
                 clearInterval(moveInterval);
                 canClick = true;
                 
-                // Возвращаем кнопку в центр
+                // Убираем обработчик движения
+                container.removeEventListener('mousemove', arguments.callee);
+                
+                // Возвращаем кнопку в центр с анимацией
+                button.style.transition = 'all 0.5s ease';
                 button.style.left = '50%';
                 button.style.top = '50%';
                 button.style.transform = 'translate(-50%, -50%)';
@@ -618,8 +668,6 @@
                 // Показываем текст
                 runawayText.style.display = 'block';
                 
-                // Убираем убегание
-                button.removeEventListener('mouseenter', arguments.callee);
             }, 10000);
             
             // Обработка нажатия на кнопку
@@ -628,10 +676,6 @@
                     // Переход на первую страницу
                     pages[4].classList.remove('active');
                     pages[1].classList.add('active');
-                    
-                    // Убираем снежинки
-                    const snowflakes = document.querySelectorAll('.snowflake');
-                    snowflakes.forEach(snowflake => snowflake.remove());
                     
                     clearTimeout(runawayTimeout);
                     clearInterval(moveInterval);
