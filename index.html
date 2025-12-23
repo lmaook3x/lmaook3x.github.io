@@ -24,11 +24,11 @@
             overflow: hidden;
         }
         
-        /* Снежинки - ВДВОЕ МЕНЬШЕ */
+        /* Снежинки - ЕЩЕ МЕНЬШЕ В 1.5 РАЗА */
         .snowflake {
             position: fixed;
             color: #cccccc;
-            font-size: 13.5rem; /* Вдвое меньше чем 27rem */
+            font-size: 9rem; /* Было 13.5rem, стало 9rem (меньше в 1.5 раза) */
             user-select: none;
             z-index: -1;
             opacity: 0.3;
@@ -55,6 +55,9 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            /* Гарантируем, что кнопки не выходят за пределы */
+            overflow: visible;
+            position: relative;
         }
         
         .active {
@@ -161,11 +164,27 @@
                 0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
-        /* Кнопка "Далее!" */
+        /* Кнопка "Далее!" с гарантией видимости */
         .next-button {
             padding: 10px 25px;
             font-size: 1rem;
             transform-origin: center;
+            /* Гарантируем, что кнопка всегда видна */
+            position: relative;
+            z-index: 10;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        
+        /* Контейнер для кнопки "Далее!" чтобы она не убегала */
+        .next-button-container {
+            margin-top: 20px;
+            padding-top: 10px;
+            position: relative;
+            min-height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .next-button:hover {
@@ -251,7 +270,8 @@
         /* Стиль для убегающей кнопки */
         .runaway-button {
             position: absolute;
-            transition: all 0.4s ease-out !important; /* Плавное движение */
+            transition: all 0.3s ease-out !important;
+            z-index: 100;
         }
         
         .runaway-text {
@@ -278,6 +298,18 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Контейнер для убегающей кнопки - ограничиваем видимую область */
+        .runaway-container {
+            margin-top: 40px;
+            position: relative;
+            height: 300px;
+            width: 100%;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            overflow: visible;
+            background-color: rgba(240, 245, 255, 0.3);
+        }
+        
         @media (max-width: 600px) {
             .title-page h1 {
                 font-size: 2.5rem;
@@ -300,7 +332,7 @@
             }
             
             .snowflake {
-                font-size: 8rem;
+                font-size: 6rem; /* Адаптивный размер */
             }
             
             .runaway-text {
@@ -344,7 +376,9 @@
             Это да, но все же)
         </div>
         
-        <button id="nextButton1" class="button next-button" style="display: none;">Далее!</button>
+        <div class="next-button-container">
+            <button id="nextButton1" class="button next-button" style="display: none;">Далее!</button>
+        </div>
     </div>
     
     <!-- Страница 3: Вопрос 2 -->
@@ -370,7 +404,9 @@
             нет2
         </div>
         
-        <button id="nextButton2" class="button next-button" style="display: none;">Далее!</button>
+        <div class="next-button-container">
+            <button id="nextButton2" class="button next-button" style="display: none;">Далее!</button>
+        </div>
     </div>
     
     <!-- Страница 4: Кнопка убегает -->
@@ -379,10 +415,10 @@
             Дальше! Будет кое-то еще БОЛЕЕ интересное<br><br>
             Лишь нажми на кнопку внизу..
         </div>
-        <div id="runawayButtonContainer" style="margin-top: 40px; position: relative; height: 400px; width: 100%; border: 2px dashed #ddd; border-radius: 8px; overflow: visible;">
-            <button id="runawayButton" class="button runaway-button" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">Нажимай!</button>
+        <div class="runaway-container">
+            <button id="runawayButton" class="button runaway-button">Нажимай!</button>
         </div>
-        <div id="runawayText" class="runaway-text" style="display: none;">ИЗВИНИ жмакай</div>
+        <div id="runawayText" class="runaway-text">ИЗВИНИ жмакай</div>
     </div>
 
     <script>
@@ -405,7 +441,6 @@
             let config;
             switch(style) {
                 case 'page1':
-                    // Для начальной страницы - больше голубых
                     config = {
                         rows: 4,
                         cols: 6,
@@ -414,7 +449,6 @@
                     };
                     break;
                 case 'page2':
-                    // Для страницы с вопросами - равномерно
                     config = {
                         rows: 5,
                         cols: 5,
@@ -423,7 +457,6 @@
                     };
                     break;
                 case 'page3':
-                    // Для второй страницы вопросов
                     config = {
                         rows: 6,
                         cols: 4,
@@ -432,7 +465,6 @@
                     };
                     break;
                 case 'page4':
-                    // Для страницы с убегающей кнопкой
                     config = {
                         rows: 3,
                         cols: 8,
@@ -455,22 +487,20 @@
                     const snowflake = document.createElement('div');
                     snowflake.className = 'snowflake';
                     
-                    // Случайный символ снежинки
                     const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
                     snowflake.textContent = symbol;
                     
-                    // Размер (вдвое меньше чем было)
-                    const baseSize = 13.5; // rem
-                    const sizeVariation = Math.random() * 3 - 1.5;
+                    // Размер (уменьшен в 1.5 раза)
+                    const baseSize = 9; // rem (было 13.5)
+                    const sizeVariation = Math.random() * 2 - 1;
                     snowflake.style.fontSize = `${baseSize + sizeVariation}rem`;
                     
                     // Равномерное распределение с учетом пробелов
                     const horizontalGap = 100 / config.cols;
                     const verticalGap = 100 / config.rows;
                     
-                    // Добавляем небольшой случайный сдвиг для естественности
-                    const randomShiftX = (Math.random() * 10 - 5);
-                    const randomShiftY = (Math.random() * 10 - 5);
+                    const randomShiftX = (Math.random() * 8 - 4);
+                    const randomShiftY = (Math.random() * 8 - 4);
                     
                     const left = j * horizontalGap + horizontalGap/2 + randomShiftX;
                     const top = i * verticalGap + verticalGap/2 + randomShiftY;
@@ -478,16 +508,13 @@
                     snowflake.style.left = `${left}%`;
                     snowflake.style.top = `${top}%`;
                     
-                    // Случайный угол поворота
                     const rotation = Math.random() * 360;
                     snowflake.style.transform = `rotate(${rotation}deg)`;
                     
-                    // Случайный цвет с учетом вероятности для текущей страницы
                     if (Math.random() < config.blueProbability) {
                         snowflake.classList.add('blue');
                     }
                     
-                    // Случайная прозрачность в заданном диапазоне
                     const [minOpacity, maxOpacity] = config.opacityRange;
                     snowflake.style.opacity = Math.random() * (maxOpacity - minOpacity) + minOpacity;
                     
@@ -644,114 +671,112 @@
             startRunawayButton();
         });
         
-        // Функция для убегающей кнопки с увеличенной зоной обнаружения
+        // Функция для убегающей кнопки (упрощенная версия)
         function startRunawayButton() {
-            let runawayTimeout;
+            console.log('Функция startRunawayButton вызвана');
+            
             let canClick = false;
-            const container = document.getElementById('runawayButtonContainer');
+            const container = document.querySelector('.runaway-container');
             const button = runawayButton;
             const textElement = runawayText;
             
-            // Размеры контейнера
-            const containerRect = container.getBoundingClientRect();
-            const containerWidth = containerRect.width;
-            const containerHeight = containerRect.height;
+            // Прячем текст изначально
+            textElement.style.display = 'none';
             
-            // Зона обнаружения 400px
-            const detectionRadius = 400;
+            // Устанавливаем начальную позицию кнопки
+            button.style.left = '50%';
+            button.style.top = '50%';
+            button.style.transform = 'translate(-50%, -50%)';
             
-            // Функция для перемещения кнопки
-            function moveButtonAwayFromCursor(cursorX, cursorY) {
+            // Зона обнаружения 50px (как вы просили)
+            const detectionRadius = 50;
+            
+            // Функция для перемещения кнопки от курсора
+            function moveButtonFromCursor(clientX, clientY) {
                 if (canClick) return;
                 
-                // Получаем текущую позицию кнопки
+                // Получаем позицию контейнера
+                const containerRect = container.getBoundingClientRect();
+                const containerLeft = containerRect.left;
+                const containerTop = containerRect.top;
+                
+                // Текущая позиция кнопки в пикселях
                 const buttonRect = button.getBoundingClientRect();
                 const buttonCenterX = buttonRect.left + buttonRect.width / 2;
                 const buttonCenterY = buttonRect.top + buttonRect.height / 2;
                 
-                // Вычисляем вектор от курсора к кнопке
-                let dx = buttonCenterX - cursorX;
-                let dy = buttonCenterY - cursorY;
-                
-                // Нормализуем вектор
+                // Вычисляем расстояние от курсора до кнопки
+                const dx = buttonCenterX - clientX;
+                const dy = buttonCenterY - clientY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance > 0) {
-                    dx /= distance;
-                    dy /= distance;
-                }
                 
-                // Умножаем на большое расстояние для далекого перемещения
-                const moveDistance = 300;
-                const targetX = buttonCenterX + dx * moveDistance;
-                const targetY = buttonCenterY + dy * moveDistance;
-                
-                // Преобразуем в относительные координаты контейнера
-                const relativeX = targetX - containerRect.left;
-                const relativeY = targetY - containerRect.top;
-                
-                // Ограничиваем, чтобы не выходить слишком далеко за пределы
-                const boundedX = Math.max(-100, Math.min(relativeX, containerWidth + 100));
-                const boundedY = Math.max(-100, Math.min(relativeY, containerHeight + 100));
-                
-                // Плавное перемещение
-                button.style.left = `${boundedX}px`;
-                button.style.top = `${boundedY}px`;
-                button.style.transform = 'translate(-50%, -50%)';
-            }
-            
-            // Функция для проверки близости курсора
-            function checkCursorProximity(e) {
-                if (canClick) return;
-                
-                const cursorX = e.clientX;
-                const cursorY = e.clientY;
-                
-                // Получаем позицию кнопки
-                const buttonRect = button.getBoundingClientRect();
-                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-                
-                // Вычисляем расстояние от курсора до центра кнопки
-                const distance = Math.sqrt(
-                    Math.pow(cursorX - buttonCenterX, 2) + 
-                    Math.pow(cursorY - buttonCenterY, 2)
-                );
-                
-                // Если курсор в зоне обнаружения, двигаем кнопку
+                // Если курсор в зоне обнаружения (50px)
                 if (distance < detectionRadius) {
-                    moveButtonAwayFromCursor(cursorX, cursorY);
+                    // Вектор от курсора к кнопке
+                    let moveX = dx;
+                    let moveY = dy;
+                    
+                    // Нормализуем вектор и умножаем на расстояние для убегания
+                    if (distance > 0) {
+                        const normalizeFactor = 200 / distance; // Убегает на 200px
+                        moveX *= normalizeFactor;
+                        moveY *= normalizeFactor;
+                    } else {
+                        // Если курсор прямо на кнопке
+                        moveX = 200;
+                        moveY = 200;
+                    }
+                    
+                    // Новая позиция кнопки
+                    let newX = buttonCenterX + moveX - containerLeft;
+                    let newY = buttonCenterY + moveY - containerTop;
+                    
+                    // Ограничиваем, чтобы кнопка не уходила слишком далеко
+                    newX = Math.max(-50, Math.min(newX, containerRect.width + 50));
+                    newY = Math.max(-50, Math.min(newY, containerRect.height + 50));
+                    
+                    // Применяем новую позицию
+                    button.style.left = `${newX}px`;
+                    button.style.top = `${newY}px`;
+                    button.style.transform = 'translate(-50%, -50%)';
                 }
             }
             
-            // Слушаем движение курсора по всему документу
-            document.addEventListener('mousemove', checkCursorProximity);
+            // Обработчик движения мыши
+            function handleMouseMove(e) {
+                moveButtonFromCursor(e.clientX, e.clientY);
+            }
             
-            // Таймер на 10 секунд
-            runawayTimeout = setTimeout(function() {
+            // Добавляем обработчик движения мыши
+            document.addEventListener('mousemove', handleMouseMove);
+            
+            // Через 10 секунд разрешаем нажимать
+            setTimeout(function() {
+                console.log('10 секунд прошло, теперь можно нажимать');
                 canClick = true;
                 
-                // Убираем обработчик движения
-                document.removeEventListener('mousemove', checkCursorProximity);
+                // Убираем обработчик движения мыши
+                document.removeEventListener('mousemove', handleMouseMove);
                 
                 // Возвращаем кнопку в центр
-                button.style.transition = 'all 0.8s ease-out';
+                button.style.transition = 'all 0.5s ease';
                 button.style.left = '50%';
                 button.style.top = '50%';
                 button.style.transform = 'translate(-50%, -50%)';
                 
                 // Показываем текст
                 textElement.style.display = 'block';
+                console.log('Текст должен отобразиться');
                 
-                // Очищаем таймер
-                clearTimeout(runawayTimeout);
-                
-            }, 10000);
+            }, 10000); // 10 секунд
             
-            // Обработка нажатия на кнопку
+            // Обработчик клика по кнопке
             button.addEventListener('click', function(e) {
                 if (canClick) {
-                    // Предотвращаем всплытие события
-                    e.stopPropagation();
+                    console.log('Кнопка нажата, переход на страницу 1');
+                    
+                    // Убираем все обработчики
+                    document.removeEventListener('mousemove', handleMouseMove);
                     
                     // Переход на первую страницу
                     pages[4].classList.remove('active');
@@ -759,15 +784,18 @@
                     
                     // Возвращаем снежинки для начальной страницы
                     createSnowflakes('page1');
-                    
-                    // Убираем обработчики
-                    document.removeEventListener('mousemove', checkCursorProximity);
-                    clearTimeout(runawayTimeout);
                 } else {
-                    // Если еще нельзя нажимать, немного двигаем кнопку
-                    moveButtonAwayFromCursor(e.clientX, e.clientY);
+                    console.log('Еще нельзя нажимать!');
+                    e.preventDefault();
+                    // Если еще нельзя нажимать, немного убегаем
+                    moveButtonFromCursor(e.clientX, e.clientY);
                 }
             });
+            
+            // Для отладки: выводим информацию о кнопке
+            console.log('Кнопка убегания инициализирована');
+            console.log('Позиция контейнера:', container.getBoundingClientRect());
+            console.log('Позиция кнопки:', button.getBoundingClientRect());
         }
     </script>
 </body>
