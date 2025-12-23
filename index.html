@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -19,19 +18,20 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            transition: background-color 0.3s;
             position: relative;
             overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         /* Снежинки */
         .snowflake {
             position: absolute;
             color: #cccccc;
-            font-size: 1.5rem;
+            font-size: 4.5rem; /* Увеличены в 3 раза */
             user-select: none;
             z-index: -1;
             opacity: 0.7;
+            pointer-events: none;
         }
         
         .snowflake.blue {
@@ -42,36 +42,59 @@
             display: none;
             width: 100%;
             max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page.with-bg {
             background-color: white;
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: relative;
-            z-index: 1;
         }
         
         .active {
             display: block;
         }
         
-        h1 {
+        /* Страница 1 - без белого фона */
+        #page1 {
+            background: none;
+            box-shadow: none;
+        }
+        
+        .title-page h1 {
             color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        h2 {
+        .title-page p {
             color: #444;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
+            line-height: 1.8;
             margin-bottom: 25px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        p {
-            color: #555;
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
+        .page-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.8rem;
+            color: #3071f2;
+            font-weight: bold;
+            background: #f0f5ff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .timer {
@@ -108,12 +131,39 @@
             font-weight: bold;
             margin-top: 10px;
             display: inline-block;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .button:hover {
             background-color: #255cd1;
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(48, 113, 242, 0.3);
+        }
+        
+        /* Кнопка "Далее!" поменьше */
+        #nextButton {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            transform-origin: center;
+        }
+        
+        /* Анимация для кнопки "Далее!" живее */
+        #nextButton:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(48, 113, 242, 0.4);
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-3px) scale(1.05); }
+            50% { transform: translateY(-6px) scale(1.08); }
+        }
+        
+        .question-title {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
         
         .options {
@@ -132,11 +182,14 @@
             cursor: pointer;
             transition: all 0.3s;
             color: #333;
+            text-align: left;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .option:hover {
             border-color: #3071f2;
             background-color: #f5f9ff;
+            transform: translateX(5px);
         }
         
         .hint {
@@ -146,11 +199,12 @@
             font-size: 1.2rem;
             display: none;
             animation: fadeIn 0.5s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .correct-hint {
@@ -175,20 +229,46 @@
             font-weight: bold;
             margin-top: 40px;
             line-height: 1.4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Стиль для убегающей кнопки */
+        .runaway-button {
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        
+        .runaway-text {
+            margin-top: 20px;
+            color: #ff4444;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .in-text-snowflake {
+            display: inline-block;
+            animation: spin 4s linear infinite;
+            margin: 0 5px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @media (max-width: 600px) {
-            .page {
-                padding: 25px;
-                border-radius: 5px;
+            .title-page h1 {
+                font-size: 2.5rem;
             }
             
-            h1 {
-                font-size: 2rem;
+            .title-page p {
+                font-size: 1.2rem;
             }
             
-            h2 {
-                font-size: 1.5rem;
+            .question-title {
+                font-size: 1.6rem;
             }
             
             .timer {
@@ -200,7 +280,7 @@
             }
             
             .snowflake {
-                font-size: 1.2rem;
+                font-size: 3rem;
             }
         }
     </style>
@@ -209,63 +289,105 @@
     <!-- Снежинки будут добавлены через JavaScript -->
     
     <!-- Страница 1: Приветствие -->
-    <div id="page1" class="page active">
-        <h1>привет милаша!</h1>
-        <p>
-            во-первых, <strong>с новым годом</strong>, а во-вторых, СЕЙЧАС будет мини тестик где на каждый вопрос тебе дастся по 1 минутке))
-        </p>
+    <div id="page1" class="page active title-page">
+        <h1>Привет Милаша!!</h1>
+        <p>ВО-ПЕРВЫХ, с новым годом! <span class="in-text-snowflake">❄</span></p>
+        <p>А во-вторых, сейчас, после нажатия кнопки ниже...</p>
+        <p>Тебя ждет ТЕСТ, который жопа жопа попа</p>
+        <p>В общем, когда ты нажмешь на эту милую синюю кнопочку, начнется. что-то. прикольное.</p>
         <button id="startButton" class="button">начать!</button>
     </div>
     
-    <!-- Страница 2: Вопрос -->
-    <div id="page2" class="page">
+    <!-- Страница 2: Вопрос 1 -->
+    <div id="page2" class="page with-bg">
+        <div class="page-number">1</div>
         <div id="timer" class="timer">01:00</div>
-        <h2>Хм! Как думаешь, кого любит кэкс? <span class="emoji">&#129300;</span></h2>
+        <h2 class="question-title">Хм! Как думаешь, кого любит кэкс?!</h2>
         
         <div class="options">
-            <div class="option" data-answer="correct">милашу</div>
-            <div class="option" data-answer="incorrect">свою кошку</div>
+            <div class="option" data-answer="correct" data-hint="correctHint1">Милашу</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint1">Химическую диссоциацию</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint2">Лололошку</div>
         </div>
         
-        <div id="correctHint" class="hint correct-hint">
-            ну конечно! надеюсь ты ответила с первого раза это же очевидно
+        <div id="correctHint1" class="hint correct-hint">
+            Ну конечно! Это <strong>правильный</strong> ответ
         </div>
         
-        <div id="incorrectHint" class="hint incorrect-hint">
-            какая кошка ты о чем у меня нету кошки <span class="emoji">&#128558;</span>
+        <div id="incorrectHint1" class="hint incorrect-hint">
+            Почему ты это нажала 0_0
         </div>
         
-        <button id="nextButton" class="button" style="display: none;">далее! :3</button>
+        <div id="incorrectHint2" class="hint incorrect-hint">
+            Это да, но все же)
+        </div>
+        
+        <button id="nextButton1" class="button" style="display: none;">Далее!</button>
     </div>
     
-    <!-- Страница 3: Финальная -->
-    <div id="page3" class="page">
-        <div class="final-text">
-            ты умница!! иди роскожи как тебе все
+    <!-- Страница 3: Вопрос 2 -->
+    <div id="page3" class="page with-bg">
+        <div class="page-number">2</div>
+        <h2 class="question-title">продолжи строчку песни какой-то там</h2>
+        
+        <div class="options">
+            <div class="option" data-answer="correct" data-hint="correctHint2">я люблю тебя с тобой хотел прожить всю жизнь</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint3">блаблабла</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint4">вот такой</div>
         </div>
+        
+        <div id="correctHint2" class="hint correct-hint">
+            Да-да-да, ты права!
+        </div>
+        
+        <div id="incorrectHint3" class="hint incorrect-hint">
+            нет1
+        </div>
+        
+        <div id="incorrectHint4" class="hint incorrect-hint">
+            нет2
+        </div>
+        
+        <button id="nextButton2" class="button" style="display: none;">Далее!</button>
+    </div>
+    
+    <!-- Страница 4: Кнопка убегает -->
+    <div id="page4" class="page with-bg">
+        <div class="final-text">
+            Дальше! Будет кое-то еще БОЛЕЕ интересное<br><br>
+            Лишь нажми на кнопку внизу..
+        </div>
+        <div id="runawayButtonContainer" style="margin-top: 40px; position: relative; height: 100px;">
+            <button id="runawayButton" class="button">Нажимай!</button>
+        </div>
+        <div id="runawayText" class="runaway-text">ИЗВИНИ жмакай</div>
     </div>
 
     <script>
-        // Создание снежинок
+        // Создание снежинок (только для страниц с вопросами)
         function createSnowflakes() {
-            const snowflakeSymbols = ['❄', '❅', '❆'];
+            const snowflakeSymbols = ['❄', '❆']; // Только 2 вида снежинок
             const body = document.body;
             const snowflakeCount = 25; // Количество снежинок
+            
+            // Очищаем старые снежинки
+            const oldSnowflakes = document.querySelectorAll('.snowflake');
+            oldSnowflakes.forEach(snowflake => snowflake.remove());
             
             for (let i = 0; i < snowflakeCount; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.className = 'snowflake';
                 
-                // Случайный символ снежинки
+                // Случайный символ снежинки (только ❄ или ❆)
                 const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
                 snowflake.textContent = symbol;
                 
-                // Случайный размер
-                const size = Math.random() * 1.5 + 0.8; // от 0.8 до 2.3rem
+                // Большие размеры (в 3 раза больше)
+                const size = Math.random() * 3 + 2.4; // от 2.4 до 5.4rem
                 snowflake.style.fontSize = `${size}rem`;
                 
                 // Случайная позиция
-                const left = Math.random() * 100; // от 0% до 100%
+                const left = Math.random() * 100;
                 const top = Math.random() * 100;
                 snowflake.style.left = `${left}%`;
                 snowflake.style.top = `${top}%`;
@@ -274,17 +396,18 @@
                 const rotation = Math.random() * 360;
                 snowflake.style.transform = `rotate(${rotation}deg)`;
                 
-                // Случайный цвет (серая или голубая)
+                // Случайный цвет
                 if (Math.random() > 0.7) {
                     snowflake.classList.add('blue');
                 }
                 
                 // Случайная прозрачность
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3; // от 0.3 до 0.8
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
                 
-                // Случайная анимация для некоторых снежинок
+                // Случайная анимация
                 if (Math.random() > 0.5) {
-                    snowflake.style.animation = `float ${Math.random() * 10 + 5}s infinite alternate ease-in-out`;
+                    const duration = Math.random() * 10 + 5;
+                    snowflake.style.animation = `float ${duration}s infinite alternate ease-in-out`;
                 }
                 
                 body.appendChild(snowflake);
@@ -296,45 +419,42 @@
         style.textContent = `
             @keyframes float {
                 0% { transform: rotate(var(--rot)) translateY(0px); }
-                100% { transform: rotate(var(--rot)) translateY(20px); }
+                100% { transform: rotate(var(--rot)) translateY(40px); }
             }
         `;
         document.head.appendChild(style);
         
         // Элементы страниц
-        const page1 = document.getElementById('page1');
-        const page2 = document.getElementById('page2');
-        const page3 = document.getElementById('page3');
+        const pages = {
+            1: document.getElementById('page1'),
+            2: document.getElementById('page2'),
+            3: document.getElementById('page3'),
+            4: document.getElementById('page4')
+        };
+        
         const startButton = document.getElementById('startButton');
-        const nextButton = document.getElementById('nextButton');
+        const nextButton1 = document.getElementById('nextButton1');
+        const nextButton2 = document.getElementById('nextButton2');
         const timerDisplay = document.getElementById('timer');
-        const options = document.querySelectorAll('.option');
-        const correctHint = document.getElementById('correctHint');
-        const incorrectHint = document.getElementById('incorrectHint');
+        const runawayButton = document.getElementById('runawayButton');
+        const runawayText = document.getElementById('runawayText');
         
         // Переменные для таймера
         let timerInterval;
         let seconds = 60;
-        let isTimerExpired = false;
-        
-        // Инициализация снежинок
-        createSnowflakes();
         
         // Начало теста
         startButton.addEventListener('click', function() {
-            page1.classList.remove('active');
-            page2.classList.add('active');
+            pages[1].classList.remove('active');
+            pages[2].classList.add('active');
             
-            // Сброс таймера и подсказок
+            // Создаем снежинки при переходе на страницу с вопросами
+            createSnowflakes();
+            
+            // Сброс таймера
             seconds = 60;
-            isTimerExpired = false;
             timerDisplay.textContent = '01:00';
             timerDisplay.classList.remove('expired');
-            
-            // Скрыть подсказки и кнопку "далее"
-            correctHint.style.display = 'none';
-            incorrectHint.style.display = 'none';
-            nextButton.style.display = 'none';
             
             // Запуск таймера
             startTimer();
@@ -347,19 +467,15 @@
             timerInterval = setInterval(function() {
                 seconds--;
                 
-                // После истечения минуты идем в минус
                 if (seconds >= 0) {
                     let mins = Math.floor(seconds / 60);
                     let secs = seconds % 60;
                     timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                     
-                    // Когда время истекло
                     if (seconds === 0) {
-                        isTimerExpired = true;
                         timerDisplay.classList.add('expired');
                     }
                 } else {
-                    // Таймер идет в минус
                     let absSeconds = Math.abs(seconds);
                     let mins = Math.floor(absSeconds / 60);
                     let secs = absSeconds % 60;
@@ -368,46 +484,159 @@
             }, 1000);
         }
         
-        // Обработка выбора ответа
-        options.forEach(option => {
+        // Обработка выбора ответа для страницы 2
+        document.querySelectorAll('#page2 .option').forEach(option => {
             option.addEventListener('click', function() {
-                // Показываем соответствующую подсказку
+                const hintId = this.dataset.hint;
+                
+                // Скрываем все подсказки
+                document.querySelectorAll('#page2 .hint').forEach(hint => {
+                    hint.style.display = 'none';
+                });
+                
+                // Показываем нужную подсказку
+                document.getElementById(hintId).style.display = 'block';
+                
+                // Показываем кнопку "Далее" только при правильном ответе
                 if (this.dataset.answer === 'correct') {
-                    correctHint.style.display = 'block';
-                    incorrectHint.style.display = 'none';
-                    
-                    // Показываем кнопку "далее" только при правильном ответе
-                    nextButton.style.display = 'inline-block';
+                    nextButton1.style.display = 'inline-block';
                 } else {
-                    incorrectHint.style.display = 'block';
-                    correctHint.style.display = 'none';
-                    nextButton.style.display = 'none';
+                    nextButton1.style.display = 'none';
                 }
                 
-                // Делаем выбранный вариант более выделенным
-                options.forEach(opt => {
+                // Сбрасываем стили всех вариантов
+                document.querySelectorAll('#page2 .option').forEach(opt => {
                     opt.style.borderColor = '#ddd';
                     opt.style.backgroundColor = 'white';
+                    opt.style.transform = 'translateX(0)';
+                });
+                
+                // Выделяем выбранный вариант
+                this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
+                this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
+                this.style.transform = 'translateX(5px)';
+            });
+        });
+        
+        // Переход от страницы 2 к 3
+        nextButton1.addEventListener('click', function() {
+            pages[2].classList.remove('active');
+            pages[3].classList.add('active');
+            clearInterval(timerInterval);
+        });
+        
+        // Обработка выбора ответа для страницы 3
+        document.querySelectorAll('#page3 .option').forEach(option => {
+            option.addEventListener('click', function() {
+                const hintId = this.dataset.hint;
+                
+                document.querySelectorAll('#page3 .hint').forEach(hint => {
+                    hint.style.display = 'none';
+                });
+                
+                document.getElementById(hintId).style.display = 'block';
+                
+                if (this.dataset.answer === 'correct') {
+                    nextButton2.style.display = 'inline-block';
+                } else {
+                    nextButton2.style.display = 'none';
+                }
+                
+                document.querySelectorAll('#page3 .option').forEach(opt => {
+                    opt.style.borderColor = '#ddd';
+                    opt.style.backgroundColor = 'white';
+                    opt.style.transform = 'translateX(0)';
                 });
                 
                 this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
                 this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
+                this.style.transform = 'translateX(5px)';
             });
         });
         
-        // Переход к следующей странице
-        nextButton.addEventListener('click', function() {
-            page2.classList.remove('active');
-            page3.classList.add('active');
+        // Переход от страницы 3 к 4
+        nextButton2.addEventListener('click', function() {
+            pages[3].classList.remove('active');
+            pages[4].classList.add('active');
             
-            // Останавливаем таймер
-            clearInterval(timerInterval);
+            // Запускаем убегание кнопки
+            startRunawayButton();
         });
         
-        // Анимация появления кнопки "далее"
-        function showNextButton() {
-            nextButton.style.display = 'inline-block';
-            nextButton.style.animation = 'fadeIn 0.5s';
+        // Функция для убегающей кнопки
+        function startRunawayButton() {
+            let runawayTimeout;
+            let canClick = false;
+            const container = document.getElementById('runawayButtonContainer');
+            const button = runawayButton;
+            
+            // Позиционируем кнопку
+            button.style.position = 'absolute';
+            button.style.left = '50%';
+            button.style.top = '50%';
+            button.style.transform = 'translate(-50%, -50%)';
+            
+            // Функция для перемещения кнопки
+            function moveButton() {
+                if (canClick) return;
+                
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = button.getBoundingClientRect();
+                
+                // Новая случайная позиция в пределах контейнера
+                const maxX = containerRect.width - buttonRect.width;
+                const maxY = containerRect.height - buttonRect.height;
+                
+                const newX = Math.random() * maxX;
+                const newY = Math.random() * maxY;
+                
+                button.style.left = `${newX}px`;
+                button.style.top = `${newY}px`;
+                button.style.transform = 'translate(0, 0)';
+            }
+            
+            // Двигаем кнопку при наведении
+            button.addEventListener('mouseenter', function() {
+                if (!canClick) {
+                    moveButton();
+                }
+            });
+            
+            // Двигаем кнопку каждые 500ms тоже
+            const moveInterval = setInterval(moveButton, 500);
+            
+            // Через 10 секунд останавливаем убегание
+            runawayTimeout = setTimeout(function() {
+                clearInterval(moveInterval);
+                canClick = true;
+                
+                // Возвращаем кнопку в центр
+                button.style.left = '50%';
+                button.style.top = '50%';
+                button.style.transform = 'translate(-50%, -50%)';
+                
+                // Показываем текст
+                runawayText.style.display = 'block';
+                
+                // Убираем убегание
+                button.removeEventListener('mouseenter', arguments.callee);
+            }, 10000);
+            
+            // Обработка нажатия на кнопку
+            button.addEventListener('click', function() {
+                if (canClick) {
+                    // Переход на первую страницу
+                    pages[4].classList.remove('active');
+                    pages[1].classList.add('active');
+                    
+                    // Убираем снежинки
+                    const snowflakes = document.querySelectorAll('.snowflake');
+                    snowflakes.forEach(snowflake => snowflake.remove());
+                    
+                    clearTimeout(runawayTimeout);
+                    clearInterval(moveInterval);
+                }
+            });
         }
     </script>
 </body>
