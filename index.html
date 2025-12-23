@@ -21,14 +21,13 @@
             position: relative;
             overflow-x: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
         }
         
-        /* Снежинки - ЕЩЕ МЕНЬШЕ В 1.5 РАЗА */
+        /* Снежинки */
         .snowflake {
             position: fixed;
             color: #cccccc;
-            font-size: 9rem; /* Было 13.5rem, стало 9rem (меньше в 1.5 раза) */
+            font-size: 9rem;
             user-select: none;
             z-index: -1;
             opacity: 0.3;
@@ -55,9 +54,9 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            /* Гарантируем, что кнопки не выходят за пределы */
+            /* Гарантируем, что контент не выходит за пределы */
             overflow: visible;
-            position: relative;
+            min-height: 600px;
         }
         
         .active {
@@ -138,7 +137,6 @@
             cursor: pointer;
             transition: all 0.2s;
             font-weight: bold;
-            margin-top: 10px;
             display: inline-block;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             
@@ -164,34 +162,27 @@
                 0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
-        /* Кнопка "Далее!" с гарантией видимости */
+        /* Кнопка "Далее!" - УПРОЩЕННАЯ ВЕРСИЯ */
         .next-button {
-            padding: 10px 25px;
-            font-size: 1rem;
-            transform-origin: center;
-            /* Гарантируем, что кнопка всегда видна */
-            position: relative;
-            z-index: 10;
+            padding: 12px 30px;
+            font-size: 1.1rem;
             margin-top: 30px;
             margin-bottom: 10px;
+            position: static !important; /* Важно: убираем абсолютное позиционирование */
+            left: auto !important;
+            top: auto !important;
+            transform: none !important;
+            display: none; /* Скрыта по умолчанию */
         }
         
-        /* Контейнер для кнопки "Далее!" чтобы она не убегала */
-        .next-button-container {
-            margin-top: 20px;
-            padding-top: 10px;
+        /* Контейнер для кнопки "Далее!" - УПРОЩЕН */
+        .next-button-wrapper {
+            margin-top: 30px;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
             position: relative;
-            min-height: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .next-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 
-                0 6px 0 #1c56d0,
-                0 10px 20px rgba(48, 113, 242, 0.4);
+            min-height: 80px;
         }
         
         .question-title {
@@ -298,7 +289,7 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Контейнер для убегающей кнопки - ограничиваем видимую область */
+        /* Контейнер для убегающей кнопки */
         .runaway-container {
             margin-top: 40px;
             position: relative;
@@ -332,11 +323,16 @@
             }
             
             .snowflake {
-                font-size: 6rem; /* Адаптивный размер */
+                font-size: 6rem;
             }
             
             .runaway-text {
                 font-size: 1.2rem;
+            }
+            
+            .page.with-bg {
+                padding: 25px;
+                min-height: 500px;
             }
         }
     </style>
@@ -352,7 +348,7 @@
         <button id="startButton" class="button">начать!</button>
     </div>
     
-    <!-- Страница 2: Вопрос 1 -->
+    <!-- Страница 2: Вопрос 1 - УПРОЩЕННАЯ ВЕРСИЯ -->
     <div id="page2" class="page with-bg">
         <div class="page-number">1</div>
         <div id="timer" class="timer">01:00</div>
@@ -376,8 +372,9 @@
             Это да, но все же)
         </div>
         
-        <div class="next-button-container">
-            <button id="nextButton1" class="button next-button" style="display: none;">Далее!</button>
+        <!-- ПРОСТОЙ контейнер для кнопки "Далее!" -->
+        <div class="next-button-wrapper">
+            <button id="nextButton1" class="button next-button">Далее!</button>
         </div>
     </div>
     
@@ -404,8 +401,9 @@
             нет2
         </div>
         
-        <div class="next-button-container">
-            <button id="nextButton2" class="button next-button" style="display: none;">Далее!</button>
+        <!-- ПРОСТОЙ контейнер для кнопки "Далее!" -->
+        <div class="next-button-wrapper">
+            <button id="nextButton2" class="button next-button">Далее!</button>
         </div>
     </div>
     
@@ -422,10 +420,7 @@
     </div>
 
     <script>
-        // Глобальная переменная для текущего стиля снежинок
-        let currentSnowflakeStyle = 'default';
-        
-        // Функция для создания равномерно распределенных снежинок
+        // Функция для создания снежинок
         function createSnowflakes(style = 'default') {
             const snowflakeSymbols = ['❄', '❆'];
             const body = document.body;
@@ -434,51 +429,22 @@
             const oldSnowflakes = document.querySelectorAll('.snowflake');
             oldSnowflakes.forEach(snowflake => snowflake.remove());
             
-            // Сохраняем текущий стиль
-            currentSnowflakeStyle = style;
-            
-            // Разные стили для разных страниц
             let config;
             switch(style) {
                 case 'page1':
-                    config = {
-                        rows: 4,
-                        cols: 6,
-                        blueProbability: 0.4,
-                        opacityRange: [0.15, 0.25]
-                    };
+                    config = { rows: 4, cols: 6, blueProbability: 0.4 };
                     break;
                 case 'page2':
-                    config = {
-                        rows: 5,
-                        cols: 5,
-                        blueProbability: 0.3,
-                        opacityRange: [0.1, 0.2]
-                    };
+                    config = { rows: 5, cols: 5, blueProbability: 0.3 };
                     break;
                 case 'page3':
-                    config = {
-                        rows: 6,
-                        cols: 4,
-                        blueProbability: 0.35,
-                        opacityRange: [0.12, 0.22]
-                    };
+                    config = { rows: 6, cols: 4, blueProbability: 0.35 };
                     break;
                 case 'page4':
-                    config = {
-                        rows: 3,
-                        cols: 8,
-                        blueProbability: 0.25,
-                        opacityRange: [0.08, 0.18]
-                    };
+                    config = { rows: 3, cols: 8, blueProbability: 0.25 };
                     break;
                 default:
-                    config = {
-                        rows: 5,
-                        cols: 5,
-                        blueProbability: 0.3,
-                        opacityRange: [0.1, 0.2]
-                    };
+                    config = { rows: 5, cols: 5, blueProbability: 0.3 };
             }
             
             // Создаем равномерную сетку
@@ -490,20 +456,15 @@
                     const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
                     snowflake.textContent = symbol;
                     
-                    // Размер (уменьшен в 1.5 раза)
-                    const baseSize = 9; // rem (было 13.5)
+                    const baseSize = 9;
                     const sizeVariation = Math.random() * 2 - 1;
                     snowflake.style.fontSize = `${baseSize + sizeVariation}rem`;
                     
-                    // Равномерное распределение с учетом пробелов
                     const horizontalGap = 100 / config.cols;
                     const verticalGap = 100 / config.rows;
                     
-                    const randomShiftX = (Math.random() * 8 - 4);
-                    const randomShiftY = (Math.random() * 8 - 4);
-                    
-                    const left = j * horizontalGap + horizontalGap/2 + randomShiftX;
-                    const top = i * verticalGap + verticalGap/2 + randomShiftY;
+                    const left = j * horizontalGap + horizontalGap/2;
+                    const top = i * verticalGap + verticalGap/2;
                     
                     snowflake.style.left = `${left}%`;
                     snowflake.style.top = `${top}%`;
@@ -515,8 +476,7 @@
                         snowflake.classList.add('blue');
                     }
                     
-                    const [minOpacity, maxOpacity] = config.opacityRange;
-                    snowflake.style.opacity = Math.random() * (maxOpacity - minOpacity) + minOpacity;
+                    snowflake.style.opacity = Math.random() * 0.2 + 0.1;
                     
                     body.appendChild(snowflake);
                 }
@@ -550,15 +510,12 @@
             pages[1].classList.remove('active');
             pages[2].classList.add('active');
             
-            // Меняем стиль снежинок для страницы вопросов
             createSnowflakes('page2');
             
-            // Сброс таймера
             seconds = 60;
             timerDisplay.textContent = '01:00';
             timerDisplay.classList.remove('expired');
             
-            // Запуск таймера
             startTimer();
         });
         
@@ -586,7 +543,7 @@
             }, 1000);
         }
         
-        // Обработка выбора ответа для страницы 2
+        // Обработка выбора ответа для страницы 2 - УПРОЩЕННАЯ
         document.querySelectorAll('#page2 .option').forEach(option => {
             option.addEventListener('click', function() {
                 const hintId = this.dataset.hint;
@@ -626,7 +583,6 @@
             pages[3].classList.add('active');
             clearInterval(timerInterval);
             
-            // Меняем стиль снежинок для второй страницы вопросов
             createSnowflakes('page3');
         });
         
@@ -664,23 +620,18 @@
             pages[3].classList.remove('active');
             pages[4].classList.add('active');
             
-            // Меняем стиль снежинок для страницы с убегающей кнопкой
             createSnowflakes('page4');
             
-            // Запускаем убегание кнопки
             startRunawayButton();
         });
         
-        // Функция для убегающей кнопки (упрощенная версия)
+        // Функция для убегающей кнопки
         function startRunawayButton() {
-            console.log('Функция startRunawayButton вызвана');
-            
             let canClick = false;
             const container = document.querySelector('.runaway-container');
             const button = runawayButton;
             const textElement = runawayText;
             
-            // Прячем текст изначально
             textElement.style.display = 'none';
             
             // Устанавливаем начальную позицию кнопки
@@ -688,114 +639,79 @@
             button.style.top = '50%';
             button.style.transform = 'translate(-50%, -50%)';
             
-            // Зона обнаружения 50px (как вы просили)
             const detectionRadius = 50;
             
-            // Функция для перемещения кнопки от курсора
             function moveButtonFromCursor(clientX, clientY) {
                 if (canClick) return;
                 
-                // Получаем позицию контейнера
                 const containerRect = container.getBoundingClientRect();
-                const containerLeft = containerRect.left;
-                const containerTop = containerRect.top;
                 
-                // Текущая позиция кнопки в пикселях
                 const buttonRect = button.getBoundingClientRect();
                 const buttonCenterX = buttonRect.left + buttonRect.width / 2;
                 const buttonCenterY = buttonRect.top + buttonRect.height / 2;
                 
-                // Вычисляем расстояние от курсора до кнопки
                 const dx = buttonCenterX - clientX;
                 const dy = buttonCenterY - clientY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
-                // Если курсор в зоне обнаружения (50px)
                 if (distance < detectionRadius) {
-                    // Вектор от курсора к кнопке
                     let moveX = dx;
                     let moveY = dy;
                     
-                    // Нормализуем вектор и умножаем на расстояние для убегания
                     if (distance > 0) {
-                        const normalizeFactor = 200 / distance; // Убегает на 200px
+                        const normalizeFactor = 200 / distance;
                         moveX *= normalizeFactor;
                         moveY *= normalizeFactor;
                     } else {
-                        // Если курсор прямо на кнопке
                         moveX = 200;
                         moveY = 200;
                     }
                     
-                    // Новая позиция кнопки
-                    let newX = buttonCenterX + moveX - containerLeft;
-                    let newY = buttonCenterY + moveY - containerTop;
+                    let newX = buttonCenterX + moveX - containerRect.left;
+                    let newY = buttonCenterY + moveY - containerRect.top;
                     
-                    // Ограничиваем, чтобы кнопка не уходила слишком далеко
                     newX = Math.max(-50, Math.min(newX, containerRect.width + 50));
                     newY = Math.max(-50, Math.min(newY, containerRect.height + 50));
                     
-                    // Применяем новую позицию
                     button.style.left = `${newX}px`;
                     button.style.top = `${newY}px`;
                     button.style.transform = 'translate(-50%, -50%)';
                 }
             }
             
-            // Обработчик движения мыши
             function handleMouseMove(e) {
                 moveButtonFromCursor(e.clientX, e.clientY);
             }
             
-            // Добавляем обработчик движения мыши
             document.addEventListener('mousemove', handleMouseMove);
             
-            // Через 10 секунд разрешаем нажимать
             setTimeout(function() {
-                console.log('10 секунд прошло, теперь можно нажимать');
                 canClick = true;
                 
-                // Убираем обработчик движения мыши
                 document.removeEventListener('mousemove', handleMouseMove);
                 
-                // Возвращаем кнопку в центр
                 button.style.transition = 'all 0.5s ease';
                 button.style.left = '50%';
                 button.style.top = '50%';
                 button.style.transform = 'translate(-50%, -50%)';
                 
-                // Показываем текст
                 textElement.style.display = 'block';
-                console.log('Текст должен отобразиться');
                 
-            }, 10000); // 10 секунд
+            }, 10000);
             
-            // Обработчик клика по кнопке
             button.addEventListener('click', function(e) {
                 if (canClick) {
-                    console.log('Кнопка нажата, переход на страницу 1');
-                    
-                    // Убираем все обработчики
                     document.removeEventListener('mousemove', handleMouseMove);
                     
-                    // Переход на первую страницу
                     pages[4].classList.remove('active');
                     pages[1].classList.add('active');
                     
-                    // Возвращаем снежинки для начальной страницы
                     createSnowflakes('page1');
                 } else {
-                    console.log('Еще нельзя нажимать!');
                     e.preventDefault();
-                    // Если еще нельзя нажимать, немного убегаем
                     moveButtonFromCursor(e.clientX, e.clientY);
                 }
             });
-            
-            // Для отладки: выводим информацию о кнопке
-            console.log('Кнопка убегания инициализирована');
-            console.log('Позиция контейнера:', container.getBoundingClientRect());
-            console.log('Позиция кнопки:', button.getBoundingClientRect());
         }
     </script>
 </body>
