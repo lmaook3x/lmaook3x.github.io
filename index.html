@@ -54,7 +54,7 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            min-height: 600px;
+            min-height: 500px; /* Уменьшена высота */
         }
         
         .active {
@@ -164,15 +164,15 @@
         .next-button {
             padding: 12px 30px;
             font-size: 1.1rem;
-            margin-top: 30px;
+            margin-top: 20px;
             margin-bottom: 10px;
             display: none;
         }
         
         /* Контейнер для кнопки "Далее!" */
         .next-button-wrapper {
-            margin-top: 30px;
-            padding: 20px 0;
+            margin-top: 20px;
+            padding: 10px 0;
             text-align: center;
             width: 100%;
             position: relative;
@@ -181,20 +181,19 @@
         .question-title {
             color: #333;
             font-size: 2rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 600;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
-            margin-bottom: 20px;
         }
         
         .option {
-            padding: 18px;
+            padding: 16px;
             font-size: 1.2rem;
             border: 2px solid #ddd;
             border-radius: 5px;
@@ -207,21 +206,28 @@
             position: relative;
         }
         
-        .option:hover {
+        .option:hover:not(.disabled) {
             border-color: #3071f2;
             background-color: #f5f9ff;
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
         
-        /* ПОДСКАЗКА СЛЕВА */
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background-color: #f9f9f9;
+        }
+        
+        /* ПОДСКАЗКА СЛЕВА - обновленный дизайн */
         .hint {
             position: fixed;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 280px;
-            padding: 20px;
-            border-radius: 10px;
+            width: 320px; /* Ширина увеличена */
+            min-height: 200px; /* Высота увеличена */
+            padding: 25px 30px; /* Увеличены отступы */
+            border-radius: 12px;
             font-size: 1.2rem;
             display: none;
             animation: slideInLeft 0.5s ease;
@@ -230,14 +236,58 @@
             background-color: #b8c7de;
             color: #333;
             border: 2px solid #a2b4d0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             line-height: 1.5;
+            /* Прямоугольная форма с удлиненными верхом/низом */
+            clip-path: polygon(
+                0 15px, 15px 0, 
+                calc(100% - 15px) 0, 100% 15px,
+                100% calc(100% - 15px), calc(100% - 15px) 100%,
+                15px 100%, 0 calc(100% - 15px)
+            );
+        }
+        
+        /* Крестик для закрытия подсказки */
+        .close-hint {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            z-index: 101;
+        }
+        
+        .close-hint:hover {
+            opacity: 1;
+        }
+        
+        .close-hint::before,
+        .close-hint::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 2px;
+            background-color: #333;
+            border-radius: 1px;
+        }
+        
+        .close-hint::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .close-hint::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
         }
         
         @keyframes slideInLeft {
             from { 
                 opacity: 0;
-                transform: translateY(-50%) translateX(-20px);
+                transform: translateY(-50%) translateX(-30px);
             }
             to { 
                 opacity: 1;
@@ -249,56 +299,91 @@
             font-size: 1.5rem;
         }
         
-        .final-text {
-            color: black;
-            font-size: 2.2rem;
-            font-weight: bold;
-            margin-top: 40px;
-            line-height: 1.4;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        /* Страница 4 - подобна странице 1 */
+        /* Страница 4 - обновленная */
         #page4 .final-text {
             margin-top: 0;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
-        /* Контейнер для убегающей кнопки на странице 4 */
-        .runaway-container {
-            margin-top: 40px;
-            position: relative;
-            height: 300px;
-            width: 100%;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(240, 245, 255, 0.3);
-        }
-        
-        /* Кнопка на странице 4 - обычная кнопка, не убегающая */
-        .page4-button {
-            margin-top: 0;
-        }
-        
-        .runaway-text {
-            margin-top: 20px;
-            color: #ff4444;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: none;
-            animation: fadeIn 0.5s;
-            padding: 10px;
-            background-color: #fff0f0;
+        /* Кнопка на странице 4 с VHS-глитч эффектом */
+        .glitch-button {
+            background-color: #3071f2;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.3rem;
             border-radius: 5px;
-            border: 2px solid #ffcccc;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            box-shadow: 
+                0 4px 0 #1c56d0,
+                0 6px 10px rgba(0, 0, 0, 0.2);
+            animation: glitch-effect 0.8s infinite alternate;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes glitch-effect {
+            0% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            10% {
+                transform: translate(1px, -1px);
+                background-color: #3071f2;
+            }
+            20% {
+                transform: translate(-1px, 1px);
+                background-color: #3a7bff;
+            }
+            30% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            40% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            50% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            60% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            70% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+            80% {
+                transform: translate(-1px, 0);
+                background-color: #2b65e0;
+            }
+            90% {
+                transform: translate(1px, 0);
+                background-color: #3071f2;
+            }
+            100% {
+                transform: translate(0, 0);
+                background-color: #3071f2;
+            }
+        }
+        
+        .glitch-button:hover {
+            animation: none;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 6px 0 #1c56d0,
+                0 8px 15px rgba(48, 113, 242, 0.3);
+        }
+        
+        .glitch-button:active {
+            transform: translateY(2px);
+            box-shadow: 
+                0 2px 0 #1c56d0,
+                0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
         .in-text-snowflake {
@@ -319,9 +404,11 @@
                 top: auto;
                 transform: none;
                 width: 100%;
-                margin-top: 20px;
-                margin-bottom: 20px;
+                max-width: 400px;
+                margin: 20px auto;
                 animation: fadeIn 0.5s;
+                clip-path: none;
+                border-radius: 10px;
             }
             
             @keyframes slideInLeft {
@@ -355,13 +442,9 @@
                 font-size: 6rem;
             }
             
-            .runaway-text {
-                font-size: 1.2rem;
-            }
-            
             .page.with-bg {
                 padding: 25px;
-                min-height: 500px;
+                min-height: 450px;
             }
             
             .hint {
@@ -370,7 +453,13 @@
                 left: auto;
                 top: auto;
                 transform: none;
-                margin: 20px 0;
+                margin: 20px auto;
+                min-height: 150px;
+            }
+            
+            .glitch-button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -399,14 +488,17 @@
         </div>
         
         <div id="correctHint1" class="hint">
+            <div class="close-hint"></div>
             Ну конечно! Это <strong>правильный</strong> ответ
         </div>
         
         <div id="incorrectHint1" class="hint">
+            <div class="close-hint"></div>
             Почему ты это нажала 0_0
         </div>
         
         <div id="incorrectHint2" class="hint">
+            <div class="close-hint"></div>
             Это да, но все же)
         </div>
         
@@ -427,14 +519,17 @@
         </div>
         
         <div id="correctHint2" class="hint">
+            <div class="close-hint"></div>
             Да-да-да, ты права!
         </div>
         
         <div id="incorrectHint3" class="hint">
+            <div class="close-hint"></div>
             нет1
         </div>
         
         <div id="incorrectHint4" class="hint">
+            <div class="close-hint"></div>
             нет2
         </div>
         
@@ -443,15 +538,12 @@
         </div>
     </div>
     
-    <!-- Страница 4: Финальная (подобна странице 1) -->
+    <!-- Страница 4: Финальная (обновленная) -->
     <div id="page4" class="page title-page">
         <h1>Дальше! Будет кое-то еще БОЛЕЕ интересное</h1>
         <p>Лишь нажми на кнопку внизу..</p>
         
-        <div class="runaway-container">
-            <button id="page4Button" class="button page4-button">Нажимай!</button>
-        </div>
-        <div id="page4Text" class="runaway-text">ИЗВИНИ жмакай</div>
+        <button id="page4Button" class="glitch-button">Нажимай!</button>
     </div>
 
     <script>
@@ -476,7 +568,7 @@
                     config = { rows: 6, cols: 4, blueProbability: 0.35 };
                     break;
                 case 'page4':
-                    config = { rows: 4, cols: 6, blueProbability: 0.4 }; // Как на странице 1
+                    config = { rows: 4, cols: 6, blueProbability: 0.4 };
                     break;
                 default:
                     config = { rows: 5, cols: 5, blueProbability: 0.3 };
@@ -533,7 +625,6 @@
         const nextButton1 = document.getElementById('nextButton1');
         const nextButton2 = document.getElementById('nextButton2');
         const page4Button = document.getElementById('page4Button');
-        const page4Text = document.getElementById('page4Text');
         const timerDisplay = document.getElementById('timer');
         
         // Переменные для таймера
@@ -545,6 +636,33 @@
             document.querySelectorAll('.hint').forEach(hint => {
                 hint.style.display = 'none';
             });
+        }
+        
+        // Функция для блокировки всех вариантов ответа
+        function disableAllOptions() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.add('disabled');
+                option.style.cursor = 'not-allowed';
+                option.style.opacity = '0.6';
+            });
+        }
+        
+        // Функция для отключения всех вариантов на странице
+        function disableOptionsOnPage(pageId) {
+            document.querySelectorAll(`#${pageId} .option`).forEach(option => {
+                option.classList.add('disabled');
+                option.style.cursor = 'not-allowed';
+                option.style.opacity = '0.6';
+            });
+        }
+        
+        // Функция для автоматического закрытия подсказки через 8 секунд
+        function autoCloseHint(hintElement) {
+            setTimeout(() => {
+                if (hintElement.style.display === 'block') {
+                    hintElement.style.display = 'none';
+                }
+            }, 8000);
         }
         
         // Начало теста
@@ -563,6 +681,13 @@
             
             // Скрываем кнопку "Далее!"
             nextButton1.style.display = 'none';
+            
+            // Включаем все варианты ответов
+            document.querySelectorAll('#page2 .option').forEach(option => {
+                option.classList.remove('disabled');
+                option.style.cursor = 'pointer';
+                option.style.opacity = '1';
+            });
             
             startTimer();
         });
@@ -594,7 +719,10 @@
         // Обработка выбора ответа для страницы 2
         document.querySelectorAll('#page2 .option').forEach(option => {
             option.addEventListener('click', function() {
+                if (this.classList.contains('disabled')) return;
+                
                 const hintId = this.dataset.hint;
+                const isCorrect = this.dataset.answer === 'correct';
                 
                 // Скрываем все подсказки
                 hideAllHints();
@@ -603,9 +731,14 @@
                 const hint = document.getElementById(hintId);
                 hint.style.display = 'block';
                 
-                // Показываем кнопку "Далее" только при правильном ответе
-                if (this.dataset.answer === 'correct') {
+                // Автоматическое закрытие через 8 секунд
+                autoCloseHint(hint);
+                
+                // Если ответ правильный - показываем кнопку "Далее"
+                if (isCorrect) {
                     nextButton1.style.display = 'inline-block';
+                    // Блокируем все варианты ответов
+                    disableOptionsOnPage('page2');
                 } else {
                     nextButton1.style.display = 'none';
                 }
@@ -618,8 +751,8 @@
                 });
                 
                 // Выделяем выбранный вариант
-                this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
-                this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
+                this.style.borderColor = isCorrect ? '#2a8a2a' : '#cc3333';
+                this.style.backgroundColor = isCorrect ? '#e8f7e8' : '#fff0f0';
                 this.style.transform = 'translateX(5px)';
             });
         });
@@ -636,13 +769,23 @@
             // Скрываем кнопку "Далее!"
             nextButton2.style.display = 'none';
             
+            // Включаем все варианты ответов
+            document.querySelectorAll('#page3 .option').forEach(option => {
+                option.classList.remove('disabled');
+                option.style.cursor = 'pointer';
+                option.style.opacity = '1';
+            });
+            
             createSnowflakes('page3');
         });
         
         // Обработка выбора ответа для страницы 3
         document.querySelectorAll('#page3 .option').forEach(option => {
             option.addEventListener('click', function() {
+                if (this.classList.contains('disabled')) return;
+                
                 const hintId = this.dataset.hint;
+                const isCorrect = this.dataset.answer === 'correct';
                 
                 // Скрываем все подсказки
                 hideAllHints();
@@ -651,9 +794,14 @@
                 const hint = document.getElementById(hintId);
                 hint.style.display = 'block';
                 
-                // Показываем кнопку "Далее" только при правильном ответе
-                if (this.dataset.answer === 'correct') {
+                // Автоматическое закрытие через 8 секунд
+                autoCloseHint(hint);
+                
+                // Если ответ правильный - показываем кнопку "Далее"
+                if (isCorrect) {
                     nextButton2.style.display = 'inline-block';
+                    // Блокируем все варианты ответов
+                    disableOptionsOnPage('page3');
                 } else {
                     nextButton2.style.display = 'none';
                 }
@@ -666,8 +814,8 @@
                 });
                 
                 // Выделяем выбранный вариант
-                this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
-                this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
+                this.style.borderColor = isCorrect ? '#2a8a2a' : '#cc3333';
+                this.style.backgroundColor = isCorrect ? '#e8f7e8' : '#fff0f0';
                 this.style.transform = 'translateX(5px)';
             });
         });
@@ -681,58 +829,24 @@
             hideAllHints();
             
             createSnowflakes('page4');
-            
-            // Запускаем логику для страницы 4
-            startPage4Logic();
         });
         
-        // Логика для страницы 4
-        function startPage4Logic() {
-            // Скрываем текст изначально
-            page4Text.style.display = 'none';
+        // Обработчик клика по кнопке на странице 4
+        page4Button.addEventListener('click', function() {
+            pages[4].classList.remove('active');
+            pages[1].classList.add('active');
             
-            // Делаем кнопку недоступной на 10 секунд
-            page4Button.disabled = true;
-            page4Button.style.opacity = '0.5';
-            page4Button.style.cursor = 'not-allowed';
-            
-            // Показываем таймер
-            let countdown = 10;
-            const originalText = page4Button.textContent;
-            page4Button.textContent = `Подожди ${countdown} сек...`;
-            
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    page4Button.textContent = `Подожди ${countdown} сек...`;
-                } else {
-                    clearInterval(countdownInterval);
-                    
-                    // Включаем кнопку
-                    page4Button.disabled = false;
-                    page4Button.style.opacity = '1';
-                    page4Button.style.cursor = 'pointer';
-                    page4Button.textContent = originalText;
-                    
-                    // Показываем текст
-                    page4Text.style.display = 'block';
-                }
-            }, 1000);
-            
-            // Обработчик клика по кнопке на странице 4
-            page4Button.addEventListener('click', function() {
-                if (!page4Button.disabled) {
-                    // Переход на первую страницу
-                    pages[4].classList.remove('active');
-                    pages[1].classList.add('active');
-                    
-                    createSnowflakes('page1');
-                    
-                    // Очищаем интервал на всякий случай
-                    clearInterval(countdownInterval);
-                }
+            createSnowflakes('page1');
+        });
+        
+        // Обработчик для крестиков закрытия подсказок
+        document.querySelectorAll('.close-hint').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const hint = this.parentElement;
+                hint.style.display = 'none';
             });
-        }
+        });
     </script>
 </body>
 </html>
