@@ -54,8 +54,6 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            /* Гарантируем, что контент не выходит за пределы */
-            overflow: visible;
             min-height: 600px;
         }
         
@@ -63,8 +61,8 @@
             display: block;
         }
         
-        /* Страница 1 - без белого фона */
-        #page1 {
+        /* Страница 1 и 4 - без белого фона */
+        #page1, #page4 {
             background: none;
             box-shadow: none;
         }
@@ -162,27 +160,22 @@
                 0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
-        /* Кнопка "Далее!" - УПРОЩЕННАЯ ВЕРСИЯ */
+        /* Кнопка "Далее!" */
         .next-button {
             padding: 12px 30px;
             font-size: 1.1rem;
             margin-top: 30px;
             margin-bottom: 10px;
-            position: static !important; /* Важно: убираем абсолютное позиционирование */
-            left: auto !important;
-            top: auto !important;
-            transform: none !important;
-            display: none; /* Скрыта по умолчанию */
+            display: none;
         }
         
-        /* Контейнер для кнопки "Далее!" - УПРОЩЕН */
+        /* Контейнер для кнопки "Далее!" */
         .next-button-wrapper {
             margin-top: 30px;
             padding: 20px 0;
             text-align: center;
             width: 100%;
             position: relative;
-            min-height: 80px;
         }
         
         .question-title {
@@ -197,6 +190,7 @@
             flex-direction: column;
             gap: 15px;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
         
         .option {
@@ -210,6 +204,7 @@
             color: #333;
             text-align: left;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
         }
         
         .option:hover {
@@ -218,31 +213,36 @@
             transform: translateX(5px);
         }
         
+        /* ПОДСКАЗКА СЛЕВА */
         .hint {
-            margin-top: 25px;
-            padding: 18px;
-            border-radius: 5px;
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            padding: 20px;
+            border-radius: 10px;
             font-size: 1.2rem;
             display: none;
-            animation: fadeIn 0.5s;
+            animation: slideInLeft 0.5s ease;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            z-index: 100;
+            background-color: #b8c7de;
+            color: #333;
+            border: 2px solid #a2b4d0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .correct-hint {
-            background-color: #e8f7e8;
-            color: #2a8a2a;
-            border: 1px solid #b8e0b8;
-        }
-        
-        .incorrect-hint {
-            background-color: #fff0f0;
-            color: #cc3333;
-            border: 1px solid #ffcccc;
+        @keyframes slideInLeft {
+            from { 
+                opacity: 0;
+                transform: translateY(-50%) translateX(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
         }
         
         .emoji {
@@ -258,11 +258,29 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Стиль для убегающей кнопки */
-        .runaway-button {
-            position: absolute;
-            transition: all 0.3s ease-out !important;
-            z-index: 100;
+        /* Страница 4 - подобна странице 1 */
+        #page4 .final-text {
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        
+        /* Контейнер для убегающей кнопки на странице 4 */
+        .runaway-container {
+            margin-top: 40px;
+            position: relative;
+            height: 300px;
+            width: 100%;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(240, 245, 255, 0.3);
+        }
+        
+        /* Кнопка на странице 4 - обычная кнопка, не убегающая */
+        .page4-button {
+            margin-top: 0;
         }
         
         .runaway-text {
@@ -278,6 +296,11 @@
             border: 2px solid #ffcccc;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         .in-text-snowflake {
             display: inline-block;
             animation: spin 4s linear infinite;
@@ -289,16 +312,22 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Контейнер для убегающей кнопки */
-        .runaway-container {
-            margin-top: 40px;
-            position: relative;
-            height: 300px;
-            width: 100%;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            overflow: visible;
-            background-color: rgba(240, 245, 255, 0.3);
+        @media (max-width: 1100px) {
+            .hint {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                animation: fadeIn 0.5s;
+            }
+            
+            @keyframes slideInLeft {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
         }
         
         @media (max-width: 600px) {
@@ -334,6 +363,15 @@
                 padding: 25px;
                 min-height: 500px;
             }
+            
+            .hint {
+                width: 100%;
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
@@ -348,7 +386,7 @@
         <button id="startButton" class="button">начать!</button>
     </div>
     
-    <!-- Страница 2: Вопрос 1 - УПРОЩЕННАЯ ВЕРСИЯ -->
+    <!-- Страница 2: Вопрос 1 -->
     <div id="page2" class="page with-bg">
         <div class="page-number">1</div>
         <div id="timer" class="timer">01:00</div>
@@ -360,19 +398,18 @@
             <div class="option" data-answer="incorrect" data-hint="incorrectHint2">Лололошку</div>
         </div>
         
-        <div id="correctHint1" class="hint correct-hint">
+        <div id="correctHint1" class="hint">
             Ну конечно! Это <strong>правильный</strong> ответ
         </div>
         
-        <div id="incorrectHint1" class="hint incorrect-hint">
+        <div id="incorrectHint1" class="hint">
             Почему ты это нажала 0_0
         </div>
         
-        <div id="incorrectHint2" class="hint incorrect-hint">
+        <div id="incorrectHint2" class="hint">
             Это да, но все же)
         </div>
         
-        <!-- ПРОСТОЙ контейнер для кнопки "Далее!" -->
         <div class="next-button-wrapper">
             <button id="nextButton1" class="button next-button">Далее!</button>
         </div>
@@ -389,34 +426,32 @@
             <div class="option" data-answer="incorrect" data-hint="incorrectHint4">вот такой</div>
         </div>
         
-        <div id="correctHint2" class="hint correct-hint">
+        <div id="correctHint2" class="hint">
             Да-да-да, ты права!
         </div>
         
-        <div id="incorrectHint3" class="hint incorrect-hint">
+        <div id="incorrectHint3" class="hint">
             нет1
         </div>
         
-        <div id="incorrectHint4" class="hint incorrect-hint">
+        <div id="incorrectHint4" class="hint">
             нет2
         </div>
         
-        <!-- ПРОСТОЙ контейнер для кнопки "Далее!" -->
         <div class="next-button-wrapper">
             <button id="nextButton2" class="button next-button">Далее!</button>
         </div>
     </div>
     
-    <!-- Страница 4: Кнопка убегает -->
-    <div id="page4" class="page with-bg">
-        <div class="final-text">
-            Дальше! Будет кое-то еще БОЛЕЕ интересное<br><br>
-            Лишь нажми на кнопку внизу..
-        </div>
+    <!-- Страница 4: Финальная (подобна странице 1) -->
+    <div id="page4" class="page title-page">
+        <h1>Дальше! Будет кое-то еще БОЛЕЕ интересное</h1>
+        <p>Лишь нажми на кнопку внизу..</p>
+        
         <div class="runaway-container">
-            <button id="runawayButton" class="button runaway-button">Нажимай!</button>
+            <button id="page4Button" class="button page4-button">Нажимай!</button>
         </div>
-        <div id="runawayText" class="runaway-text">ИЗВИНИ жмакай</div>
+        <div id="page4Text" class="runaway-text">ИЗВИНИ жмакай</div>
     </div>
 
     <script>
@@ -441,7 +476,7 @@
                     config = { rows: 6, cols: 4, blueProbability: 0.35 };
                     break;
                 case 'page4':
-                    config = { rows: 3, cols: 8, blueProbability: 0.25 };
+                    config = { rows: 4, cols: 6, blueProbability: 0.4 }; // Как на странице 1
                     break;
                 default:
                     config = { rows: 5, cols: 5, blueProbability: 0.3 };
@@ -497,13 +532,20 @@
         const startButton = document.getElementById('startButton');
         const nextButton1 = document.getElementById('nextButton1');
         const nextButton2 = document.getElementById('nextButton2');
+        const page4Button = document.getElementById('page4Button');
+        const page4Text = document.getElementById('page4Text');
         const timerDisplay = document.getElementById('timer');
-        const runawayButton = document.getElementById('runawayButton');
-        const runawayText = document.getElementById('runawayText');
         
         // Переменные для таймера
         let timerInterval;
         let seconds = 60;
+        
+        // Функция для скрытия всех подсказок
+        function hideAllHints() {
+            document.querySelectorAll('.hint').forEach(hint => {
+                hint.style.display = 'none';
+            });
+        }
         
         // Начало теста
         startButton.addEventListener('click', function() {
@@ -515,6 +557,12 @@
             seconds = 60;
             timerDisplay.textContent = '01:00';
             timerDisplay.classList.remove('expired');
+            
+            // Скрываем все подсказки при переходе
+            hideAllHints();
+            
+            // Скрываем кнопку "Далее!"
+            nextButton1.style.display = 'none';
             
             startTimer();
         });
@@ -543,18 +591,17 @@
             }, 1000);
         }
         
-        // Обработка выбора ответа для страницы 2 - УПРОЩЕННАЯ
+        // Обработка выбора ответа для страницы 2
         document.querySelectorAll('#page2 .option').forEach(option => {
             option.addEventListener('click', function() {
                 const hintId = this.dataset.hint;
                 
                 // Скрываем все подсказки
-                document.querySelectorAll('#page2 .hint').forEach(hint => {
-                    hint.style.display = 'none';
-                });
+                hideAllHints();
                 
-                // Показываем нужную подсказку
-                document.getElementById(hintId).style.display = 'block';
+                // Показываем нужную подсказку слева
+                const hint = document.getElementById(hintId);
+                hint.style.display = 'block';
                 
                 // Показываем кнопку "Далее" только при правильном ответе
                 if (this.dataset.answer === 'correct') {
@@ -583,6 +630,12 @@
             pages[3].classList.add('active');
             clearInterval(timerInterval);
             
+            // Скрываем все подсказки
+            hideAllHints();
+            
+            // Скрываем кнопку "Далее!"
+            nextButton2.style.display = 'none';
+            
             createSnowflakes('page3');
         });
         
@@ -591,24 +644,28 @@
             option.addEventListener('click', function() {
                 const hintId = this.dataset.hint;
                 
-                document.querySelectorAll('#page3 .hint').forEach(hint => {
-                    hint.style.display = 'none';
-                });
+                // Скрываем все подсказки
+                hideAllHints();
                 
-                document.getElementById(hintId).style.display = 'block';
+                // Показываем нужную подсказку слева
+                const hint = document.getElementById(hintId);
+                hint.style.display = 'block';
                 
+                // Показываем кнопку "Далее" только при правильном ответе
                 if (this.dataset.answer === 'correct') {
                     nextButton2.style.display = 'inline-block';
                 } else {
                     nextButton2.style.display = 'none';
                 }
                 
+                // Сбрасываем стили всех вариантов
                 document.querySelectorAll('#page3 .option').forEach(opt => {
                     opt.style.borderColor = '#ddd';
                     opt.style.backgroundColor = 'white';
                     opt.style.transform = 'translateX(0)';
                 });
                 
+                // Выделяем выбранный вариант
                 this.style.borderColor = this.dataset.answer === 'correct' ? '#2a8a2a' : '#cc3333';
                 this.style.backgroundColor = this.dataset.answer === 'correct' ? '#e8f7e8' : '#fff0f0';
                 this.style.transform = 'translateX(5px)';
@@ -620,96 +677,59 @@
             pages[3].classList.remove('active');
             pages[4].classList.add('active');
             
+            // Скрываем все подсказки
+            hideAllHints();
+            
             createSnowflakes('page4');
             
-            startRunawayButton();
+            // Запускаем логику для страницы 4
+            startPage4Logic();
         });
         
-        // Функция для убегающей кнопки
-        function startRunawayButton() {
-            let canClick = false;
-            const container = document.querySelector('.runaway-container');
-            const button = runawayButton;
-            const textElement = runawayText;
+        // Логика для страницы 4
+        function startPage4Logic() {
+            // Скрываем текст изначально
+            page4Text.style.display = 'none';
             
-            textElement.style.display = 'none';
+            // Делаем кнопку недоступной на 10 секунд
+            page4Button.disabled = true;
+            page4Button.style.opacity = '0.5';
+            page4Button.style.cursor = 'not-allowed';
             
-            // Устанавливаем начальную позицию кнопки
-            button.style.left = '50%';
-            button.style.top = '50%';
-            button.style.transform = 'translate(-50%, -50%)';
+            // Показываем таймер
+            let countdown = 10;
+            const originalText = page4Button.textContent;
+            page4Button.textContent = `Подожди ${countdown} сек...`;
             
-            const detectionRadius = 50;
-            
-            function moveButtonFromCursor(clientX, clientY) {
-                if (canClick) return;
-                
-                const containerRect = container.getBoundingClientRect();
-                
-                const buttonRect = button.getBoundingClientRect();
-                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-                
-                const dx = buttonCenterX - clientX;
-                const dy = buttonCenterY - clientY;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < detectionRadius) {
-                    let moveX = dx;
-                    let moveY = dy;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    page4Button.textContent = `Подожди ${countdown} сек...`;
+                } else {
+                    clearInterval(countdownInterval);
                     
-                    if (distance > 0) {
-                        const normalizeFactor = 200 / distance;
-                        moveX *= normalizeFactor;
-                        moveY *= normalizeFactor;
-                    } else {
-                        moveX = 200;
-                        moveY = 200;
-                    }
+                    // Включаем кнопку
+                    page4Button.disabled = false;
+                    page4Button.style.opacity = '1';
+                    page4Button.style.cursor = 'pointer';
+                    page4Button.textContent = originalText;
                     
-                    let newX = buttonCenterX + moveX - containerRect.left;
-                    let newY = buttonCenterY + moveY - containerRect.top;
-                    
-                    newX = Math.max(-50, Math.min(newX, containerRect.width + 50));
-                    newY = Math.max(-50, Math.min(newY, containerRect.height + 50));
-                    
-                    button.style.left = `${newX}px`;
-                    button.style.top = `${newY}px`;
-                    button.style.transform = 'translate(-50%, -50%)';
+                    // Показываем текст
+                    page4Text.style.display = 'block';
                 }
-            }
+            }, 1000);
             
-            function handleMouseMove(e) {
-                moveButtonFromCursor(e.clientX, e.clientY);
-            }
-            
-            document.addEventListener('mousemove', handleMouseMove);
-            
-            setTimeout(function() {
-                canClick = true;
-                
-                document.removeEventListener('mousemove', handleMouseMove);
-                
-                button.style.transition = 'all 0.5s ease';
-                button.style.left = '50%';
-                button.style.top = '50%';
-                button.style.transform = 'translate(-50%, -50%)';
-                
-                textElement.style.display = 'block';
-                
-            }, 10000);
-            
-            button.addEventListener('click', function(e) {
-                if (canClick) {
-                    document.removeEventListener('mousemove', handleMouseMove);
-                    
+            // Обработчик клика по кнопке на странице 4
+            page4Button.addEventListener('click', function() {
+                if (!page4Button.disabled) {
+                    // Переход на первую страницу
                     pages[4].classList.remove('active');
                     pages[1].classList.add('active');
                     
                     createSnowflakes('page1');
-                } else {
-                    e.preventDefault();
-                    moveButtonFromCursor(e.clientX, e.clientY);
+                    
+                    // Очищаем интервал на всякий случай
+                    clearInterval(countdownInterval);
                 }
             });
         }
