@@ -54,7 +54,7 @@
             border-radius: 8px;
             padding: 40px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            min-height: 500px; /* Уменьшена высота */
+            min-height: 500px;
         }
         
         .active {
@@ -192,11 +192,11 @@
             margin-top: 20px;
         }
         
+        /* СТИЛЬ ОТВЕТОВ - ОВАЛЬНЫЕ РАМКИ */
         .option {
-            padding: 16px;
+            padding: 18px 25px;
             font-size: 1.2rem;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            border: 3px solid #ddd; /* Более толстая рамка */
             background-color: white;
             cursor: pointer;
             transition: all 0.3s;
@@ -204,6 +204,25 @@
             text-align: left;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position: relative;
+            
+            /* Овальная форма: сильное закругление по бокам, ровные линии сверху/снизу */
+            border-radius: 50px; /* Большое значение для овальной формы */
+            border-top: 3px solid #ddd;
+            border-bottom: 3px solid #ddd;
+            border-left: 3px solid #ddd;
+            border-right: 3px solid #ddd;
+        }
+        
+        /* ПРАВИЛЬНЫЙ ОТВЕТ - новый цвет #82d182 */
+        .option.correct-selected {
+            border-color: #82d182 !important;
+            background-color: #f0f9f0;
+        }
+        
+        /* НЕПРАВИЛЬНЫЙ ОТВЕТ - новый цвет #bda380 */
+        .option.incorrect-selected {
+            border-color: #bda380 !important;
+            background-color: #f9f5f0;
         }
         
         .option:hover:not(.disabled) {
@@ -224,9 +243,9 @@
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 320px; /* Ширина увеличена */
-            min-height: 200px; /* Высота увеличена */
-            padding: 25px 30px; /* Увеличены отступы */
+            width: 320px;
+            min-height: 200px;
+            padding: 25px 30px;
             border-radius: 12px;
             font-size: 1.2rem;
             display: none;
@@ -238,6 +257,14 @@
             border: 2px solid #a2b4d0;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             line-height: 1.5;
+            
+            /* Выравнивание текста по центру */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
             /* Прямоугольная форма с удлиненными верхом/низом */
             clip-path: polygon(
                 0 15px, 15px 0, 
@@ -461,6 +488,11 @@
                 padding: 12px 25px;
                 font-size: 1.1rem;
             }
+            
+            .option {
+                padding: 16px 20px;
+                border-radius: 40px; /* Меньшее закругление на мобильных */
+            }
         }
     </style>
 </head>
@@ -659,7 +691,7 @@
         // Функция для автоматического закрытия подсказки через 8 секунд
         function autoCloseHint(hintElement) {
             setTimeout(() => {
-                if (hintElement.style.display === 'block') {
+                if (hintElement.style.display === 'flex') {
                     hintElement.style.display = 'none';
                 }
             }, 8000);
@@ -682,11 +714,14 @@
             // Скрываем кнопку "Далее!"
             nextButton1.style.display = 'none';
             
-            // Включаем все варианты ответов
+            // Сбрасываем все классы стилей у вариантов ответов
             document.querySelectorAll('#page2 .option').forEach(option => {
-                option.classList.remove('disabled');
+                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
                 option.style.cursor = 'pointer';
                 option.style.opacity = '1';
+                option.style.borderColor = '#ddd';
+                option.style.backgroundColor = 'white';
+                option.style.transform = 'translateX(0)';
             });
             
             startTimer();
@@ -729,10 +764,22 @@
                 
                 // Показываем нужную подсказку слева
                 const hint = document.getElementById(hintId);
-                hint.style.display = 'block';
+                hint.style.display = 'flex';
                 
                 // Автоматическое закрытие через 8 секунд
                 autoCloseHint(hint);
+                
+                // Убираем все классы выделения у всех вариантов
+                document.querySelectorAll('#page2 .option').forEach(opt => {
+                    opt.classList.remove('correct-selected', 'incorrect-selected');
+                });
+                
+                // Добавляем соответствующий класс выделения
+                if (isCorrect) {
+                    this.classList.add('correct-selected');
+                } else {
+                    this.classList.add('incorrect-selected');
+                }
                 
                 // Если ответ правильный - показываем кнопку "Далее"
                 if (isCorrect) {
@@ -743,16 +790,12 @@
                     nextButton1.style.display = 'none';
                 }
                 
-                // Сбрасываем стили всех вариантов
+                // Сбрасываем трансформацию у всех вариантов
                 document.querySelectorAll('#page2 .option').forEach(opt => {
-                    opt.style.borderColor = '#ddd';
-                    opt.style.backgroundColor = 'white';
                     opt.style.transform = 'translateX(0)';
                 });
                 
-                // Выделяем выбранный вариант
-                this.style.borderColor = isCorrect ? '#2a8a2a' : '#cc3333';
-                this.style.backgroundColor = isCorrect ? '#e8f7e8' : '#fff0f0';
+                // Анимируем выбранный вариант
                 this.style.transform = 'translateX(5px)';
             });
         });
@@ -769,11 +812,14 @@
             // Скрываем кнопку "Далее!"
             nextButton2.style.display = 'none';
             
-            // Включаем все варианты ответов
+            // Сбрасываем все классы стилей у вариантов ответов
             document.querySelectorAll('#page3 .option').forEach(option => {
-                option.classList.remove('disabled');
+                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
                 option.style.cursor = 'pointer';
                 option.style.opacity = '1';
+                option.style.borderColor = '#ddd';
+                option.style.backgroundColor = 'white';
+                option.style.transform = 'translateX(0)';
             });
             
             createSnowflakes('page3');
@@ -792,10 +838,22 @@
                 
                 // Показываем нужную подсказку слева
                 const hint = document.getElementById(hintId);
-                hint.style.display = 'block';
+                hint.style.display = 'flex';
                 
                 // Автоматическое закрытие через 8 секунд
                 autoCloseHint(hint);
+                
+                // Убираем все классы выделения у всех вариантов
+                document.querySelectorAll('#page3 .option').forEach(opt => {
+                    opt.classList.remove('correct-selected', 'incorrect-selected');
+                });
+                
+                // Добавляем соответствующий класс выделения
+                if (isCorrect) {
+                    this.classList.add('correct-selected');
+                } else {
+                    this.classList.add('incorrect-selected');
+                }
                 
                 // Если ответ правильный - показываем кнопку "Далее"
                 if (isCorrect) {
@@ -806,16 +864,12 @@
                     nextButton2.style.display = 'none';
                 }
                 
-                // Сбрасываем стили всех вариантов
+                // Сбрасываем трансформацию у всех вариантов
                 document.querySelectorAll('#page3 .option').forEach(opt => {
-                    opt.style.borderColor = '#ddd';
-                    opt.style.backgroundColor = 'white';
                     opt.style.transform = 'translateX(0)';
                 });
                 
-                // Выделяем выбранный вариант
-                this.style.borderColor = isCorrect ? '#2a8a2a' : '#cc3333';
-                this.style.backgroundColor = isCorrect ? '#e8f7e8' : '#fff0f0';
+                // Анимируем выбранный вариант
                 this.style.transform = 'translateX(5px)';
             });
         });
