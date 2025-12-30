@@ -23,21 +23,27 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Снежинки */
+        /* Снежинки - уменьшенные в 1.5 раза */
         .snowflake {
             position: fixed;
-            color: #cccccc;
-            font-size: 9rem;
             user-select: none;
             z-index: -1;
-            opacity: 0.3;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            font-size: 6rem; /* Уменьшено с 9rem до 6rem (в 1.5 раза меньше) */
+            opacity: 0.4;
         }
         
-        .snowflake.blue {
-            color: #aebeeb;
-            opacity: 0.2;
+        /* Новые цвета снежинок */
+        .snowflake.color1 {
+            color: #6eb5f0;
+        }
+        
+        .snowflake.color2 {
+            color: #9dbad1;
+        }
+        
+        .snowflake.color3 {
+            color: #8dbce3;
         }
         
         .page {
@@ -61,8 +67,8 @@
             display: block;
         }
         
-        /* Страница 1 и 4 - без белого фона */
-        #page1, #page4 {
+        /* Страница 1 и 5 - без белого фона */
+        #page1, #page5 {
             background: none;
             box-shadow: none;
         }
@@ -196,7 +202,7 @@
         .option {
             padding: 18px 25px;
             font-size: 1.2rem;
-            border: 3px solid #ddd; /* Более толстая рамка */
+            border: 3px solid #ddd;
             background-color: white;
             cursor: pointer;
             transition: all 0.3s;
@@ -204,22 +210,16 @@
             text-align: left;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position: relative;
-            
-            /* Овальная форма: сильное закругление по бокам, ровные линии сверху/снизу */
-            border-radius: 50px; /* Большое значение для овальной формы */
-            border-top: 3px solid #ddd;
-            border-bottom: 3px solid #ddd;
-            border-left: 3px solid #ddd;
-            border-right: 3px solid #ddd;
+            border-radius: 50px;
         }
         
-        /* ПРАВИЛЬНЫЙ ОТВЕТ - новый цвет #82d182 */
+        /* ПРАВИЛЬНЫЙ ОТВЕТ */
         .option.correct-selected {
             border-color: #82d182 !important;
             background-color: #f0f9f0;
         }
         
-        /* НЕПРАВИЛЬНЫЙ ОТВЕТ - новый цвет #bda380 */
+        /* НЕПРАВИЛЬНЫЙ ОТВЕТ */
         .option.incorrect-selected {
             border-color: #bda380 !important;
             background-color: #f9f5f0;
@@ -237,7 +237,7 @@
             background-color: #f9f9f9;
         }
         
-        /* ПОДСКАЗКА СЛЕВА - обновленный дизайн */
+        /* ПОДСКАЗКА СЛЕВА */
         .hint {
             position: fixed;
             left: 20px;
@@ -257,15 +257,11 @@
             border: 2px solid #a2b4d0;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             line-height: 1.5;
-            
-            /* Выравнивание текста по центру */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            
-            /* Прямоугольная форма с удлиненными верхом/низом */
             clip-path: polygon(
                 0 15px, 15px 0, 
                 calc(100% - 15px) 0, 100% 15px,
@@ -326,13 +322,13 @@
             font-size: 1.5rem;
         }
         
-        /* Страница 4 - обновленная */
-        #page4 .final-text {
+        /* Страница 5 - финальная */
+        #page5 .final-text {
             margin-top: 0;
             margin-bottom: 40px;
         }
         
-        /* Кнопка на странице 4 с VHS-глитч эффектом */
+        /* Кнопка на странице 5 с VHS-глитч эффектом */
         .glitch-button {
             background-color: #3071f2;
             color: white;
@@ -466,7 +462,7 @@
             }
             
             .snowflake {
-                font-size: 6rem;
+                font-size: 4rem; /* Уменьшено для мобильных */
             }
             
             .page.with-bg {
@@ -491,7 +487,7 @@
             
             .option {
                 padding: 16px 20px;
-                border-radius: 40px; /* Меньшее закругление на мобильных */
+                border-radius: 40px;
             }
         }
     </style>
@@ -515,7 +511,7 @@
         
         <div class="options">
             <div class="option" data-answer="correct" data-hint="correctHint1">Милашу</div>
-            <div class="option" data-answer="incorrect" data-hint="incorrectHint1">Химическую диссоциацию</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint1">Смешные зумерские мемы</div>
             <div class="option" data-answer="incorrect" data-hint="incorrectHint2">Лололошку</div>
         </div>
         
@@ -542,27 +538,39 @@
     <!-- Страница 3: Вопрос 2 -->
     <div id="page3" class="page with-bg">
         <div class="page-number">2</div>
-        <h2 class="question-title">продолжи строчку песни какой-то там</h2>
+        <h2 class="question-title">Что?</h2>
         
         <div class="options">
-            <div class="option" data-answer="correct" data-hint="correctHint2">я люблю тебя с тобой хотел прожить всю жизнь</div>
-            <div class="option" data-answer="incorrect" data-hint="incorrectHint3">блаблабла</div>
-            <div class="option" data-answer="incorrect" data-hint="incorrectHint4">вот такой</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint3">Супик кекс рыба</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint4">Рыбка суп кекс</div>
+            <div class="option" data-answer="correct" data-hint="correctHint2">Кексик суп рыба</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint5">Сексик секс секс</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint6">Рыбка</div>
         </div>
         
         <div id="correctHint2" class="hint">
             <div class="close-hint"></div>
-            Да-да-да, ты права!
+            Да, конечно, я твой кексик (⁠ ⁠˘⁠ ⁠³⁠˘⁠)
         </div>
         
         <div id="incorrectHint3" class="hint">
             <div class="close-hint"></div>
-            нет1
+            Почти чучуть!
         </div>
         
         <div id="incorrectHint4" class="hint">
             <div class="close-hint"></div>
-            нет2
+            ┐⁠(⁠￣⁠ヘ⁠￣⁠)⁠┌
+        </div>
+        
+        <div id="incorrectHint5" class="hint">
+            <div class="close-hint"></div>
+            Кто-кто? Это ты <strong>меня</strong> так назвала? (⁠・⁠o⁠・⁠)
+        </div>
+        
+        <div id="incorrectHint6" class="hint">
+            <div class="close-hint"></div>
+            Божечки копчёные сосиски (⁠灬⁠º⁠‿⁠º⁠灬⁠)
         </div>
         
         <div class="next-button-wrapper">
@@ -570,93 +578,201 @@
         </div>
     </div>
     
-    <!-- Страница 4: Финальная (обновленная) -->
-    <div id="page4" class="page title-page">
+    <!-- Страница 4: Вопрос 3 -->
+    <div id="page4" class="page with-bg">
+        <div class="page-number">3</div>
+        <h2 class="question-title">Which translation has word "Bouquet"?</h2>
+        
+        <div class="options">
+            <div class="option" data-answer="incorrect" data-hint="">Банкет</div>
+            <div class="option" data-answer="incorrect" data-hint="">Банкнота</div>
+            <div class="option" data-answer="incorrect" data-hint="">Буклет</div>
+            <div class="option" data-answer="correct" data-hint="correctHint3">Букет</div>
+            <div class="option" data-answer="incorrect" data-hint="">Бинокль</div>
+        </div>
+        
+        <div id="correctHint3" class="hint">
+            <div class="close-hint"></div>
+            Да! Мне нечего сказать, ты умница
+        </div>
+        
+        <div class="next-button-wrapper">
+            <button id="nextButton3" class="button next-button">Далее!</button>
+        </div>
+    </div>
+    
+    <!-- Страница 5: Финальная -->
+    <div id="page5" class="page title-page">
         <h1>Дальше! Будет кое-то еще БОЛЕЕ интересное</h1>
         <p>Лишь нажми на кнопку внизу..</p>
         
-        <button id="page4Button" class="glitch-button">Нажимай!</button>
+        <button id="page5Button" class="glitch-button">Нажимай!</button>
     </div>
 
     <script>
-        // Функция для создания снежинок
-        function createSnowflakes(style = 'default') {
-            const snowflakeSymbols = ['❄', '❆'];
+        // Функция для создания уменьшенных и смещенных снежинок
+        function createOffsetSnowflakes() {
             const body = document.body;
             
             // Очищаем старые снежинки
             const oldSnowflakes = document.querySelectorAll('.snowflake');
             oldSnowflakes.forEach(snowflake => snowflake.remove());
             
-            let config;
-            switch(style) {
-                case 'page1':
-                    config = { rows: 4, cols: 6, blueProbability: 0.4 };
-                    break;
-                case 'page2':
-                    config = { rows: 5, cols: 5, blueProbability: 0.3 };
-                    break;
-                case 'page3':
-                    config = { rows: 6, cols: 4, blueProbability: 0.35 };
-                    break;
-                case 'page4':
-                    config = { rows: 4, cols: 6, blueProbability: 0.4 };
-                    break;
-                default:
-                    config = { rows: 5, cols: 5, blueProbability: 0.3 };
-            }
+            // Более плотная сетка (меньше снежинок, но они меньше)
+            const rows = 10; // Уменьшили количество строк
+            const cols = 7;  // Уменьшили количество столбцов
             
-            // Создаем равномерную сетку
-            for (let i = 0; i < config.rows; i++) {
-                for (let j = 0; j < config.cols; j++) {
+            // Расстояние между снежинками
+            const horizontalSpacing = 100 / (cols - 1);
+            const verticalSpacing = 100 / (rows - 1);
+            
+            // Символы снежинок (только два вида)
+            const snowflakeSymbols = ['❄', '❆'];
+            
+            // Цветовые классы
+            const colorClasses = ['color1', 'color2', 'color3'];
+            
+            // Массив для хранения позиций для проверки пересечений
+            const positions = [];
+            
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
                     const snowflake = document.createElement('div');
                     snowflake.className = 'snowflake';
                     
-                    const symbol = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
-                    snowflake.textContent = symbol;
+                    // Чередуем символы
+                    const symbolIndex = (i + j) % 2;
+                    snowflake.textContent = snowflakeSymbols[symbolIndex];
                     
-                    const baseSize = 9;
-                    const sizeVariation = Math.random() * 2 - 1;
-                    snowflake.style.fontSize = `${baseSize + sizeVariation}rem`;
+                    // Фиксированный размер 6rem (в 1.5 раза меньше)
+                    snowflake.style.fontSize = '6rem';
                     
-                    const horizontalGap = 100 / config.cols;
-                    const verticalGap = 100 / config.rows;
+                    // Базовое позиционирование
+                    let baseLeft = j * horizontalSpacing;
+                    let baseTop = i * verticalSpacing;
                     
-                    const left = j * horizontalGap + horizontalGap/2;
-                    const top = i * verticalGap + verticalGap/2;
+                    // Смещение для разрушения столбикового эффекта
+                    // Нечетные строки смещаем вправо, четные - влево
+                    const horizontalOffset = (i % 2 === 0) ? 8 : -6;
+                    
+                    // Смещение вверх/вниз для создания волнообразного эффекта
+                    const verticalOffset = Math.sin(j * 0.8) * 5;
+                    
+                    // Финалные позиции со смещениями
+                    let left = baseLeft + horizontalOffset;
+                    let top = baseTop + verticalOffset;
+                    
+                    // Ограничиваем позиции в пределах экрана
+                    left = Math.max(2, Math.min(left, 98));
+                    top = Math.max(2, Math.min(top, 98));
                     
                     snowflake.style.left = `${left}%`;
                     snowflake.style.top = `${top}%`;
                     
-                    const rotation = Math.random() * 360;
+                    // Угол поворота с учетом позиции для разнообразия
+                    const rotation = (i * 45 + j * 60 + left + top) % 360;
                     snowflake.style.transform = `rotate(${rotation}deg)`;
                     
-                    if (Math.random() < config.blueProbability) {
-                        snowflake.classList.add('blue');
-                    }
+                    // Распределяем цвета
+                    const colorIndex = (i * 2 + j) % 3;
+                    snowflake.classList.add(colorClasses[colorIndex]);
                     
-                    snowflake.style.opacity = Math.random() * 0.2 + 0.1;
+                    // Разная прозрачность для глубины
+                    const opacity = 0.3 + (i % 3) * 0.1;
+                    snowflake.style.opacity = opacity.toString();
+                    
+                    // Сохраняем позицию для проверки пересечений
+                    positions.push({left, top});
                     
                     body.appendChild(snowflake);
                 }
             }
+            
+            // Добавляем дополнительные смещенные снежинки для заполнения пробелов
+            const additionalRows = Math.floor(rows * 0.7);
+            const additionalCols = Math.floor(cols * 0.7);
+            
+            for (let i = 0; i < additionalRows; i++) {
+                for (let j = 0; j < additionalCols; j++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    
+                    // Обратный порядок символов для дополнительных снежинок
+                    const symbolIndex = (i + j + 1) % 2;
+                    snowflake.textContent = snowflakeSymbols[symbolIndex];
+                    
+                    // Немного меньший размер для дополнительных снежинок
+                    snowflake.style.fontSize = '5rem';
+                    
+                    // Позиционируем в промежутках между основными снежинками
+                    // со смещением от регулярной сетки
+                    const offsetMultiplier = 0.7;
+                    let left = (j + 0.5) * horizontalSpacing * offsetMultiplier;
+                    let top = (i + 0.5) * verticalSpacing * offsetMultiplier;
+                    
+                    // Дополнительные смещения для случайного вида
+                    const randomX = (Math.random() - 0.5) * 15;
+                    const randomY = (Math.random() - 0.5) * 15;
+                    
+                    left += randomX;
+                    top += randomY;
+                    
+                    // Ограничиваем позиции
+                    left = Math.max(1, Math.min(left, 99));
+                    top = Math.max(1, Math.min(top, 99));
+                    
+                    // Проверяем, не слишком ли близко к другим снежинкам
+                    let tooClose = false;
+                    for (const pos of positions) {
+                        const distance = Math.sqrt(
+                            Math.pow(pos.left - left, 2) + 
+                            Math.pow(pos.top - top, 2)
+                        );
+                        if (distance < 8) { // Минимальное расстояние
+                            tooClose = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!tooClose) {
+                        snowflake.style.left = `${left}%`;
+                        snowflake.style.top = `${top}%`;
+                        
+                        // Угол поворота
+                        const rotation = (i * 30 + j * 90 + left * 2) % 360;
+                        snowflake.style.transform = `rotate(${rotation}deg)`;
+                        
+                        // Цвет
+                        const colorIndex = (i * 3 + j * 2) % 3;
+                        snowflake.classList.add(colorClasses[colorIndex]);
+                        
+                        // Меньшая прозрачность
+                        snowflake.style.opacity = '0.25';
+                        
+                        positions.push({left, top});
+                        body.appendChild(snowflake);
+                    }
+                }
+            }
         }
         
-        // Создаем снежинки для начальной страницы
-        createSnowflakes('page1');
+        // Создаем снежинки один раз при загрузке
+        createOffsetSnowflakes();
         
         // Элементы страниц
         const pages = {
             1: document.getElementById('page1'),
             2: document.getElementById('page2'),
             3: document.getElementById('page3'),
-            4: document.getElementById('page4')
+            4: document.getElementById('page4'),
+            5: document.getElementById('page5')
         };
         
         const startButton = document.getElementById('startButton');
         const nextButton1 = document.getElementById('nextButton1');
         const nextButton2 = document.getElementById('nextButton2');
-        const page4Button = document.getElementById('page4Button');
+        const nextButton3 = document.getElementById('nextButton3');
+        const page5Button = document.getElementById('page5Button');
         const timerDisplay = document.getElementById('timer');
         
         // Переменные для таймера
@@ -667,15 +783,6 @@
         function hideAllHints() {
             document.querySelectorAll('.hint').forEach(hint => {
                 hint.style.display = 'none';
-            });
-        }
-        
-        // Функция для блокировки всех вариантов ответа
-        function disableAllOptions() {
-            document.querySelectorAll('.option').forEach(option => {
-                option.classList.add('disabled');
-                option.style.cursor = 'not-allowed';
-                option.style.opacity = '0.6';
             });
         }
         
@@ -701,8 +808,6 @@
         startButton.addEventListener('click', function() {
             pages[1].classList.remove('active');
             pages[2].classList.add('active');
-            
-            createSnowflakes('page2');
             
             seconds = 60;
             timerDisplay.textContent = '01:00';
@@ -764,10 +869,11 @@
                 
                 // Показываем нужную подсказку слева
                 const hint = document.getElementById(hintId);
-                hint.style.display = 'flex';
-                
-                // Автоматическое закрытие через 8 секунд
-                autoCloseHint(hint);
+                if (hint) {
+                    hint.style.display = 'flex';
+                    // Автоматическое закрытие через 8 секунд
+                    autoCloseHint(hint);
+                }
                 
                 // Убираем все классы выделения у всех вариантов
                 document.querySelectorAll('#page2 .option').forEach(opt => {
@@ -821,8 +927,6 @@
                 option.style.backgroundColor = 'white';
                 option.style.transform = 'translateX(0)';
             });
-            
-            createSnowflakes('page3');
         });
         
         // Обработка выбора ответа для страницы 3
@@ -836,12 +940,15 @@
                 // Скрываем все подсказки
                 hideAllHints();
                 
-                // Показываем нужную подсказку слева
-                const hint = document.getElementById(hintId);
-                hint.style.display = 'flex';
-                
-                // Автоматическое закрытие через 8 секунд
-                autoCloseHint(hint);
+                // Показываем подсказку только если она есть и ответ правильный
+                if (hintId) {
+                    const hint = document.getElementById(hintId);
+                    if (hint) {
+                        hint.style.display = 'flex';
+                        // Автоматическое закрытие через 8 секунд
+                        autoCloseHint(hint);
+                    }
+                }
                 
                 // Убираем все классы выделения у всех вариантов
                 document.querySelectorAll('#page3 .option').forEach(opt => {
@@ -882,15 +989,85 @@
             // Скрываем все подсказки
             hideAllHints();
             
-            createSnowflakes('page4');
+            // Скрываем кнопку "Далее!"
+            nextButton3.style.display = 'none';
+            
+            // Сбрасываем все классы стилей у вариантов ответов
+            document.querySelectorAll('#page4 .option').forEach(option => {
+                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+                option.style.cursor = 'pointer';
+                option.style.opacity = '1';
+                option.style.borderColor = '#ddd';
+                option.style.backgroundColor = 'white';
+                option.style.transform = 'translateX(0)';
+            });
         });
         
-        // Обработчик клика по кнопке на странице 4
-        page4Button.addEventListener('click', function() {
+        // Обработка выбора ответа для страницы 4
+        document.querySelectorAll('#page4 .option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (this.classList.contains('disabled')) return;
+                
+                const hintId = this.dataset.hint;
+                const isCorrect = this.dataset.answer === 'correct';
+                
+                // Скрываем все подсказки
+                hideAllHints();
+                
+                // Показываем подсказку только если она есть и ответ правильный
+                if (hintId && isCorrect) {
+                    const hint = document.getElementById(hintId);
+                    if (hint) {
+                        hint.style.display = 'flex';
+                        // Автоматическое закрытие через 8 секунд
+                        autoCloseHint(hint);
+                    }
+                }
+                
+                // Убираем все классы выделения у всех вариантов
+                document.querySelectorAll('#page4 .option').forEach(opt => {
+                    opt.classList.remove('correct-selected', 'incorrect-selected');
+                });
+                
+                // Добавляем соответствующий класс выделения
+                if (isCorrect) {
+                    this.classList.add('correct-selected');
+                } else {
+                    this.classList.add('incorrect-selected');
+                }
+                
+                // Если ответ правильный - показываем кнопку "Далее"
+                if (isCorrect) {
+                    nextButton3.style.display = 'inline-block';
+                    // Блокируем все варианты ответов
+                    disableOptionsOnPage('page4');
+                } else {
+                    nextButton3.style.display = 'none';
+                }
+                
+                // Сбрасываем трансформацию у всех вариантов
+                document.querySelectorAll('#page4 .option').forEach(opt => {
+                    opt.style.transform = 'translateX(0)';
+                });
+                
+                // Анимируем выбранный вариант
+                this.style.transform = 'translateX(5px)';
+            });
+        });
+        
+        // Переход от страницы 4 к 5
+        nextButton3.addEventListener('click', function() {
             pages[4].classList.remove('active');
-            pages[1].classList.add('active');
+            pages[5].classList.add('active');
             
-            createSnowflakes('page1');
+            // Скрываем все подсказки
+            hideAllHints();
+        });
+        
+        // Обработчик клика по кнопке на странице 5
+        page5Button.addEventListener('click', function() {
+            pages[5].classList.remove('active');
+            pages[1].classList.add('active');
         });
         
         // Обработчик для крестиков закрытия подсказок
