@@ -44,6 +44,27 @@
             color: #8dbce3;
         }
         
+        /* Интерактивная снежинка для 2 вопроса */
+        .interactive-snowflake {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .interactive-snowflake:hover {
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+        
+        .interactive-snowflake.color1 {
+            color: #6eb5f0;
+        }
+        
         .page {
             display: none;
             width: 100%;
@@ -65,7 +86,7 @@
             display: block;
         }
         
-        #page1, #page6 {
+        #page1, #page6, #page7, #page8 {
             background: none;
             box-shadow: none;
         }
@@ -431,9 +452,14 @@
         }
         
         .column-item.connected {
-            border-color: #82d182;
-            background-color: #f0f9f0;
+            border-color: #bda380;
+            background-color: #f9f5f0;
             cursor: default;
+        }
+        
+        .column-item.correct-connected {
+            border-color: #82d182 !important;
+            background-color: #f0f9f0 !important;
         }
         
         /* Кружочки для соединения */
@@ -459,17 +485,25 @@
         }
         
         .column-item.connected .connection-dot {
+            background-color: #bda380;
+        }
+        
+        .column-item.correct-connected .connection-dot {
             background-color: #82d182;
         }
         
         /* Линии соединения */
         .connection-line {
             position: absolute;
-            background-color: #3071f2;
+            background-color: #bda380;
             height: 3px;
             pointer-events: none;
             z-index: 5;
             transform-origin: 0 0;
+        }
+        
+        .connection-line.correct-line {
+            background-color: #82d182;
         }
         
         .check-button-wrapper {
@@ -511,17 +545,127 @@
             transform: translateY(2px);
             box-shadow: 0 2px 0 #d35454, 0 3px 5px rgba(0, 0, 0, 0.2);
         }
+                /* Стили для выделения текста */
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        /* Стили для 7-го вопроса (Кодовое слово) */
+        body.dark-theme {
+            background-color: #0a0a0a;
+        }
+        
+        .dark-page {
+            background-color: #0e0e0f !important;
+            border: 2px solid #f51d2e;
+            box-shadow: 0 0 20px rgba(245, 29, 46, 0.3), 
+                        0 0 40px rgba(245, 29, 46, 0.2),
+                        0 0 60px rgba(245, 29, 46, 0.1) !important;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-page::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle at center, rgba(245, 29, 46, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: pulse-glow 2s infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { opacity: 0.3; }
+            to { opacity: 0.7; }
+        }
+        
+        .dark-title {
+            color: #f51d2e !important;
+            font-family: 'Cambria', serif !important;
+        }
+        
+        .dark-option {
+            border-color: #f51d2e !important;
+            color: #f51d2e !important;
+            background-color: rgba(245, 29, 46, 0.05) !important;
+        }
+        
+        .dark-option:hover:not(.disabled) {
+            background-color: rgba(245, 29, 46, 0.1) !important;
+        }
+        
+        .dark-option.selected {
+            border-color: #ff6b6b !important;
+            background-color: rgba(245, 29, 46, 0.15) !important;
+        }
+        
+        .dark-timer {
+            color: #f51d2e !important;
+            background-color: rgba(245, 29, 46, 0.1) !important;
+        }
+        
+        .dark-page-number {
+            color: #f51d2e !important;
+            background-color: rgba(245, 29, 46, 0.1) !important;
+        }
+        
+        .dark-button {
+            background-color: #f51d2e !important;
+            box-shadow: 0 4px 0 #c01525, 0 6px 10px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        .dark-button:hover {
+            background-color: #ff3b4d !important;
+            box-shadow: 0 6px 0 #c01525, 0 8px 15px rgba(245, 29, 46, 0.3) !important;
+        }
+        
+        .dark-button:active {
+            box-shadow: 0 2px 0 #c01525, 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* Подсказка для интерактивной снежинки */
+        #snowflakeHint {
+            background-color: #f5a4b1;
+            color: #333;
+            border: 2px solid #e89390;
+        }
+        
+        /* Стили для итогов на последней странице */
+        .results {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+        
+        .results h3 {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        
+        .results p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
     <!-- Страница 1: Приветствие -->
     <div id="page1" class="page active title-page">
-        <h1>Привет Милаша!!</h1>
-        <p>ВО-ПЕРВЫХ, с новым годом! <span class="in-text-snowflake">❄</span></p>
-        <p>А во-вторых, сейчас, после нажатия кнопки ниже...</p>
-        <p>Тебя ждет ТЕСТ, который жопа жопа попа</p>
-        <p>В общем, когда ты нажмешь на эту милую синюю кнопочку, начнется. что-то. прикольное.</p>
-        <button id="startButton" class="button">начать!</button>
+        <h1>Привет, милая Милаша</h1>
+        <p>Во-первых, с новым годом! <span class="in-text-snowflake">❄</span></p>
+        <p>Во-вторых, если ты дошла до сюда...</p>
+        <p>я думаю, ты готова к тому, чтобы пройти</p>
+        <p>ТЕСТ "на-знание-чего-то-там"</p>
+        <button id="startButton" class="button">Итак..</button>
     </div>
     
     <!-- Страница 2: Вопрос 1 -->
@@ -529,6 +673,9 @@
         <div class="page-number">1</div>
         <div id="timer1" class="timer">01:00</div>
         <h2 class="question-title">Хм! Как думаешь, кого любит кэкс?!</h2>
+        
+        <!-- Интерактивная снежинка -->
+        <div id="interactiveSnowflake" class="interactive-snowflake color1">❄</div>
         
         <div class="options">
             <div class="option" data-answer="correct" data-hint="correctHint1">Милашу</div>
@@ -549,6 +696,12 @@
         <div id="incorrectHint2" class="hint">
             <div class="close-hint"></div>
             Это да, но все же)
+        </div>
+        
+        <!-- Подсказка для снежинки -->
+        <div id="snowflakeHint" class="hint triple-click-hint">
+            <div class="close-hint"></div>
+            Вписать
         </div>
         
         <div class="next-button-wrapper">
@@ -745,15 +898,99 @@
             <button id="nextButton5" class="button next-button" style="display: none;">Далее!</button>
         </div>
     </div>
-    
-    <!-- Страница 6: Финальная -->
-    <div id="page6" class="page title-page">
-        <h1>Дальше! Будет кое-то еще БОЛЕЕ интересное</h1>
-        <p>Лишь нажми на кнопку внизу..</p>
+        <!-- Страница 6: Вопрос 6 (Алмазная кирка) -->
+    <div id="page6" class="page with-bg">
+        <div class="page-number">6</div>
+        <div id="timer6" class="timer">01:00</div>
+        <h2 class="question-title">Как сделать гребаную алмазную кирку?</h2>
         
-        <button id="page6Button" class="glitch-button">Нажимай!</button>
+        <div class="options">
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint9">положить 3 стаканных алмаза с тремя стаканными палками</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint10">3 алмаза в ряд <span class="highlight">внизу</span> и 2 палки вертикально посередине</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint11">Попросить кого-то сделать кирку</div>
+            <div class="option" data-answer="correct" data-hint="correctHint5">3 алмаза в ряд <span class="highlight">наверху</span> и 2 палки вертикально посередине</div>
+            <div class="option" data-answer="correct" data-hint="correctHint6">Не знаю :(</div>
+        </div>
+        
+        <div id="correctHint5" class="hint">
+            <div class="close-hint"></div>
+            Вот это да! Ты права!!!
+        </div>
+        
+        <div id="correctHint6" class="hint">
+            <div class="close-hint"></div>
+            Хорошо! Все в порядке<br>
+            <span class="emoji-new-line">(⁠ ⁠ꈍ⁠ᴗ⁠ꈍ⁠)</span>
+        </div>
+        
+        <div id="incorrectHint9" class="hint">
+            <div class="close-hint"></div>
+            Вот было бы это правдой..
+        </div>
+        
+        <div id="incorrectHint10" class="hint">
+            <div class="close-hint"></div>
+            <span class="emoji-new-line">(⁠ʃ⁠ƪ⁠＾⁠3⁠＾⁠）</span>
+        </div>
+        
+        <div id="incorrectHint11" class="hint">
+            <div class="close-hint"></div>
+            Умно, милая!
+        </div>
+        
+        <div class="next-button-wrapper">
+            <button id="nextButton6" class="button next-button">Далее!</button>
+        </div>
+    </div>
+    
+    <!-- Страница 7: Вопрос 7 (Кодовое слово) -->
+    <div id="page7" class="page with-bg dark-page">
+        <div class="page-number dark-page-number">7</div>
+        <div id="timer7" class="timer dark-timer">00:00</div>
+        <h2 class="question-title dark-title">Кодовое слово</h2>
+        
+        <div class="options">
+            <div class="option dark-option" data-answer="cucumber" data-selected="false">Огурец</div>
+            <div class="option dark-option" data-answer="carrot" data-selected="false">Морковка</div>
+        </div>
+        
+        <div class="next-button-wrapper">
+            <button id="nextButton7" class="button dark-button next-button">...</button>
+        </div>
+    </div>
+    
+    <!-- Страница 8: Финальная (для огурца) -->
+    <div id="page8" class="page active title-page">
+        <h1>Что же...</h1>
+        <p>Ты подтвердила свою осведомленность во всех предыдущих вопросах</p>
+        <p>это похвально.</p>
+        <p>Отнюдь я уверена, что ты достойна перейти в скрытый от чужих глаз канал,</p>
+        <p>ты можешь перейти по ссылке <a href="https://t.me/+Ud0nNOOZlV00OTBi" target="_blank" style="color: #3071f2; text-decoration: underline;">https://t.me/+Ud0nNOOZlV00OTBi</a></p>
+        <button id="restartButton" class="button">Перезапуск?</button>
+    </div>
+    
+    <!-- Страница 9: Финальная (для морковки) -->
+    <div id="page9" class="page title-page">
+        <h1>Что же...</h1>
+        <p>Ты подтвердила свою осведомленность во всех предыдущих вопросах</p>
+        <p>это похвально.</p>
+        <p>Отнюдь я уверена, что ты достойна перейти в скрытый от чужих глаз канал,</p>
+        <p>ты можешь перейти по ссылке <a href="https://t.me/+Ud0nNOOZlV00OTBi" target="_blank" style="color: #3071f2; text-decoration: underline;">https://t.me/+Ud0nNOOZlV00OTBi</a></p>
+        
+        <div class="results">
+            <h3>Итоги:</h3>
+            <p>Найдено дополнительный материалов <span id="materialCount">0</span></p>
+        </div>
+        
+        <button id="restartButton2" class="button">Перезапуск?</button>
     </div>
     <script>
+    // Глобальные переменные для подсчета подсказок
+    let pinkHintsSeen = {
+        snowflake: false,
+        question4: false
+    };
+    
     // Функция для создания снежинок
     function createOffsetSnowflakes() {
         const body = document.body;
@@ -815,7 +1052,10 @@
         4: document.getElementById('page4'),
         5: document.getElementById('page5'),
         "5_5": document.getElementById('page5_5'),
-        6: document.getElementById('page6')
+        6: document.getElementById('page6'),
+        7: document.getElementById('page7'),
+        8: document.getElementById('page8'),
+        9: document.getElementById('page9')
     };
     
     const startButton = document.getElementById('startButton');
@@ -824,7 +1064,12 @@
     const nextButton3 = document.getElementById('nextButton3');
     const nextButton4 = document.getElementById('nextButton4');
     const nextButton5 = document.getElementById('nextButton5');
+    const nextButton6 = document.getElementById('nextButton6');
+    const nextButton7 = document.getElementById('nextButton7');
     const page6Button = document.getElementById('page6Button');
+    const restartButton = document.getElementById('restartButton');
+    const restartButton2 = document.getElementById('restartButton2');
+    const interactiveSnowflake = document.getElementById('interactiveSnowflake');
     
     // Массив таймеров
     const timers = [
@@ -832,10 +1077,12 @@
         document.getElementById('timer2'),
         document.getElementById('timer3'),
         document.getElementById('timer4'),
-        document.getElementById('timer5')
+        document.getElementById('timer5'),
+        document.getElementById('timer6'),
+        document.getElementById('timer7')
     ];
     
-    let timerIntervals = [null, null, null, null, null];
+    let timerIntervals = [null, null, null, null, null, null, null];
     
     // Функция для скрытия всех подсказок
     function hideAllHints() {
@@ -863,26 +1110,30 @@
     }
     
     // Функция для запуска таймера на странице
-    function startTimer(timerIndex) {
+    function startTimer(timerIndex, countUp = false) {
         if (timerIntervals[timerIndex]) {
             clearInterval(timerIntervals[timerIndex]);
         }
         
-        let seconds = 60;
+        let seconds = countUp ? 0 : 60;
         const timerDisplay = timers[timerIndex];
         
-        timerDisplay.textContent = '01:00';
+        timerDisplay.textContent = countUp ? '00:00' : '01:00';
         timerDisplay.classList.remove('expired');
         
         timerIntervals[timerIndex] = setInterval(function() {
-            seconds--;
+            if (countUp) {
+                seconds++;
+            } else {
+                seconds--;
+            }
             
-            if (seconds >= 0) {
-                let mins = Math.floor(seconds / 60);
-                let secs = seconds % 60;
+            if (seconds >= 0 || countUp) {
+                let mins = Math.floor(Math.abs(seconds) / 60);
+                let secs = Math.abs(seconds) % 60;
                 timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 
-                if (seconds === 0) {
+                if (!countUp && seconds === 0) {
                     timerDisplay.classList.add('expired');
                 }
             } else {
@@ -896,6 +1147,7 @@
     
     // Переменная для подсчета кликов по специальному варианту
     let specialOptionClicks = 0;
+    let snowflakeClicks = 0;
     
     // Начало теста
     startButton.addEventListener('click', function() {
@@ -915,6 +1167,18 @@
         });
         
         startTimer(0);
+    });
+    
+    // Обработка интерактивной снежинки на странице 2
+    interactiveSnowflake.addEventListener('click', function() {
+        snowflakeClicks++;
+        
+        if (snowflakeClicks === 5) {
+            const snowflakeHint = document.getElementById('snowflakeHint');
+            snowflakeHint.style.display = 'flex';
+            autoCloseHint(snowflakeHint);
+            pinkHintsSeen.snowflake = true;
+        }
     });
     
     // Обработка выбора ответа для страницы 2
@@ -1043,28 +1307,58 @@
             if (this.classList.contains('disabled')) return;
             
             const hintId = this.dataset.hint;
-            const isCorrect = this.dataset.answer === 'correct';
+            const answerType = this.dataset.answer;
+            const isCorrect = answerType === 'correct';
+            const isSpecial = answerType === 'special';
             
             hideAllHints();
             
-            if (hintId && isCorrect) {
-                const hint = document.getElementById(hintId);
-                if (hint) {
-                    hint.style.display = 'flex';
-                    autoCloseHint(hint);
+            // Обработка специального варианта (клики подсчитываются)
+            if (isSpecial) {
+                let clicks = parseInt(this.dataset.clicks) || 0;
+                clicks++;
+                this.dataset.clicks = clicks;
+                
+                if (clicks === 3) {
+                    // После 3 кликов показываем новую подсказку
+                    const tripleHint = document.getElementById('specialTripleHint');
+                    tripleHint.style.display = 'flex';
+                    autoCloseHint(tripleHint);
+                    pinkHintsSeen.question4 = true;
+                } else {
+                    // До 3 кликов показываем обычную подсказку
+                    if (hintId) {
+                        const hint = document.getElementById(hintId);
+                        if (hint) {
+                            hint.style.display = 'flex';
+                            autoCloseHint(hint);
+                        }
+                    }
+                }
+            } else {
+                // Обычные варианты
+                if (hintId && isCorrect) {
+                    const hint = document.getElementById(hintId);
+                    if (hint) {
+                        hint.style.display = 'flex';
+                        autoCloseHint(hint);
+                    }
                 }
             }
             
+            // Убираем все классы выделения у всех вариантов
             document.querySelectorAll('#page4 .option').forEach(opt => {
                 opt.classList.remove('correct-selected', 'incorrect-selected');
             });
             
+            // Добавляем соответствующий класс выделения
             if (isCorrect) {
                 this.classList.add('correct-selected');
-            } else {
+            } else if (!isSpecial) {
                 this.classList.add('incorrect-selected');
             }
             
+            // Если ответ правильный - показываем кнопку "Далее"
             if (isCorrect) {
                 nextButton3.style.display = 'inline-block';
                 disableOptionsOnPage('page4');
@@ -1072,6 +1366,7 @@
                 nextButton3.style.display = 'none';
             }
             
+            // Сбрасываем трансформацию у всех вариантов
             document.querySelectorAll('#page4 .option').forEach(opt => {
                 opt.style.transform = 'scale(1)';
             });
@@ -1226,7 +1521,7 @@
         
         // Сбрасываем все элементы
         document.querySelectorAll('.column-item').forEach(item => {
-            item.classList.remove('selected', 'connected');
+            item.classList.remove('selected', 'connected', 'correct-connected');
             item.style.cursor = 'pointer';
         });
         
@@ -1238,6 +1533,7 @@
         document.getElementById('resetChemistryButton').style.display = 'none';
         document.getElementById('nextButton5').style.display = 'none';
         document.getElementById('checkChemistryButton').textContent = 'Проверить :3';
+        document.getElementById('checkChemistryButton').style.display = 'inline-block';
         hideAllHints();
     }
     
@@ -1328,10 +1624,10 @@
             
             // Снимаем connected класс со старых элементов
             document.querySelectorAll(`[data-id="${leftId}"]`).forEach(el => {
-                el.classList.remove('connected');
+                el.classList.remove('connected', 'correct-connected');
             });
             document.querySelectorAll(`[data-id="${rightId}"]`).forEach(el => {
-                el.classList.remove('connected');
+                el.classList.remove('connected', 'correct-connected');
             });
             
             // Удаляем старые линии
@@ -1341,7 +1637,7 @@
         // Добавляем новое соединение
         connections.push({left: leftId, right: rightId});
         
-        // Добавляем connected класс к элементам
+        // Добавляем connected класс к элементам (коричневый цвет)
         document.querySelectorAll(`[data-id="${leftId}"]`).forEach(el => {
             el.classList.add('connected');
         });
@@ -1413,7 +1709,24 @@
         });
         
         if (allCorrect) {
-            // Все правильно
+            // Все правильно - меняем на зеленый цвет
+            connections.forEach(conn => {
+                // Обновляем элементы на зеленые
+                document.querySelectorAll(`[data-id="${conn.left}"]`).forEach(el => {
+                    el.classList.remove('connected');
+                    el.classList.add('correct-connected');
+                });
+                document.querySelectorAll(`[data-id="${conn.right}"]`).forEach(el => {
+                    el.classList.remove('connected');
+                    el.classList.add('correct-connected');
+                });
+            });
+            
+            // Обновляем линии на зеленые
+            document.querySelectorAll('.connection-line').forEach(line => {
+                line.classList.add('correct-line');
+            });
+            
             const correctHint = document.getElementById('chemistryCorrectHint');
             correctHint.style.display = 'flex';
             autoCloseHint(correctHint);
@@ -1447,12 +1760,155 @@
         pages[6].classList.add('active');
         
         hideAllHints();
+        nextButton6.style.display = 'none';
+        
+        document.querySelectorAll('#page6 .option').forEach(option => {
+            option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+            option.style.cursor = 'pointer';
+            option.style.opacity = '1';
+            option.style.borderColor = '#ddd';
+            option.style.backgroundColor = 'white';
+            option.style.transform = 'scale(1)';
+        });
+        
+        startTimer(5);
     });
     
-    // Обработчик клика по кнопке на странице 6
-    page6Button.addEventListener('click', function() {
+    // Обработка выбора ответа для страницы 6
+    document.querySelectorAll('#page6 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            if (this.classList.contains('disabled')) return;
+            
+            const hintId = this.dataset.hint;
+            const isCorrect = this.dataset.answer === 'correct';
+            
+            hideAllHints();
+            
+            if (hintId) {
+                const hint = document.getElementById(hintId);
+                if (hint) {
+                    hint.style.display = 'flex';
+                    autoCloseHint(hint);
+                }
+            }
+            
+            document.querySelectorAll('#page6 .option').forEach(opt => {
+                opt.classList.remove('correct-selected', 'incorrect-selected');
+            });
+            
+            if (isCorrect) {
+                this.classList.add('correct-selected');
+            } else {
+                this.classList.add('incorrect-selected');
+            }
+            
+            // Если ответ правильный - показываем кнопку "Далее"
+            // На этой странице есть 2 правильных ответа
+            if (isCorrect) {
+                nextButton6.style.display = 'inline-block';
+                disableOptionsOnPage('page6');
+            } else {
+                nextButton6.style.display = 'none';
+            }
+            
+            document.querySelectorAll('#page6 .option').forEach(opt => {
+                opt.style.transform = 'scale(1)';
+            });
+        });
+    });
+    
+    // Переход от страницы 6 к 7
+    nextButton6.addEventListener('click', function() {
         pages[6].classList.remove('active');
+        pages[7].classList.add('active');
+        
+        // Убираем снежинки с фона
+        document.querySelectorAll('.snowflake').forEach(snowflake => {
+            snowflake.style.display = 'none';
+        });
+        
+        // Добавляем темную тему
+        document.body.classList.add('dark-theme');
+        
+        hideAllHints();
+        nextButton7.style.display = 'none';
+        
+        document.querySelectorAll('#page7 .option').forEach(option => {
+            option.classList.remove('selected');
+            option.dataset.selected = 'false';
+            option.style.cursor = 'pointer';
+        });
+        
+        // Запускаем таймер вперед
+        startTimer(6, true);
+    });
+    
+    // Обработка выбора ответа для страницы 7
+    let selectedAnswer7 = null;
+    document.querySelectorAll('#page7 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            // Снимаем выделение со всех вариантов
+            document.querySelectorAll('#page7 .option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.dataset.selected = 'false';
+            });
+            
+            // Выделяем выбранный вариант
+            this.classList.add('selected');
+            this.dataset.selected = 'true';
+            selectedAnswer7 = this.dataset.answer;
+            
+            // Показываем кнопку "..."
+            nextButton7.style.display = 'inline-block';
+        });
+    });
+    
+    // Обработка кнопки на странице 7
+    nextButton7.addEventListener('click', function() {
+        if (!selectedAnswer7) return;
+        
+        // Убираем темную тему
+        document.body.classList.remove('dark-theme');
+        
+        // Возвращаем снежинки
+        document.querySelectorAll('.snowflake').forEach(snowflake => {
+            snowflake.style.display = '';
+        });
+        
+        pages[7].classList.remove('active');
+        
+        // Подсчитываем количество найденных розовых подсказок
+        let materialCount = 0;
+        if (pinkHintsSeen.snowflake) materialCount++;
+        if (pinkHintsSeen.question4) materialCount++;
+        
+        // Устанавливаем количество в соответствующем элементе
+        document.getElementById('materialCount').textContent = materialCount;
+        
+        if (selectedAnswer7 === 'cucumber') {
+            pages[8].classList.add('active');
+        } else if (selectedAnswer7 === 'carrot') {
+            pages[9].classList.add('active');
+        }
+    });
+    
+    // Обработчики кнопок перезапуска
+    restartButton.addEventListener('click', function() {
+        pages[8].classList.remove('active');
         pages[1].classList.add('active');
+        
+        // Сбрасываем счетчики
+        pinkHintsSeen = { snowflake: false, question4: false };
+        snowflakeClicks = 0;
+    });
+    
+    restartButton2.addEventListener('click', function() {
+        pages[9].classList.remove('active');
+        pages[1].classList.add('active');
+        
+        // Сбрасываем счетчики
+        pinkHintsSeen = { snowflake: false, question4: false };
+        snowflakeClicks = 0;
     });
     
     // Обработчик для крестиков закрытия подсказок
@@ -1466,13 +1922,34 @@
     
     // Обработчик изменения размера окна для перерисовки линий
     window.addEventListener('resize', function() {
-        drawConnectionLines();
+        if (document.querySelector('.columns-container')) {
+            drawConnectionLines();
+        }
     });
     
     // Инициализация при загрузке
     document.addEventListener('DOMContentLoaded', function() {
         // Скрываем кнопку сброса при загрузке
-        document.getElementById('resetChemistryButton').style.display = 'none';
+        const resetBtn = document.getElementById('resetChemistryButton');
+        if (resetBtn) resetBtn.style.display = 'none';
+        
+        // Скрываем интерактивную снежинку на всех страницах, кроме 2
+        interactiveSnowflake.style.display = 'none';
+        
+        // Показываем снежинку только на странице 2
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (pages[2].classList.contains('active')) {
+                        interactiveSnowflake.style.display = 'block';
+                    } else {
+                        interactiveSnowflake.style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        observer.observe(pages[2], { attributes: true });
     });
 </script>
 </body>
