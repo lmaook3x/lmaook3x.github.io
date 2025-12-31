@@ -944,7 +944,7 @@
         
         <button id="restartButton2" class="button">Перезапуск?</button>
     </div>
-    <script>
+<script>
     // Глобальная переменная для отслеживания розовой подсказки
     let pinkHintTriggered = false;
     
@@ -1240,7 +1240,7 @@
         startTimer(2);
     });
     
-    // Обработка выбора ответа для страницы 4
+    // Обработка выбора ответа для страницы 4 - ИСПРАВЛЕННАЯ ЧАСТЬ!
     document.querySelectorAll('#page4 .option').forEach(option => {
         option.addEventListener('click', function() {
             if (this.classList.contains('disabled')) return;
@@ -1298,9 +1298,12 @@
             }
             
             // Если ответ правильный - показываем кнопку "Далее" и блокируем ВСЕ варианты
+            // НЕ СБРАСЫВАЕМ pinkHintTriggered, если он уже был установлен!
             if (isCorrect) {
                 nextButton3.style.display = 'inline-block';
                 disableOptionsOnPage('page4');
+                // ВАЖНО: Не изменяем pinkHintTriggered здесь!
+                // Он уже мог быть установлен в true выше (при 3 кликах)
             } else {
                 nextButton3.style.display = 'none';
             }
@@ -1877,5 +1880,3 @@
         if (resetBtn) resetBtn.style.display = 'none';
     });
 </script>
-</body>
-</html>
