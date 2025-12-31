@@ -23,17 +23,15 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Снежинки - уменьшенные в 1.5 раза */
         .snowflake {
             position: fixed;
             user-select: none;
             z-index: -1;
             pointer-events: none;
-            font-size: 6rem; /* Уменьшено с 9rem до 6rem (в 1.5 раза меньше) */
+            font-size: 6rem;
             opacity: 0.4;
         }
         
-        /* Новые цвета снежинок */
         .snowflake.color1 {
             color: #6eb5f0;
         }
@@ -49,7 +47,7 @@
         .page {
             display: none;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -67,8 +65,7 @@
             display: block;
         }
         
-        /* Страница 1 и 5 - без белого фона */
-        #page1, #page5 {
+        #page1, #page6 {
             background: none;
             box-shadow: none;
         }
@@ -130,7 +127,6 @@
             100% { opacity: 1; }
         }
         
-        /* 3D Кнопка */
         .button {
             background-color: #3071f2;
             color: white;
@@ -143,30 +139,35 @@
             font-weight: bold;
             display: inline-block;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
             position: relative;
-            box-shadow: 
-                0 4px 0 #1c56d0,
-                0 6px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 0 #1c56d0, 0 6px 10px rgba(0, 0, 0, 0.2);
             transform: translateY(0);
         }
         
         .button:hover {
             background-color: #255cd1;
             transform: translateY(-2px);
-            box-shadow: 
-                0 6px 0 #1c56d0,
-                0 8px 15px rgba(48, 113, 242, 0.3);
+            box-shadow: 0 6px 0 #1c56d0, 0 8px 15px rgba(48, 113, 242, 0.3);
         }
         
         .button:active {
             transform: translateY(2px);
-            box-shadow: 
-                0 2px 0 #1c56d0,
-                0 3px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #1c56d0, 0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
-        /* Кнопка "Далее!" */
+        .button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: 0 4px 0 #999999;
+            transform: translateY(0);
+        }
+        
+        .button:disabled:hover {
+            background-color: #cccccc;
+            transform: translateY(0);
+            box-shadow: 0 4px 0 #999999;
+        }
+        
         .next-button {
             padding: 12px 30px;
             font-size: 1.1rem;
@@ -175,7 +176,6 @@
             display: none;
         }
         
-        /* Контейнер для кнопки "Далее!" */
         .next-button-wrapper {
             margin-top: 20px;
             padding: 10px 0;
@@ -198,7 +198,6 @@
             margin-top: 20px;
         }
         
-        /* СТИЛЬ ОТВЕТОВ - ОВАЛЬНЫЕ РАМКИ */
         .option {
             padding: 18px 25px;
             font-size: 1.2rem;
@@ -213,22 +212,19 @@
             border-radius: 50px;
         }
         
-        /* ПРАВИЛЬНЫЙ ОТВЕТ */
+        .option:hover:not(.disabled) {
+            background-color: white;
+            transform: scale(1.02);
+        }
+        
         .option.correct-selected {
             border-color: #82d182 !important;
             background-color: #f0f9f0;
         }
         
-        /* НЕПРАВИЛЬНЫЙ ОТВЕТ */
         .option.incorrect-selected {
             border-color: #bda380 !important;
             background-color: #f9f5f0;
-        }
-        
-        .option:hover:not(.disabled) {
-            border-color: #3071f2;
-            background-color: #f5f9ff;
-            transform: translateX(3px);
         }
         
         .option.disabled {
@@ -237,7 +233,6 @@
             background-color: #f9f9f9;
         }
         
-        /* ПОДСКАЗКА СЛЕВА */
         .hint {
             position: fixed;
             left: 20px;
@@ -270,7 +265,18 @@
             );
         }
         
-        /* Крестик для закрытия подсказки */
+        .hint.special-hint {
+            background-color: #e89390;
+            color: #333;
+            border: 2px solid #d87a77;
+        }
+        
+        .hint.triple-click-hint {
+            background-color: #f5a4b1;
+            color: #333;
+            border: 2px solid #e89390;
+        }
+        
         .close-hint {
             position: absolute;
             top: 12px;
@@ -322,13 +328,18 @@
             font-size: 1.5rem;
         }
         
-        /* Страница 5 - финальная */
-        #page5 .final-text {
+        .emoji-new-line {
+            display: block;
+            font-size: 1.5rem;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        #page6 .final-text {
             margin-top: 0;
             margin-bottom: 40px;
         }
         
-        /* Кнопка на странице 5 с VHS-глитч эффектом */
         .glitch-button {
             background-color: #3071f2;
             color: white;
@@ -341,72 +352,27 @@
             display: inline-block;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position: relative;
-            box-shadow: 
-                0 4px 0 #1c56d0,
-                0 6px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 0 #1c56d0, 0 6px 10px rgba(0, 0, 0, 0.2);
             animation: glitch-effect 0.8s infinite alternate;
         }
         
         @keyframes glitch-effect {
-            0% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            10% {
-                transform: translate(1px, -1px);
-                background-color: #3071f2;
-            }
-            20% {
-                transform: translate(-1px, 1px);
-                background-color: #3a7bff;
-            }
-            30% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            40% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            50% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            60% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            70% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
-            80% {
-                transform: translate(-1px, 0);
-                background-color: #2b65e0;
-            }
-            90% {
-                transform: translate(1px, 0);
-                background-color: #3071f2;
-            }
-            100% {
-                transform: translate(0, 0);
-                background-color: #3071f2;
-            }
+            0% { transform: translate(0, 0); background-color: #3071f2; }
+            10% { transform: translate(1px, -1px); background-color: #3071f2; }
+            20% { transform: translate(-1px, 1px); background-color: #3a7bff; }
+            30% { transform: translate(0, 0); background-color: #3071f2; }
+            100% { transform: translate(0, 0); background-color: #3071f2; }
         }
         
         .glitch-button:hover {
             animation: none;
             transform: translateY(-2px);
-            box-shadow: 
-                0 6px 0 #1c56d0,
-                0 8px 15px rgba(48, 113, 242, 0.3);
+            box-shadow: 0 6px 0 #1c56d0, 0 8px 15px rgba(48, 113, 242, 0.3);
         }
         
         .glitch-button:active {
             transform: translateY(2px);
-            box-shadow: 
-                0 2px 0 #1c56d0,
-                0 3px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 0 #1c56d0, 0 3px 5px rgba(0, 0, 0, 0.2);
         }
         
         .in-text-snowflake {
@@ -420,75 +386,130 @@
             100% { transform: rotate(360deg); }
         }
         
-        @media (max-width: 1100px) {
-            .hint {
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-                width: 100%;
-                max-width: 400px;
-                margin: 20px auto;
-                animation: fadeIn 0.5s;
-                clip-path: none;
-                border-radius: 10px;
-            }
-            
-            @keyframes slideInLeft {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
+        /* Стили для 5-го вопроса */
+        .columns-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: 30px;
+            position: relative;
         }
         
-        @media (max-width: 600px) {
-            .title-page h1 {
-                font-size: 2.5rem;
-            }
-            
-            .title-page p {
-                font-size: 1.2rem;
-            }
-            
-            .question-title {
-                font-size: 1.6rem;
-            }
-            
-            .timer {
-                font-size: 2rem;
-            }
-            
-            .final-text {
-                font-size: 1.8rem;
-            }
-            
-            .snowflake {
-                font-size: 4rem; /* Уменьшено для мобильных */
-            }
-            
-            .page.with-bg {
-                padding: 25px;
-                min-height: 450px;
-            }
-            
-            .hint {
-                width: 100%;
-                position: relative;
-                left: auto;
-                top: auto;
-                transform: none;
-                margin: 20px auto;
-                min-height: 150px;
-            }
-            
-            .glitch-button {
-                padding: 12px 25px;
-                font-size: 1.1rem;
-            }
-            
-            .option {
-                padding: 16px 20px;
-                border-radius: 40px;
-            }
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .column-item {
+            padding: 14px 20px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #333;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 8px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .column-item:hover:not(.connected) {
+            background-color: #f5f7fa;
+            transform: scale(1.02);
+        }
+        
+        .column-item.selected {
+            border-color: #3071f2;
+            background-color: #f0f5ff;
+        }
+        
+        .column-item.connected {
+            border-color: #82d182;
+            background-color: #f0f9f0;
+            cursor: default;
+        }
+        
+        /* Кружочки для соединения */
+        .connection-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #3071f2;
+            z-index: 10;
+        }
+        
+        .left-column .connection-dot {
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .right-column .connection-dot {
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .column-item.connected .connection-dot {
+            background-color: #82d182;
+        }
+        
+        /* Линии соединения */
+        .connection-line {
+            position: absolute;
+            background-color: #3071f2;
+            height: 3px;
+            pointer-events: none;
+            z-index: 5;
+            transform-origin: 0 0;
+        }
+        
+        .check-button-wrapper {
+            margin-top: 40px;
+            text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        #specialTripleHint {
+            display: none;
+        }
+        
+        .reset-button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            display: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            box-shadow: 0 4px 0 #d35454, 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+        
+        .reset-button:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #d35454, 0 8px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .reset-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #d35454, 0 3px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -506,7 +527,7 @@
     <!-- Страница 2: Вопрос 1 -->
     <div id="page2" class="page with-bg">
         <div class="page-number">1</div>
-        <div id="timer" class="timer">01:00</div>
+        <div id="timer1" class="timer">01:00</div>
         <h2 class="question-title">Хм! Как думаешь, кого любит кэкс?!</h2>
         
         <div class="options">
@@ -538,6 +559,7 @@
     <!-- Страница 3: Вопрос 2 -->
     <div id="page3" class="page with-bg">
         <div class="page-number">2</div>
+        <div id="timer2" class="timer">01:00</div>
         <h2 class="question-title">Что?</h2>
         
         <div class="options">
@@ -550,7 +572,8 @@
         
         <div id="correctHint2" class="hint">
             <div class="close-hint"></div>
-            Да, конечно, я твой кексик (⁠ ⁠˘⁠ ⁠³⁠˘⁠)
+            Да, конечно, я твой кексик<br>
+            <span class="emoji-new-line">(⁠ ⁠˘⁠ ⁠³⁠˘⁠)</span>
         </div>
         
         <div id="incorrectHint3" class="hint">
@@ -581,6 +604,7 @@
     <!-- Страница 4: Вопрос 3 -->
     <div id="page4" class="page with-bg">
         <div class="page-number">3</div>
+        <div id="timer3" class="timer">01:00</div>
         <h2 class="question-title">Which translation has word "Bouquet"?</h2>
         
         <div class="options">
@@ -601,483 +625,855 @@
         </div>
     </div>
     
-    <!-- Страница 5: Финальная -->
-    <div id="page5" class="page title-page">
+    <!-- Страница 5: Вопрос 4 -->
+    <div id="page5" class="page with-bg">
+        <div class="page-number">4</div>
+        <div id="timer4" class="timer">01:00</div>
+        <h2 class="question-title">О чём я рассказывала тебе в понедельник?</h2>
+        
+        <div class="options">
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint7">О своей сраке во втором классе</div>
+            <div class="option" data-answer="correct" data-hint="correctHint4">О помидорном соке</div>
+            <div class="option" data-answer="incorrect" data-hint="incorrectHint8">О том, как люблю тебя</div>
+            <div class="option special-option" data-answer="special" data-hint="specialHint" data-clicks="0">О том, как люблю рыб</div>
+        </div>
+        
+        <div id="correctHint4" class="hint">
+            <div class="close-hint"></div>
+            О томатном, ага<br>
+            <span class="emoji-new-line">(⁠●⁠´⁠⌓⁠`⁠●⁠)</span>
+        </div>
+        
+        <div id="incorrectHint7" class="hint">
+            <div class="close-hint"></div>
+            Это было раньше!!!
+        </div>
+        
+        <div id="incorrectHint8" class="hint">
+            <div class="close-hint"></div>
+            А ты этого хочешь?
+        </div>
+        
+        <div id="specialHint" class="hint">
+            <div class="close-hint"></div>
+            я думаю, что об этом необязательно рассказывать, и так очевидно же.. ┐⁠(⁠ ⁠˘⁠_⁠˘⁠)⁠┌
+        </div>
+        
+        <!-- Новая подсказка после 3 кликов -->
+        <div id="specialTripleHint" class="hint triple-click-hint">
+            <div class="close-hint"></div>
+            Вписать
+        </div>
+        
+        <div class="next-button-wrapper">
+            <button id="nextButton4" class="button next-button">Далее!</button>
+        </div>
+    </div>
+    
+    <!-- Страница 5.5: Вопрос 5 (Невинная химия) -->
+    <div id="page5_5" class="page with-bg">
+        <div class="page-number">5</div>
+        <div id="timer5" class="timer">01:00</div>
+        <h2 class="question-title">Невинная химия</h2>
+        <p>Соедини левые и правые элементы правильно:</p>
+        
+        <div class="columns-container">
+            <!-- Левый столбик -->
+            <div class="column left-column" id="leftColumn">
+                <div class="column-item" data-id="1">
+                    Оксид серы + кислород
+                    <div class="connection-dot"></div>
+                </div>
+                <div class="column-item" data-id="2">
+                    Серебро + азотная кислота
+                    <div class="connection-dot"></div>
+                </div>
+                <div class="column-item" data-id="3">
+                    Хлорид бария + серная кислота
+                    <div class="connection-dot"></div>
+                </div>
+                <div class="column-item" data-id="4">
+                    Сульфат меди + гидроксид натрия
+                    <div class="connection-dot"></div>
+                </div>
+                <div class="column-item" data-id="5">
+                    Оксид углерода + углерод
+                    <div class="connection-dot"></div>
+                </div>
+            </div>
+            
+            <!-- Правый столбик -->
+            <div class="column right-column" id="rightColumn">
+                <div class="column-item" data-id="a">
+                    <div class="connection-dot"></div>
+                    Оксид серы
+                </div>
+                <div class="column-item" data-id="b">
+                    <div class="connection-dot"></div>
+                    Гидроксид меди
+                </div>
+                <div class="column-item" data-id="c">
+                    <div class="connection-dot"></div>
+                    Нитрат серебра
+                </div>
+                <div class="column-item" data-id="d">
+                    <div class="connection-dot"></div>
+                    Угарный газ
+                </div>
+                <div class="column-item" data-id="e">
+                    <div class="connection-dot"></div>
+                    Сульфат бария
+                </div>
+            </div>
+        </div>
+        
+        <!-- Подсказки для 5 вопроса -->
+        <div id="chemistryWrongHint" class="hint">
+            <div class="close-hint"></div>
+            Есть что-то неправильное<br>
+            <span class="emoji-new-line">(⁠；⁠^⁠ω⁠^⁠)</span>
+        </div>
+        
+        <div id="chemistryCorrectHint" class="hint">
+            <div class="close-hint"></div>
+            КАКАЯ ТЫ УМНИЧКА, восхищяюсь!
+        </div>
+        
+        <div class="check-button-wrapper">
+            <button id="checkChemistryButton" class="button" disabled>Проверить :3</button>
+            <button id="resetChemistryButton" class="reset-button">Сброс</button>
+            <button id="nextButton5" class="button next-button" style="display: none;">Далее!</button>
+        </div>
+    </div>
+    
+    <!-- Страница 6: Финальная -->
+    <div id="page6" class="page title-page">
         <h1>Дальше! Будет кое-то еще БОЛЕЕ интересное</h1>
         <p>Лишь нажми на кнопку внизу..</p>
         
-        <button id="page5Button" class="glitch-button">Нажимай!</button>
+        <button id="page6Button" class="glitch-button">Нажимай!</button>
     </div>
-
     <script>
-        // Функция для создания уменьшенных и смещенных снежинок
-        function createOffsetSnowflakes() {
-            const body = document.body;
-            
-            // Очищаем старые снежинки
-            const oldSnowflakes = document.querySelectorAll('.snowflake');
-            oldSnowflakes.forEach(snowflake => snowflake.remove());
-            
-            // Более плотная сетка (меньше снежинок, но они меньше)
-            const rows = 10; // Уменьшили количество строк
-            const cols = 7;  // Уменьшили количество столбцов
-            
-            // Расстояние между снежинками
-            const horizontalSpacing = 100 / (cols - 1);
-            const verticalSpacing = 100 / (rows - 1);
-            
-            // Символы снежинок (только два вида)
-            const snowflakeSymbols = ['❄', '❆'];
-            
-            // Цветовые классы
-            const colorClasses = ['color1', 'color2', 'color3'];
-            
-            // Массив для хранения позиций для проверки пересечений
-            const positions = [];
-            
-            for (let i = 0; i < rows; i++) {
-                for (let j = 0; j < cols; j++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.className = 'snowflake';
-                    
-                    // Чередуем символы
-                    const symbolIndex = (i + j) % 2;
-                    snowflake.textContent = snowflakeSymbols[symbolIndex];
-                    
-                    // Фиксированный размер 6rem (в 1.5 раза меньше)
-                    snowflake.style.fontSize = '6rem';
-                    
-                    // Базовое позиционирование
-                    let baseLeft = j * horizontalSpacing;
-                    let baseTop = i * verticalSpacing;
-                    
-                    // Смещение для разрушения столбикового эффекта
-                    // Нечетные строки смещаем вправо, четные - влево
-                    const horizontalOffset = (i % 2 === 0) ? 8 : -6;
-                    
-                    // Смещение вверх/вниз для создания волнообразного эффекта
-                    const verticalOffset = Math.sin(j * 0.8) * 5;
-                    
-                    // Финалные позиции со смещениями
-                    let left = baseLeft + horizontalOffset;
-                    let top = baseTop + verticalOffset;
-                    
-                    // Ограничиваем позиции в пределах экрана
-                    left = Math.max(2, Math.min(left, 98));
-                    top = Math.max(2, Math.min(top, 98));
-                    
-                    snowflake.style.left = `${left}%`;
-                    snowflake.style.top = `${top}%`;
-                    
-                    // Угол поворота с учетом позиции для разнообразия
-                    const rotation = (i * 45 + j * 60 + left + top) % 360;
-                    snowflake.style.transform = `rotate(${rotation}deg)`;
-                    
-                    // Распределяем цвета
-                    const colorIndex = (i * 2 + j) % 3;
-                    snowflake.classList.add(colorClasses[colorIndex]);
-                    
-                    // Разная прозрачность для глубины
-                    const opacity = 0.3 + (i % 3) * 0.1;
-                    snowflake.style.opacity = opacity.toString();
-                    
-                    // Сохраняем позицию для проверки пересечений
-                    positions.push({left, top});
-                    
-                    body.appendChild(snowflake);
-                }
-            }
-            
-            // Добавляем дополнительные смещенные снежинки для заполнения пробелов
-            const additionalRows = Math.floor(rows * 0.7);
-            const additionalCols = Math.floor(cols * 0.7);
-            
-            for (let i = 0; i < additionalRows; i++) {
-                for (let j = 0; j < additionalCols; j++) {
-                    const snowflake = document.createElement('div');
-                    snowflake.className = 'snowflake';
-                    
-                    // Обратный порядок символов для дополнительных снежинок
-                    const symbolIndex = (i + j + 1) % 2;
-                    snowflake.textContent = snowflakeSymbols[symbolIndex];
-                    
-                    // Немного меньший размер для дополнительных снежинок
-                    snowflake.style.fontSize = '5rem';
-                    
-                    // Позиционируем в промежутках между основными снежинками
-                    // со смещением от регулярной сетки
-                    const offsetMultiplier = 0.7;
-                    let left = (j + 0.5) * horizontalSpacing * offsetMultiplier;
-                    let top = (i + 0.5) * verticalSpacing * offsetMultiplier;
-                    
-                    // Дополнительные смещения для случайного вида
-                    const randomX = (Math.random() - 0.5) * 15;
-                    const randomY = (Math.random() - 0.5) * 15;
-                    
-                    left += randomX;
-                    top += randomY;
-                    
-                    // Ограничиваем позиции
-                    left = Math.max(1, Math.min(left, 99));
-                    top = Math.max(1, Math.min(top, 99));
-                    
-                    // Проверяем, не слишком ли близко к другим снежинкам
-                    let tooClose = false;
-                    for (const pos of positions) {
-                        const distance = Math.sqrt(
-                            Math.pow(pos.left - left, 2) + 
-                            Math.pow(pos.top - top, 2)
-                        );
-                        if (distance < 8) { // Минимальное расстояние
-                            tooClose = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!tooClose) {
-                        snowflake.style.left = `${left}%`;
-                        snowflake.style.top = `${top}%`;
-                        
-                        // Угол поворота
-                        const rotation = (i * 30 + j * 90 + left * 2) % 360;
-                        snowflake.style.transform = `rotate(${rotation}deg)`;
-                        
-                        // Цвет
-                        const colorIndex = (i * 3 + j * 2) % 3;
-                        snowflake.classList.add(colorClasses[colorIndex]);
-                        
-                        // Меньшая прозрачность
-                        snowflake.style.opacity = '0.25';
-                        
-                        positions.push({left, top});
-                        body.appendChild(snowflake);
-                    }
-                }
+    // Функция для создания снежинок
+    function createOffsetSnowflakes() {
+        const body = document.body;
+        const oldSnowflakes = document.querySelectorAll('.snowflake');
+        oldSnowflakes.forEach(snowflake => snowflake.remove());
+        
+        const rows = 10;
+        const cols = 7;
+        const horizontalSpacing = 100 / (cols - 1);
+        const verticalSpacing = 100 / (rows - 1);
+        const snowflakeSymbols = ['❄', '❆'];
+        const colorClasses = ['color1', 'color2', 'color3'];
+        const positions = [];
+        
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                const symbolIndex = (i + j) % 2;
+                snowflake.textContent = snowflakeSymbols[symbolIndex];
+                snowflake.style.fontSize = '6rem';
+                
+                let baseLeft = j * horizontalSpacing;
+                let baseTop = i * verticalSpacing;
+                const horizontalOffset = (i % 2 === 0) ? 8 : -6;
+                const verticalOffset = Math.sin(j * 0.8) * 5;
+                let left = baseLeft + horizontalOffset;
+                let top = baseTop + verticalOffset;
+                
+                left = Math.max(2, Math.min(left, 98));
+                top = Math.max(2, Math.min(top, 98));
+                
+                snowflake.style.left = `${left}%`;
+                snowflake.style.top = `${top}%`;
+                
+                const rotation = (i * 45 + j * 60 + left + top) % 360;
+                snowflake.style.transform = `rotate(${rotation}deg)`;
+                
+                const colorIndex = (i * 2 + j) % 3;
+                snowflake.classList.add(colorClasses[colorIndex]);
+                
+                const opacity = 0.3 + (i % 3) * 0.1;
+                snowflake.style.opacity = opacity.toString();
+                
+                positions.push({left, top});
+                body.appendChild(snowflake);
             }
         }
+    }
+    
+    // Создаем снежинки один раз при загрузке
+    createOffsetSnowflakes();
+    
+    // Элементы страниц
+    const pages = {
+        1: document.getElementById('page1'),
+        2: document.getElementById('page2'),
+        3: document.getElementById('page3'),
+        4: document.getElementById('page4'),
+        5: document.getElementById('page5'),
+        "5_5": document.getElementById('page5_5'),
+        6: document.getElementById('page6')
+    };
+    
+    const startButton = document.getElementById('startButton');
+    const nextButton1 = document.getElementById('nextButton1');
+    const nextButton2 = document.getElementById('nextButton2');
+    const nextButton3 = document.getElementById('nextButton3');
+    const nextButton4 = document.getElementById('nextButton4');
+    const nextButton5 = document.getElementById('nextButton5');
+    const page6Button = document.getElementById('page6Button');
+    
+    // Массив таймеров
+    const timers = [
+        document.getElementById('timer1'),
+        document.getElementById('timer2'),
+        document.getElementById('timer3'),
+        document.getElementById('timer4'),
+        document.getElementById('timer5')
+    ];
+    
+    let timerIntervals = [null, null, null, null, null];
+    
+    // Функция для скрытия всех подсказок
+    function hideAllHints() {
+        document.querySelectorAll('.hint').forEach(hint => {
+            hint.style.display = 'none';
+        });
+    }
+    
+    // Функция для отключения всех вариантов на странице
+    function disableOptionsOnPage(pageId) {
+        document.querySelectorAll(`#${pageId} .option`).forEach(option => {
+            option.classList.add('disabled');
+            option.style.cursor = 'not-allowed';
+            option.style.opacity = '0.6';
+        });
+    }
+    
+    // Функция для автоматического закрытия подсказки через 8 секунд
+    function autoCloseHint(hintElement) {
+        setTimeout(() => {
+            if (hintElement.style.display === 'flex') {
+                hintElement.style.display = 'none';
+            }
+        }, 8000);
+    }
+    
+    // Функция для запуска таймера на странице
+    function startTimer(timerIndex) {
+        if (timerIntervals[timerIndex]) {
+            clearInterval(timerIntervals[timerIndex]);
+        }
         
-        // Создаем снежинки один раз при загрузке
-        createOffsetSnowflakes();
-        
-        // Элементы страниц
-        const pages = {
-            1: document.getElementById('page1'),
-            2: document.getElementById('page2'),
-            3: document.getElementById('page3'),
-            4: document.getElementById('page4'),
-            5: document.getElementById('page5')
-        };
-        
-        const startButton = document.getElementById('startButton');
-        const nextButton1 = document.getElementById('nextButton1');
-        const nextButton2 = document.getElementById('nextButton2');
-        const nextButton3 = document.getElementById('nextButton3');
-        const page5Button = document.getElementById('page5Button');
-        const timerDisplay = document.getElementById('timer');
-        
-        // Переменные для таймера
-        let timerInterval;
         let seconds = 60;
+        const timerDisplay = timers[timerIndex];
         
-        // Функция для скрытия всех подсказок
-        function hideAllHints() {
-            document.querySelectorAll('.hint').forEach(hint => {
-                hint.style.display = 'none';
-            });
-        }
+        timerDisplay.textContent = '01:00';
+        timerDisplay.classList.remove('expired');
         
-        // Функция для отключения всех вариантов на странице
-        function disableOptionsOnPage(pageId) {
-            document.querySelectorAll(`#${pageId} .option`).forEach(option => {
-                option.classList.add('disabled');
-                option.style.cursor = 'not-allowed';
-                option.style.opacity = '0.6';
-            });
-        }
-        
-        // Функция для автоматического закрытия подсказки через 8 секунд
-        function autoCloseHint(hintElement) {
-            setTimeout(() => {
-                if (hintElement.style.display === 'flex') {
-                    hintElement.style.display = 'none';
+        timerIntervals[timerIndex] = setInterval(function() {
+            seconds--;
+            
+            if (seconds >= 0) {
+                let mins = Math.floor(seconds / 60);
+                let secs = seconds % 60;
+                timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                if (seconds === 0) {
+                    timerDisplay.classList.add('expired');
                 }
-            }, 8000);
-        }
+            } else {
+                let absSeconds = Math.abs(seconds);
+                let mins = Math.floor(absSeconds / 60);
+                let secs = absSeconds % 60;
+                timerDisplay.textContent = `-${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+    }
+    
+    // Переменная для подсчета кликов по специальному варианту
+    let specialOptionClicks = 0;
+    
+    // Начало теста
+    startButton.addEventListener('click', function() {
+        pages[1].classList.remove('active');
+        pages[2].classList.add('active');
         
-        // Начало теста
-        startButton.addEventListener('click', function() {
-            pages[1].classList.remove('active');
-            pages[2].classList.add('active');
-            
-            seconds = 60;
-            timerDisplay.textContent = '01:00';
-            timerDisplay.classList.remove('expired');
-            
-            // Скрываем все подсказки при переходе
-            hideAllHints();
-            
-            // Скрываем кнопку "Далее!"
-            nextButton1.style.display = 'none';
-            
-            // Сбрасываем все классы стилей у вариантов ответов
-            document.querySelectorAll('#page2 .option').forEach(option => {
-                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
-                option.style.cursor = 'pointer';
-                option.style.opacity = '1';
-                option.style.borderColor = '#ddd';
-                option.style.backgroundColor = 'white';
-                option.style.transform = 'translateX(0)';
-            });
-            
-            startTimer();
+        hideAllHints();
+        nextButton1.style.display = 'none';
+        
+        document.querySelectorAll('#page2 .option').forEach(option => {
+            option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+            option.style.cursor = 'pointer';
+            option.style.opacity = '1';
+            option.style.borderColor = '#ddd';
+            option.style.backgroundColor = 'white';
+            option.style.transform = 'scale(1)';
         });
         
-        // Запуск таймера
-        function startTimer() {
-            clearInterval(timerInterval);
+        startTimer(0);
+    });
+    
+    // Обработка выбора ответа для страницы 2
+    document.querySelectorAll('#page2 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            if (this.classList.contains('disabled')) return;
             
-            timerInterval = setInterval(function() {
-                seconds--;
-                
-                if (seconds >= 0) {
-                    let mins = Math.floor(seconds / 60);
-                    let secs = seconds % 60;
-                    timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                    
-                    if (seconds === 0) {
-                        timerDisplay.classList.add('expired');
-                    }
-                } else {
-                    let absSeconds = Math.abs(seconds);
-                    let mins = Math.floor(absSeconds / 60);
-                    let secs = absSeconds % 60;
-                    timerDisplay.textContent = `-${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                }
-            }, 1000);
-        }
+            const hintId = this.dataset.hint;
+            const isCorrect = this.dataset.answer === 'correct';
+            
+            hideAllHints();
+            
+            const hint = document.getElementById(hintId);
+            if (hint) {
+                hint.style.display = 'flex';
+                autoCloseHint(hint);
+            }
+            
+            document.querySelectorAll('#page2 .option').forEach(opt => {
+                opt.classList.remove('correct-selected', 'incorrect-selected');
+            });
+            
+            if (isCorrect) {
+                this.classList.add('correct-selected');
+            } else {
+                this.classList.add('incorrect-selected');
+            }
+            
+            if (isCorrect) {
+                nextButton1.style.display = 'inline-block';
+                disableOptionsOnPage('page2');
+            } else {
+                nextButton1.style.display = 'none';
+            }
+            
+            document.querySelectorAll('#page2 .option').forEach(opt => {
+                opt.style.transform = 'scale(1)';
+            });
+        });
+    });
+    
+    // Переход от страницы 2 к 3
+    nextButton1.addEventListener('click', function() {
+        pages[2].classList.remove('active');
+        pages[3].classList.add('active');
         
-        // Обработка выбора ответа для страницы 2
-        document.querySelectorAll('#page2 .option').forEach(option => {
-            option.addEventListener('click', function() {
-                if (this.classList.contains('disabled')) return;
-                
-                const hintId = this.dataset.hint;
-                const isCorrect = this.dataset.answer === 'correct';
-                
-                // Скрываем все подсказки
-                hideAllHints();
-                
-                // Показываем нужную подсказку слева
+        hideAllHints();
+        nextButton2.style.display = 'none';
+        
+        document.querySelectorAll('#page3 .option').forEach(option => {
+            option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+            option.style.cursor = 'pointer';
+            option.style.opacity = '1';
+            option.style.borderColor = '#ddd';
+            option.style.backgroundColor = 'white';
+            option.style.transform = 'scale(1)';
+        });
+        
+        startTimer(1);
+    });
+    
+    // Обработка выбора ответа для страницы 3
+    document.querySelectorAll('#page3 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            if (this.classList.contains('disabled')) return;
+            
+            const hintId = this.dataset.hint;
+            const isCorrect = this.dataset.answer === 'correct';
+            
+            hideAllHints();
+            
+            if (hintId) {
                 const hint = document.getElementById(hintId);
                 if (hint) {
                     hint.style.display = 'flex';
-                    // Автоматическое закрытие через 8 секунд
                     autoCloseHint(hint);
                 }
-                
-                // Убираем все классы выделения у всех вариантов
-                document.querySelectorAll('#page2 .option').forEach(opt => {
-                    opt.classList.remove('correct-selected', 'incorrect-selected');
-                });
-                
-                // Добавляем соответствующий класс выделения
-                if (isCorrect) {
-                    this.classList.add('correct-selected');
-                } else {
-                    this.classList.add('incorrect-selected');
-                }
-                
-                // Если ответ правильный - показываем кнопку "Далее"
-                if (isCorrect) {
-                    nextButton1.style.display = 'inline-block';
-                    // Блокируем все варианты ответов
-                    disableOptionsOnPage('page2');
-                } else {
-                    nextButton1.style.display = 'none';
-                }
-                
-                // Сбрасываем трансформацию у всех вариантов
-                document.querySelectorAll('#page2 .option').forEach(opt => {
-                    opt.style.transform = 'translateX(0)';
-                });
-                
-                // Анимируем выбранный вариант
-                this.style.transform = 'translateX(5px)';
+            }
+            
+            document.querySelectorAll('#page3 .option').forEach(opt => {
+                opt.classList.remove('correct-selected', 'incorrect-selected');
+            });
+            
+            if (isCorrect) {
+                this.classList.add('correct-selected');
+            } else {
+                this.classList.add('incorrect-selected');
+            }
+            
+            if (isCorrect) {
+                nextButton2.style.display = 'inline-block';
+                disableOptionsOnPage('page3');
+            } else {
+                nextButton2.style.display = 'none';
+            }
+            
+            document.querySelectorAll('#page3 .option').forEach(opt => {
+                opt.style.transform = 'scale(1)';
             });
         });
+    });
+    
+    // Переход от страницы 3 к 4
+    nextButton2.addEventListener('click', function() {
+        pages[3].classList.remove('active');
+        pages[4].classList.add('active');
         
-        // Переход от страницы 2 к 3
-        nextButton1.addEventListener('click', function() {
-            pages[2].classList.remove('active');
-            pages[3].classList.add('active');
-            clearInterval(timerInterval);
+        hideAllHints();
+        nextButton3.style.display = 'none';
+        
+        document.querySelectorAll('#page4 .option').forEach(option => {
+            option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+            option.style.cursor = 'pointer';
+            option.style.opacity = '1';
+            option.style.borderColor = '#ddd';
+            option.style.backgroundColor = 'white';
+            option.style.transform = 'scale(1)';
+        });
+        
+        startTimer(2);
+    });
+    
+    // Обработка выбора ответа для страницы 4
+    document.querySelectorAll('#page4 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            if (this.classList.contains('disabled')) return;
             
-            // Скрываем все подсказки
+            const hintId = this.dataset.hint;
+            const isCorrect = this.dataset.answer === 'correct';
+            
             hideAllHints();
             
-            // Скрываем кнопку "Далее!"
-            nextButton2.style.display = 'none';
+            if (hintId && isCorrect) {
+                const hint = document.getElementById(hintId);
+                if (hint) {
+                    hint.style.display = 'flex';
+                    autoCloseHint(hint);
+                }
+            }
             
-            // Сбрасываем все классы стилей у вариантов ответов
-            document.querySelectorAll('#page3 .option').forEach(option => {
-                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
-                option.style.cursor = 'pointer';
-                option.style.opacity = '1';
-                option.style.borderColor = '#ddd';
-                option.style.backgroundColor = 'white';
-                option.style.transform = 'translateX(0)';
+            document.querySelectorAll('#page4 .option').forEach(opt => {
+                opt.classList.remove('correct-selected', 'incorrect-selected');
+            });
+            
+            if (isCorrect) {
+                this.classList.add('correct-selected');
+            } else {
+                this.classList.add('incorrect-selected');
+            }
+            
+            if (isCorrect) {
+                nextButton3.style.display = 'inline-block';
+                disableOptionsOnPage('page4');
+            } else {
+                nextButton3.style.display = 'none';
+            }
+            
+            document.querySelectorAll('#page4 .option').forEach(opt => {
+                opt.style.transform = 'scale(1)';
             });
         });
+    });
+    
+    // Переход от страницы 4 к 5
+    nextButton3.addEventListener('click', function() {
+        pages[4].classList.remove('active');
+        pages[5].classList.add('active');
         
-        // Обработка выбора ответа для страницы 3
-        document.querySelectorAll('#page3 .option').forEach(option => {
-            option.addEventListener('click', function() {
-                if (this.classList.contains('disabled')) return;
+        hideAllHints();
+        nextButton4.style.display = 'none';
+        specialOptionClicks = 0;
+        
+        document.querySelectorAll('#page5 .option').forEach(option => {
+            option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
+            option.style.cursor = 'pointer';
+            option.style.opacity = '1';
+            option.style.borderColor = '#ddd';
+            option.style.backgroundColor = 'white';
+            option.style.transform = 'scale(1)';
+            
+            if (option.classList.contains('special-option')) {
+                option.dataset.clicks = '0';
+            }
+        });
+        
+        startTimer(3);
+    });
+    
+    // Обработка выбора ответа для страницы 5
+    document.querySelectorAll('#page5 .option').forEach(option => {
+        option.addEventListener('click', function() {
+            if (this.classList.contains('disabled')) return;
+            
+            const hintId = this.dataset.hint;
+            const answerType = this.dataset.answer;
+            const isCorrect = answerType === 'correct';
+            const isSpecial = answerType === 'special';
+            
+            hideAllHints();
+            
+            // Обработка специального варианта (клики подсчитываются)
+            if (isSpecial) {
+                let clicks = parseInt(this.dataset.clicks) || 0;
+                clicks++;
+                this.dataset.clicks = clicks;
                 
-                const hintId = this.dataset.hint;
-                const isCorrect = this.dataset.answer === 'correct';
-                
-                // Скрываем все подсказки
-                hideAllHints();
-                
-                // Показываем подсказку только если она есть и ответ правильный
+                if (clicks === 3) {
+                    // После 3 кликов показываем новую подсказку
+                    const tripleHint = document.getElementById('specialTripleHint');
+                    tripleHint.style.display = 'flex';
+                    autoCloseHint(tripleHint);
+                } else {
+                    // До 3 кликов показываем обычную подсказку
+                    if (hintId) {
+                        const hint = document.getElementById(hintId);
+                        if (hint) {
+                            hint.style.display = 'flex';
+                            autoCloseHint(hint);
+                        }
+                    }
+                }
+            } else {
+                // Обычные варианты
                 if (hintId) {
                     const hint = document.getElementById(hintId);
                     if (hint) {
                         hint.style.display = 'flex';
-                        // Автоматическое закрытие через 8 секунд
                         autoCloseHint(hint);
                     }
                 }
-                
-                // Убираем все классы выделения у всех вариантов
-                document.querySelectorAll('#page3 .option').forEach(opt => {
-                    opt.classList.remove('correct-selected', 'incorrect-selected');
-                });
-                
-                // Добавляем соответствующий класс выделения
-                if (isCorrect) {
-                    this.classList.add('correct-selected');
-                } else {
-                    this.classList.add('incorrect-selected');
-                }
-                
-                // Если ответ правильный - показываем кнопку "Далее"
-                if (isCorrect) {
-                    nextButton2.style.display = 'inline-block';
-                    // Блокируем все варианты ответов
-                    disableOptionsOnPage('page3');
-                } else {
-                    nextButton2.style.display = 'none';
-                }
-                
-                // Сбрасываем трансформацию у всех вариантов
-                document.querySelectorAll('#page3 .option').forEach(opt => {
-                    opt.style.transform = 'translateX(0)';
-                });
-                
-                // Анимируем выбранный вариант
-                this.style.transform = 'translateX(5px)';
+            }
+            
+            // Убираем все классы выделения у всех вариантов
+            document.querySelectorAll('#page5 .option').forEach(opt => {
+                opt.classList.remove('correct-selected', 'incorrect-selected');
+            });
+            
+            // Добавляем соответствующий класс выделения
+            if (isCorrect) {
+                this.classList.add('correct-selected');
+            } else if (!isSpecial) {
+                this.classList.add('incorrect-selected');
+            }
+            
+            // Если ответ правильный - показываем кнопку "Далее"
+            if (isCorrect) {
+                nextButton4.style.display = 'inline-block';
+                disableOptionsOnPage('page5');
+            } else {
+                nextButton4.style.display = 'none';
+            }
+            
+            // Сбрасываем трансформацию у всех вариантов
+            document.querySelectorAll('#page5 .option').forEach(opt => {
+                opt.style.transform = 'scale(1)';
             });
         });
+    });
+    
+    // Переход от страницы 5 к 5.5
+    nextButton4.addEventListener('click', function() {
+        pages[5].classList.remove('active');
+        pages["5_5"].classList.add('active');
         
-        // Переход от страницы 3 к 4
-        nextButton2.addEventListener('click', function() {
-            pages[3].classList.remove('active');
-            pages[4].classList.add('active');
+        hideAllHints();
+        
+        // Сброс состояния для химического вопроса
+        resetChemistryQuestion();
+        
+        startTimer(4);
+    });
+    
+    // Логика для 5-го вопроса (химия)
+    let selectedLeft = null;
+    let selectedRight = null;
+    let connections = [];
+    
+    // Правильные соединения: 1-a, 2-c, 3-e, 4-b, 5-d
+    const correctConnections = {
+        '1': 'a',
+        '2': 'c', 
+        '3': 'e',
+        '4': 'b',
+        '5': 'd'
+    };
+    
+    // Функция для получения координат кружочков
+    function getDotCoordinates(element, isLeft) {
+        const rect = element.getBoundingClientRect();
+        const containerRect = document.querySelector('.columns-container').getBoundingClientRect();
+        
+        if (isLeft) {
+            return {
+                x: rect.right - containerRect.left,
+                y: rect.top - containerRect.top + rect.height / 2
+            };
+        } else {
+            return {
+                x: rect.left - containerRect.left,
+                y: rect.top - containerRect.top + rect.height / 2
+            };
+        }
+    }
+    
+    function resetChemistryQuestion() {
+        selectedLeft = null;
+        selectedRight = null;
+        connections = [];
+        
+        // Сбрасываем все элементы
+        document.querySelectorAll('.column-item').forEach(item => {
+            item.classList.remove('selected', 'connected');
+            item.style.cursor = 'pointer';
+        });
+        
+        // Удаляем все линии
+        document.querySelectorAll('.connection-line').forEach(line => line.remove());
+        
+        // Сбрасываем кнопки
+        document.getElementById('checkChemistryButton').disabled = true;
+        document.getElementById('resetChemistryButton').style.display = 'none';
+        document.getElementById('nextButton5').style.display = 'none';
+        document.getElementById('checkChemistryButton').textContent = 'Проверить :3';
+        hideAllHints();
+    }
+    
+    // Обработчики для элементов левого столбца
+    document.querySelectorAll('#leftColumn .column-item').forEach(item => {
+        item.addEventListener('click', function() {
+            if (this.classList.contains('connected')) return;
             
-            // Скрываем все подсказки
-            hideAllHints();
-            
-            // Скрываем кнопку "Далее!"
-            nextButton3.style.display = 'none';
-            
-            // Сбрасываем все классы стилей у вариантов ответов
-            document.querySelectorAll('#page4 .option').forEach(option => {
-                option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
-                option.style.cursor = 'pointer';
-                option.style.opacity = '1';
-                option.style.borderColor = '#ddd';
-                option.style.backgroundColor = 'white';
-                option.style.transform = 'translateX(0)';
+            // Снимаем выделение со всех левых элементов
+            document.querySelectorAll('#leftColumn .column-item').forEach(el => {
+                el.classList.remove('selected');
             });
-        });
-        
-        // Обработка выбора ответа для страницы 4
-        document.querySelectorAll('#page4 .option').forEach(option => {
-            option.addEventListener('click', function() {
-                if (this.classList.contains('disabled')) return;
-                
-                const hintId = this.dataset.hint;
-                const isCorrect = this.dataset.answer === 'correct';
-                
-                // Скрываем все подсказки
-                hideAllHints();
-                
-                // Показываем подсказку только если она есть и ответ правильный
-                if (hintId && isCorrect) {
-                    const hint = document.getElementById(hintId);
-                    if (hint) {
-                        hint.style.display = 'flex';
-                        // Автоматическое закрытие через 8 секунд
-                        autoCloseHint(hint);
-                    }
-                }
-                
-                // Убираем все классы выделения у всех вариантов
-                document.querySelectorAll('#page4 .option').forEach(opt => {
-                    opt.classList.remove('correct-selected', 'incorrect-selected');
-                });
-                
-                // Добавляем соответствующий класс выделения
-                if (isCorrect) {
-                    this.classList.add('correct-selected');
-                } else {
-                    this.classList.add('incorrect-selected');
-                }
-                
-                // Если ответ правильный - показываем кнопку "Далее"
-                if (isCorrect) {
-                    nextButton3.style.display = 'inline-block';
-                    // Блокируем все варианты ответов
-                    disableOptionsOnPage('page4');
-                } else {
-                    nextButton3.style.display = 'none';
-                }
-                
-                // Сбрасываем трансформацию у всех вариантов
-                document.querySelectorAll('#page4 .option').forEach(opt => {
-                    opt.style.transform = 'translateX(0)';
-                });
-                
-                // Анимируем выбранный вариант
-                this.style.transform = 'translateX(5px)';
-            });
-        });
-        
-        // Переход от страницы 4 к 5
-        nextButton3.addEventListener('click', function() {
-            pages[4].classList.remove('active');
-            pages[5].classList.add('active');
             
-            // Скрываем все подсказки
-            hideAllHints();
+            // Если этот элемент уже выбран, снимаем выделение
+            if (selectedLeft === this) {
+                selectedLeft = null;
+                this.classList.remove('selected');
+            } else {
+                // Выделяем новый элемент
+                this.classList.add('selected');
+                selectedLeft = this;
+                
+                // Если есть выбранный правый элемент, создаем соединение
+                if (selectedRight) {
+                    createConnection(selectedLeft.dataset.id, selectedRight.dataset.id);
+                    selectedLeft = null;
+                    selectedRight = null;
+                    
+                    // Снимаем выделение
+                    document.querySelectorAll('.column-item').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                }
+            }
+            
+            // Проверяем, можно ли активировать кнопку проверки
+            updateCheckButton();
         });
-        
-        // Обработчик клика по кнопке на странице 5
-        page5Button.addEventListener('click', function() {
-            pages[5].classList.remove('active');
-            pages[1].classList.add('active');
-        });
-        
-        // Обработчик для крестиков закрытия подсказок
-        document.querySelectorAll('.close-hint').forEach(closeBtn => {
-            closeBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const hint = this.parentElement;
-                hint.style.display = 'none';
+    });
+    
+    // Обработчики для элементов правого столбца
+    document.querySelectorAll('#rightColumn .column-item').forEach(item => {
+        item.addEventListener('click', function() {
+            if (this.classList.contains('connected')) return;
+            
+            // Снимаем выделение со всех правых элементов
+            document.querySelectorAll('#rightColumn .column-item').forEach(el => {
+                el.classList.remove('selected');
             });
+            
+            // Если этот элемент уже выбран, снимаем выделение
+            if (selectedRight === this) {
+                selectedRight = null;
+                this.classList.remove('selected');
+            } else {
+                // Выделяем новый элемент
+                this.classList.add('selected');
+                selectedRight = this;
+                
+                // Если есть выбранный левый элемент, создаем соединение
+                if (selectedLeft) {
+                    createConnection(selectedLeft.dataset.id, selectedRight.dataset.id);
+                    selectedLeft = null;
+                    selectedRight = null;
+                    
+                    // Снимаем выделение
+                    document.querySelectorAll('.column-item').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                }
+            }
+            
+            // Проверяем, можно ли активировать кнопку проверки
+            updateCheckButton();
         });
-    </script>
+    });
+    
+    function createConnection(leftId, rightId) {
+        // Проверяем, не соединен ли уже этот элемент
+        const leftConnected = connections.find(conn => conn.left === leftId);
+        const rightConnected = connections.find(conn => conn.right === rightId);
+        
+        if (leftConnected || rightConnected) {
+            // Удаляем старое соединение
+            connections = connections.filter(conn => 
+                conn.left !== leftId && conn.right !== rightId
+            );
+            
+            // Снимаем connected класс со старых элементов
+            document.querySelectorAll(`[data-id="${leftId}"]`).forEach(el => {
+                el.classList.remove('connected');
+            });
+            document.querySelectorAll(`[data-id="${rightId}"]`).forEach(el => {
+                el.classList.remove('connected');
+            });
+            
+            // Удаляем старые линии
+            document.querySelectorAll('.connection-line').forEach(line => line.remove());
+        }
+        
+        // Добавляем новое соединение
+        connections.push({left: leftId, right: rightId});
+        
+        // Добавляем connected класс к элементам
+        document.querySelectorAll(`[data-id="${leftId}"]`).forEach(el => {
+            el.classList.add('connected');
+        });
+        document.querySelectorAll(`[data-id="${rightId}"]`).forEach(el => {
+            el.classList.add('connected');
+        });
+        
+        // Создаем визуальные линии соединения
+        drawConnectionLines();
+    }
+    
+    function drawConnectionLines() {
+        // Удаляем старые линии
+        document.querySelectorAll('.connection-line').forEach(line => line.remove());
+        
+        // Создаем новые линии для каждого соединения
+        connections.forEach(conn => {
+            const leftElement = document.querySelector(`#leftColumn [data-id="${conn.left}"]`);
+            const rightElement = document.querySelector(`#rightColumn [data-id="${conn.right}"]`);
+            
+            if (leftElement && rightElement) {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                
+                const leftCoords = getDotCoordinates(leftElement, true);
+                const rightCoords = getDotCoordinates(rightElement, false);
+                
+                const length = Math.sqrt(
+                    Math.pow(rightCoords.x - leftCoords.x, 2) + 
+                    Math.pow(rightCoords.y - leftCoords.y, 2)
+                );
+                
+                const angle = Math.atan2(
+                    rightCoords.y - leftCoords.y, 
+                    rightCoords.x - leftCoords.x
+                ) * 180 / Math.PI;
+                
+                line.style.width = `${length}px`;
+                line.style.left = `${leftCoords.x}px`;
+                line.style.top = `${leftCoords.y}px`;
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.transformOrigin = '0 0';
+                
+                document.querySelector('.columns-container').appendChild(line);
+            }
+        });
+    }
+    
+    function updateCheckButton() {
+        const checkButton = document.getElementById('checkChemistryButton');
+        if (connections.length === 5) {
+            checkButton.disabled = false;
+        } else {
+            checkButton.disabled = true;
+        }
+    }
+    
+    // Обработчик кнопки проверки
+    document.getElementById('checkChemistryButton').addEventListener('click', function() {
+        hideAllHints();
+        
+        let allCorrect = true;
+        
+        // Проверяем каждое соединение
+        connections.forEach(conn => {
+            if (correctConnections[conn.left] !== conn.right) {
+                allCorrect = false;
+            }
+        });
+        
+        if (allCorrect) {
+            // Все правильно
+            const correctHint = document.getElementById('chemistryCorrectHint');
+            correctHint.style.display = 'flex';
+            autoCloseHint(correctHint);
+            
+            // Меняем кнопку
+            this.style.display = 'none';
+            document.getElementById('resetChemistryButton').style.display = 'none';
+            document.getElementById('nextButton5').style.display = 'inline-block';
+        } else {
+            // Есть ошибки
+            const wrongHint = document.getElementById('chemistryWrongHint');
+            wrongHint.style.display = 'flex';
+            autoCloseHint(wrongHint);
+            
+            // Меняем кнопку "Проверить :3" на "Сброс"
+            this.style.display = 'none';
+            document.getElementById('resetChemistryButton').style.display = 'inline-block';
+        }
+    });
+    
+    // Обработчик кнопки сброса
+    document.getElementById('resetChemistryButton').addEventListener('click', function() {
+        resetChemistryQuestion();
+        this.style.display = 'none';
+        document.getElementById('checkChemistryButton').style.display = 'inline-block';
+    });
+    
+    // Переход от страницы 5.5 к 6
+    nextButton5.addEventListener('click', function() {
+        pages["5_5"].classList.remove('active');
+        pages[6].classList.add('active');
+        
+        hideAllHints();
+    });
+    
+    // Обработчик клика по кнопке на странице 6
+    page6Button.addEventListener('click', function() {
+        pages[6].classList.remove('active');
+        pages[1].classList.add('active');
+    });
+    
+    // Обработчик для крестиков закрытия подсказок
+    document.querySelectorAll('.close-hint').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const hint = this.parentElement;
+            hint.style.display = 'none';
+        });
+    });
+    
+    // Обработчик изменения размера окна для перерисовки линий
+    window.addEventListener('resize', function() {
+        drawConnectionLines();
+    });
+    
+    // Инициализация при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        // Скрываем кнопку сброса при загрузке
+        document.getElementById('resetChemistryButton').style.display = 'none';
+    });
+</script>
 </body>
 </html>
