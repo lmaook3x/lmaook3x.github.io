@@ -948,19 +948,6 @@
     // Глобальная переменная для отслеживания розовой подсказки
     let pinkHintTriggered = false;
     
-    // Сохраняем состояние в localStorage
-    function savePinkHintState() {
-        localStorage.setItem('pinkHintTriggered', pinkHintTriggered);
-    }
-    
-    // Загружаем состояние из localStorage при загрузке
-    window.addEventListener('load', function() {
-        const savedState = localStorage.getItem('pinkHintTriggered');
-        if (savedState !== null) {
-            pinkHintTriggered = savedState === 'true';
-        }
-    });
-    
     // Функция для создания снежинок
     function createOffsetSnowflakes() {
         const body = document.body;
@@ -1112,9 +1099,6 @@
             }
         }, 1000);
     }
-    
-    // Переменная для подсчета кликов по специальному варианту
-    let specialOptionClicks = 0;
     
     // Начало теста
     startButton.addEventListener('click', function() {
@@ -1279,13 +1263,7 @@
                     const tripleHint = document.getElementById('specialTripleHint');
                     tripleHint.style.display = 'flex';
                     autoCloseHint(tripleHint);
-                    pinkHintTriggered = true; // Устанавливаем триггер
-                    savePinkHintState(); // Сохраняем состояние
-                    
-                    // Если уже был нажат правильный ответ, показываем кнопку "Далее"
-                    if (document.querySelector('#page4 .option.correct-selected')) {
-                        nextButton3.style.display = 'inline-block';
-                    }
+                    pinkHintTriggered = true; // ВАЖНО: устанавливаем флаг
                 } else {
                     // До 3 кликов показываем обычную подсказку
                     if (hintId) {
@@ -1322,12 +1300,11 @@
             // Если ответ правильный - показываем кнопку "Далее" и блокируем ВСЕ варианты
             if (isCorrect) {
                 nextButton3.style.display = 'inline-block';
-                disableOptionsOnPage('page4'); // Блокируем ВСЕ варианты
+                disableOptionsOnPage('page4');
             } else {
                 nextButton3.style.display = 'none';
             }
             
-            // Сбрасываем трансформацию у всех вариантов
             document.querySelectorAll('#page4 .option').forEach(opt => {
                 opt.style.transform = 'scale(1)';
             });
@@ -1341,7 +1318,6 @@
         
         hideAllHints();
         nextButton4.style.display = 'none';
-        specialOptionClicks = 0;
         
         document.querySelectorAll('#page5 .option').forEach(option => {
             option.classList.remove('disabled', 'correct-selected', 'incorrect-selected');
@@ -1423,7 +1399,6 @@
                 nextButton4.style.display = 'none';
             }
             
-            // Сбрасываем трансформацию у всех вариантов
             document.querySelectorAll('#page5 .option').forEach(opt => {
                 opt.style.transform = 'scale(1)';
             });
@@ -1838,15 +1813,8 @@
         
         pages[7].classList.remove('active');
         
-        // Подсчитываем количество найденных розовых подсказок
-        let materialCount = 0;
-        if (pinkHintTriggered) materialCount = 1; // Всегда 1, если триггер сработал
-        
-        // Обновляем счетчик материалов
-        const materialCountElement = document.getElementById('materialCount');
-        if (materialCountElement) {
-            materialCountElement.textContent = materialCount;
-        }
+        // ВАЖНО: Обновляем счетчик на последней странице
+        updateMaterialCount();
         
         if (selectedAnswer7 === 'cucumber') {
             pages[8].classList.add('active');
@@ -1855,6 +1823,20 @@
         }
     });
     
+    // Функция для обновления счетчика материалов
+    function updateMaterialCount() {
+        let materialCount = 0;
+        if (pinkHintTriggered) {
+            materialCount = 1;
+        }
+        
+        // Находим элемент и обновляем его
+        const materialCountElement = document.getElementById('materialCount');
+        if (materialCountElement) {
+            materialCountElement.textContent = materialCount;
+        }
+    }
+    
     // Обработчики кнопок перезапуска
     restartButton.addEventListener('click', function() {
         pages[8].classList.remove('active');
@@ -1862,8 +1844,6 @@
         
         // Сбрасываем триггер
         pinkHintTriggered = false;
-        specialOptionClicks = 0;
-        localStorage.removeItem('pinkHintTriggered');
     });
     
     restartButton2.addEventListener('click', function() {
@@ -1872,8 +1852,6 @@
         
         // Сбрасываем триггер
         pinkHintTriggered = false;
-        specialOptionClicks = 0;
-        localStorage.removeItem('pinkHintTriggered');
     });
     
     // Обработчик для крестиков закрытия подсказок
