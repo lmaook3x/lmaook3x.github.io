@@ -606,8 +606,8 @@
             box-shadow: 0 2px 0 #c01525, 0 3px 5px rgba(0, 0, 0, 0.2) !important;
         }
         
-        /* Стили для итогов на последней странице */
-        .results {
+        /* Стили для итогов на последней странице - УДАЛЕНЫ */
+        /* .results {
             margin-top: 30px;
             padding-top: 20px;
         }
@@ -623,7 +623,7 @@
             font-size: 1.4rem;
             color: #555;
             margin-bottom: 5px;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -668,8 +668,7 @@
             <button id="nextButton1" class="button next-button">Далее!</button>
         </div>
     </div>
-    
-    <!-- Страница 3: Вопрос 2 -->
+        <!-- Страница 3: Вопрос 2 -->
     <div id="page3" class="page with-bg">
         <div class="page-number">2</div>
         <div id="timer2" class="timer">01:00</div>
@@ -782,8 +781,7 @@
             <button id="nextButton4" class="button next-button">Далее!</button>
         </div>
     </div>
-    
-    <!-- Страница 5.5: Вопрос 5 (Невинная химия) -->
+        <!-- Страница 5.5: Вопрос 5 (Невинная химия) -->
     <div id="page5_5" class="page with-bg">
         <div class="page-number">5</div>
         <div id="timer5" class="timer">01:00</div>
@@ -937,14 +935,9 @@
         <p>Отнюдь я уверена, что ты достойна перейти в скрытый от чужих глаз канал,</p>
         <p>ты можешь перейти по ссылке <a href="https://t.me/+Ud0nNOOZlV00OTBi" target="_blank" style="color: #3071f2; text-decoration: underline;">https://t.me/+Ud0nNOOZlV00OTBi</a></p>
         
-        <div class="results">
-            <h3>Итоги:</h3>
-            <p>Найдено дополнительных материалов: <span id="materialCount">0</span></p>
-        </div>
-        
         <button id="restartButton2" class="button">Перезапуск?</button>
     </div>
-<script>
+        <script>
     // Глобальная переменная для отслеживания розовой подсказки
     let pinkHintTriggered = false;
     
@@ -1816,8 +1809,7 @@
         
         pages[7].classList.remove('active');
         
-        // ВАЖНО: Обновляем счетчик на последней странице
-        updateMaterialCount();
+        // ВАЖНО: УДАЛЕН вызов updateMaterialCount() - больше нет надписи "Итоги"
         
         if (selectedAnswer7 === 'cucumber') {
             pages[8].classList.add('active');
@@ -1825,20 +1817,6 @@
             pages[9].classList.add('active');
         }
     });
-    
-    // Функция для обновления счетчика материалов
-    function updateMaterialCount() {
-        let materialCount = 0;
-        if (pinkHintTriggered) {
-            materialCount = 1;
-        }
-        
-        // Находим элемент и обновляем его
-        const materialCountElement = document.getElementById('materialCount');
-        if (materialCountElement) {
-            materialCountElement.textContent = materialCount;
-        }
-    }
     
     // Обработчики кнопок перезапуска
     restartButton.addEventListener('click', function() {
@@ -1880,3 +1858,5 @@
         if (resetBtn) resetBtn.style.display = 'none';
     });
 </script>
+</body>
+</html>
