@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Продолжение 67...</title>
+    <title>Тестик для милаши!</title>
     <style>
         * {
             margin: 0;
@@ -788,7 +788,7 @@
         <div class="page-number">5</div>
         <div id="timer5" class="timer">01:00</div>
         <h2 class="question-title">Невинная химия</h2>
-        <p>Соедини левые и правые элементы правильно:</p>
+        <!-- Убрана строка "Соедини левые и правые элементы правильно:" -->
         
         <div class="columns-container">
             <!-- Левый столбик -->
@@ -947,6 +947,19 @@
     <script>
     // Глобальная переменная для отслеживания розовой подсказки
     let pinkHintTriggered = false;
+    
+    // Сохраняем состояние в localStorage
+    function savePinkHintState() {
+        localStorage.setItem('pinkHintTriggered', pinkHintTriggered);
+    }
+    
+    // Загружаем состояние из localStorage при загрузке
+    window.addEventListener('load', function() {
+        const savedState = localStorage.getItem('pinkHintTriggered');
+        if (savedState !== null) {
+            pinkHintTriggered = savedState === 'true';
+        }
+    });
     
     // Функция для создания снежинок
     function createOffsetSnowflakes() {
@@ -1267,6 +1280,12 @@
                     tripleHint.style.display = 'flex';
                     autoCloseHint(tripleHint);
                     pinkHintTriggered = true; // Устанавливаем триггер
+                    savePinkHintState(); // Сохраняем состояние
+                    
+                    // Если уже был нажат правильный ответ, показываем кнопку "Далее"
+                    if (document.querySelector('#page4 .option.correct-selected')) {
+                        nextButton3.style.display = 'inline-block';
+                    }
                 } else {
                     // До 3 кликов показываем обычную подсказку
                     if (hintId) {
@@ -1300,10 +1319,10 @@
                 this.classList.add('incorrect-selected');
             }
             
-            // Если ответ правильный - показываем кнопку "Далее"
+            // Если ответ правильный - показываем кнопку "Далее" и блокируем ВСЕ варианты
             if (isCorrect) {
                 nextButton3.style.display = 'inline-block';
-                disableOptionsOnPage('page4');
+                disableOptionsOnPage('page4'); // Блокируем ВСЕ варианты
             } else {
                 nextButton3.style.display = 'none';
             }
@@ -1844,6 +1863,7 @@
         // Сбрасываем триггер
         pinkHintTriggered = false;
         specialOptionClicks = 0;
+        localStorage.removeItem('pinkHintTriggered');
     });
     
     restartButton2.addEventListener('click', function() {
@@ -1853,6 +1873,7 @@
         // Сбрасываем триггер
         pinkHintTriggered = false;
         specialOptionClicks = 0;
+        localStorage.removeItem('pinkHintTriggered');
     });
     
     // Обработчик для крестиков закрытия подсказок
